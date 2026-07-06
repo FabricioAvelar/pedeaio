@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Promoções
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'static/style/index.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block conteudo %}
+<section class="features">
+    <h2>Produtos</h2>
+    <p class="subheading">Em estoque</p>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="image"><a href="{% url 'batata-frita' %}"><img src="{% static 'imgs/batata-frita.jpg' %}" width="230px" height="190px"></a></div>
+        <h3><br><a href="{% url 'batata-frita' %}">Batata-Fritas</a></h3>
+        <p><s></s> </p>
+      </div>
+      <div class="feature">
+        <div class="image"><a href="{% url 'hamburguer' %}"><img src="{% static 'imgs/hamburguer.jpg' %}" width="230px" height="190px"></a></div>
+        <h3><br><a href="{% url 'hamburguer' %}">Hambúrgueres</a></h3>
+        <p><s></s> </p>
+      </div>
+      <div class="feature">
+        <div class="image"><a href="{% url 'cachorro_quente' %}"><img src="{% static 'imgs/cachorro_quente.jpg' %}" width="230px" height="190px"></a></div>
+        <h3><br><a href="{% url 'cachorro_quente' %}">Chachorro quente</a></h3>
+        <p><s></s> </p>
+      </div>
+      <div class="feature">
+        <div class="image"><a href="{% url 'pizza' %}"><img src="{% static 'imgs/pizza.jpg' %}" width="230px" height="190px"></a></div>
+        <h3><br><a href="{% url 'pizza' %}">Pizzas de diversos sabores</a></h3>
+        <p><s></s> </p>
+      </div>
+      <div class="feature">
+        <div class="image"><a href="{% url 'salgados' %}"><img src="{% static 'imgs/salgados.jpg' %}" width="230px" height="190px"></a></div>
+        <h3><br><a href="{% url 'salgados' %}">Salgados variados</a></h3>
+        <p><br><s></s> </p>
+      </div>
+      <div class="feature">
+        <div class="image"><a href="{% url 'sobremesas' %}"><img src="{% static 'imgs/sobremesas.jpg' %}" width="230px" height="190"></a></div>
+        <h3><br><a href="{% url 'sobremesas' %}">Sobremesas</a></h3>
+        <p><s></s> </p>
+      </div>
+       <div class="feature">
+        <div class="image"><a href="{% url 'refrigerante' %}"><img src="{% static 'imgs/refrigerante.jpg' %}" width="230px" height="190px"></a></div>
+        <h3><br><a href="{% url 'refrigerante' %}">Refrigerantes</a></h3>
+        <p><br><s></s> </p>
+      </div>
+       <div class="feature">
+        <div class="image"><a href="{% url 'sucos' %}"><img src="{% static 'imgs/suco.jpg' %}" width="230px" height="190px"></a></div>
+        <h3><br><a href="{% url 'sucos' %}">Sucos</a></h3>
+        <p><br><s> </s> </p>
+      </div>
+    </div>
+</section>
+{% endblock %}

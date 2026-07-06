@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Perfil
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'static/style/index.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+<script src="static/script/perfil.js"></script>
+{% endblock %}
+
+{% block conteudo %}
+
+<!--Por enquanto os botões laterais de seleção: Perfil, Pedidos recentes, Endereço, Favoritos e Cupons/Saldo não funcionam, apenas o de sair.-->
+<div class="container">
+    <aside class="sidebar">
+        <div class="perfil-user">
+            <img src="static/imgs/logo.png">
+            <h2>Pede Aió</h2>
+            <p>pedeaio@email.com</p>
+        </div>
+        <nav>
+            <ul>
+                <li>🏠 Perfil</li>
+                <li>🛍️ Pedidos Recentes</li>
+                <li>📍 Endereço</li>
+                <li>❤️ Favoritos</li>
+                <li>🎟️ Cupons / Saldo</li>
+                <li class="sair">🚪 Sair</li>
+            </ul>
+        </nav>
+    </aside>
+    <main class="conteudo">
+    <section class="boas-vindas">
+            <h1>Bem-vindo, Admin</h1>
+            <p>Confira seus pedidos, favoritos e cupons disponíveis.</p>
+        </section>
+        <section class="cards">
+            <div class="card">
+                <h3>🛍️ Pedidos</h3>
+                <p>12 pedidos realizados</p>
+            </div>
+            <div class="card">
+                <h3>❤️ Favoritos</h3>
+                <p>8 itens favoritos</p>
+            </div>
+            <div class="card">
+                <h3>🎟️ Cupons</h3>
+                <p>3 cupons disponíveis</p>
+            </div>
+            <div class="card">
+                <h3>📍 Endereço</h3>
+                <p>Canguaretama - RN</p>
+            </div>
+        </section>
+        <section class="pedidos">
+            <h2>Pedidos Recentes</h2>
+            <div class="pedido-card">
+                <h3>🍕 Pizza Calabresa</h3>
+                <p>Status: Em preparo</p>
+            </div>
+            <div class="pedido-card">
+                <h3>🍔 Hambúrguer Artesanal</h3>
+                <p>Status: Entregue</p>
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}

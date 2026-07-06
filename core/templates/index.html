@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Página Inicial
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/index.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block conteudo %}
+<section class="index">
+    <h1>Pede Aió</h1>
+    <p>Pede Aí teu lanche</p>
+    <div class="index-buttons">
+      <button class="btn-outline">Contato</button>
+      <button class="btn-dark">Dúvidas</button>
+    </div>
+</section>
+
+<section class="image-section">
+    <div class="image-box"><img src="static/imgs/motoboys.png"></div>
+    <div class="image-box"><img src="static/imgs/pizzaria.jpg" width="600px" height="350px"></div>
+</section>
+{% endblock %}

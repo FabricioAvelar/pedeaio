@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Cadastro
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/index.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+<script src="static/script/register.js"></script>
+{% endblock %}
+
+  {% block conteudo %}
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" id="pf-tab">Pessoa Física</button>
+    
+  </div>
+
+<form id="pf-form" class="form-box">
+    <div class="form-row">
+      <div class="form-item"><label>Nome*</label><input type="text" required></div>
+      <div class="form-item"><label>Sobrenome*</label><input type="text" required></div>
+      <div class="form-item"><label>CPF*</label><input type="text" required></div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-item"><label><br>Data de nascimento*</label><input type="date" required></div>
+      <div class="form-item"><label><br>Telefone*</label><input type="text" required></div>
+      <div class="form-item"><label><br>E-mail*</label><input type="email" required></div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-item"><label><br>CEP</label><input type="text"></div>
+      <div class="form-item"><label><br>Estado</label>
+      <select>
+        <option>Selecione</option>
+        <option>Rio Grande do Norte</option>
+        <option>Paraíba</option>
+        <option>Ceará</option>
+        <option>Pernambuco</option>
+      </select>
+    </div>
+      <div class="form-item"><label><br>Cidade</label><input type="text"></div>
+  </div>
+
+  <div class="form-submit">
+      <button type="submit" class="btn-criar">Criar conta</button>
+    </div>
+</form>
+
+<form id="pj-form" class="form-box" style="display:none;">
+    <div class="form-row">
+      <div class="form-item"><label>Razão Social*</label><input type="text" required></div>
+      <div class="form-item"><label>CNPJ*</label><input type="text" required></div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-item"><label><br>Telefone</label><input type="text"></div>
+      <div class="form-item"><label><br>E-mail</label><input type="email"></div>
+    </div>
+
+    <div class="form-submit">
+      <button type="submit" class="btn-criar">Criar conta</button>
+    </div>
+</form>
+</div>
+{% endblock %}

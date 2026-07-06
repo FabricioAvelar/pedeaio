@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Xports</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="icon" type="image/x-icon" href="/static/imgs/logo.png">
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/style/index.css'>
+    <script src='/static/script/index.js'></script>
+{% block estilo %}
+{% endblock %}
+</head>
+<body>
+
+{% include 'menu.html' %}
+
+{% block conteudo %}
+{% endblock %}
+
+{% include 'rodape.html' %}
+
+
+{% block scripts %}
+<script src="{% static '/static/script/nav.js' %}"></script>
+{% endblock %}
+</body>
+</html>

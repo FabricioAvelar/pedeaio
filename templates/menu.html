@@ -1,0 +1,16 @@
+<header class="navbar">
+    <div class="logo"><a href="index.html"><img src="/static/imgs/logo.png"></a></div>
+    <nav class="nav-links">
+      <a href="{% url 'index' %}">Home</a>
+      <a href="{% url 'promocoes' %}">Promoções</a>
+      <a href="{% url 'index' %}">Produtos</a>
+      <a href="{% url 'index' %}">Entrega</a>
+      <a href="{% url 'index' %}">Combos</a>
+      <a href="{% url 'index' %}">Cupons</a>
+      <a href="{% url 'index' %}">Equipe</a>
+    </nav>
+    <div class="nav-buttons">
+      <button class="btn-outline"><a href="{% url 'login' %}">Entrar</a></button>
+      <button class="btn-dark"><a href="{% url 'register' %}">Criar conta</a></button>
+    </div>
+</header>

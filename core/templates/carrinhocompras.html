@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Página Inicial
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/carrinho.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'script/carrinho.js' %}"></script>
+{% endblock %}
+
+{% block conteudo %}
+<div class="steps">
+    <span class="active">Carrinho</span>
+    <span>Entrega</span>
+    <span>Pagamento</span>
+    <span>Confirmação</span>
+</div>
+
+<main class="container">
+
+    <section class="cart">
+        <h2>CARRINHO</h2>
+
+        <div class="item">
+            <img src="https://via.placeholder.com/120" alt="">
+            <div class="info">
+                <h3></h3>
+                <p></p>
+                <p></p>
+            </div>
+            <div class="qty">
+                <button>-</button>
+                <span>1</span>
+                <button>+</button>
+            </div>
+            <div class="price">R$ </div>
+        </div>
+
+        <div class="item">
+            <img src="https://via.placeholder.com/120" alt="">
+            <div class="info">
+                <h3></h3>
+                <p></p>
+                <p></p>
+            </div>
+            <div class="qty">
+                <button>-</button>
+                <span>1</span>
+                <button>+</button>
+            </div>
+            <div class="price">R$ </div>
+        </div>
+    </section>
+
+    <aside class="summary">
+        <h3>Resumo</h3>
+        <div class="line">
+            <span>Produtos</span>
+            <span>R$ </span>
+        </div>
+        <div class="line">
+            <span>Desconto</span>
+            <span>- R$ </span>
+        </div>
+        <div class="total">
+            <span>Total</span>
+            <span>R$ </span>
+        </div>
+        <button class="btn full">Continuar</button>
+    </aside>
+</main>
+{% endblock %}
