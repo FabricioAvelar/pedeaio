@@ -1,0 +1,97 @@
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:50px 20px;
+}
+
+.cadastro{
+    width:650px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
+    padding:35px;
+    margin:20px 0;
+}
+
+.cadastro h2{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:30px;
+}
+
+.cadastro p{
+    text-align:center;
+    color:#666;
+    margin-bottom:30px;
+}
+
+.cadastro form{
+    display:flex;
+    flex-direction:column;
+}
+
+.cadastro .campo{
+    margin-bottom:18px;
+}
+
+.cadastro label{
+    display:block;
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+.cadastro input,
+.cadastro textarea,
+.cadastro select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d5d5d5;
+    border-radius:8px;
+    font-size:15px;
+    transition:.3s;
+}
+
+.cadastro input:focus,
+.cadastro textarea:focus,
+.cadastro select:focus{
+    outline:none;
+    border-color:#000;
+}
+
+.cadastro textarea{
+    resize:vertical;
+    min-height:120px;
+}
+
+.cadastro input[type=file]{
+    border:none;
+    padding:0;
+}
+
+.cadastro button{
+    margin-top:15px;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#111;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.cadastro button:hover{
+    background:#333;
+    transform:scale(1.02);
+}
+
+.cadastro .errorlist{
+    list-style:none;
+    color:#d60000;
+    margin-bottom:10px;
+}
+
+.cadastro .helptext{
+    display:none;
+}

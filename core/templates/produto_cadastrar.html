@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Cadastrar Produto
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/produto_cadastrar.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container">
+    <div class="cadastro">
+        <h2>Cadastrar Produto</h2>
+        <p>Preencha as informações abaixo.</p>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="campo">
+                <label>Nome</label>
+                {{ form.nome }}
+            </div>
+            <div class="campo">
+                <label>Descrição</label>
+                {{ form.descricao }}
+            </div>
+            <div class="campo">
+                <label>Preço</label>
+                {{ form.preco }}
+            </div>
+            <div class="campo">
+                <label>Imagem</label>
+                {% for foto in fotos %}
+<img src="media\{{foto.imagem}}" alt="" >
+{% endfor %}
+            </div>
+            <form action="" method="" enctype="multipart/form-data"></form>
+            <button type="submit">
+                Salvar Produto
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

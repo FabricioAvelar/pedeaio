@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Promoções
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/index.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block conteudo %}
+<section class="features">
+    <h2>Produtos</h2>
+    <p class="subheading">Em estoque</p>
+    <div class="features-grid">
+
+{% for produto in produtos %}
+
+<div class="feature">
+
+    <div class="image">
+        <img src="{{ produto.imagem.url }}" width="230" height="190">
+    </div>
+
+    <h3>{{ produto.nome }}</h3>
+
+    <p>R$ {{ produto.preco }}</p>
+
+    <a href="{% url 'adicionar_produto' produto.id %}">
+        <button class="btn-car">
+            Adicionar ao carrinho
+        </button>
+    </a>
+
+</div>
+
+{% empty %}
+
+<h2>Nenhum produto cadastrado.</h2>
+
+{% endfor %}
+
+</div>
+</section>
+{% endblock %}
