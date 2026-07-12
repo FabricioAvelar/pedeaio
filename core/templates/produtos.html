@@ -16,6 +16,38 @@ Produtos
     <h2>Produtos</h2>
     <p class="subheading">Em estoque</p>
 
+    <form method="GET" class="busca">
+
+    <input
+        type="text"
+        name="buscar"
+        placeholder="Buscar produto..."
+        value="{{ busca|default_if_none:'' }}">
+
+    <select name="categoria">
+
+        <option value="">Todas</option>
+
+        <option value="Hamburguer">Hambúrguer</option>
+
+        <option value="Pizza">Pizza</option>
+
+        <option value="Batata">Batata</option>
+
+        <option value="Bebida">Bebidas</option>
+
+        <option value="Sobremesa">Sobremesas</option>
+
+        <option value="Salgado">Salgados</option>
+
+    </select>
+
+    <button type="submit">
+        Buscar
+    </button>
+
+</form>
+
     <div class="features-grid">
 
         {% for produto in produtos %}

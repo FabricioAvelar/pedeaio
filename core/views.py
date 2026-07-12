@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Produto, Carrinho, ItemCarrinho
+from .models import Produto, Carrinho, ItemCarrinho, Usuario
 from .forms import ProdutoForm
 
 # Usuário
@@ -103,16 +103,29 @@ def produto_remover(request, id):
 
 
 def produtos(request):
+
     produtos = Produto.objects.all()
 
-    return render(request, 'produtos.html', {
-        'produtos': produtos
+    busca = request.GET.get('buscar')
+
+    categoria = request.GET.get('categoria')
+
+    if busca:
+        produtos = produtos.filter(nome__icontains=busca)
+
+    if categoria:
+        produtos = produtos.filter(categoria=categoria)
+
+    return render(request,'produtos.html',{
+        'produtos': produtos,
+        'busca': busca,
+        'categoria': categoria
     })
 
-
+#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
 def adicionar_produto(request, produto_id):
-    # if not request.user.is_authenticated:
-    #    return redirect('login')
+    if not request.user.is_authenticated:
+        return redirect('login')
 
     produto = get_object_or_404(Produto, id=produto_id)
 
@@ -132,7 +145,7 @@ def adicionar_produto(request, produto_id):
     return redirect('carrinhocompras')
 
 
-
+#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
 def carrinhocompras(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -153,18 +166,34 @@ def carrinhocompras(request):
     'itens': itens,
     'total': total})
 
-
+#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
 def aumentar_quantidade(request, item_id):
-    item = get_object_or_404(ItemCarrinho, id=item_id)
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    item = get_object_or_404(
+        ItemCarrinho,
+        id=item_id,
+        carrinho__usuario=request.user
+    )
 
     item.quantidade += 1
     item.save()
 
     return redirect('carrinhocompras')
 
-
+#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
 def diminuir_quantidade(request, item_id):
-    item = get_object_or_404(ItemCarrinho, id=item_id)
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    item = get_object_or_404(
+        ItemCarrinho,
+        id=item_id,
+        carrinho__usuario=request.user
+    )
 
     if item.quantidade > 1:
         item.quantidade -= 1
@@ -174,9 +203,18 @@ def diminuir_quantidade(request, item_id):
 
     return redirect('carrinhocompras')
 
-
+#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
 def remover_produto(request, item_id):
-    item = get_object_or_404(ItemCarrinho, id=item_id)
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    item = get_object_or_404(
+        ItemCarrinho,
+        id=item_id,
+        carrinho__usuario=request.user
+    )
+
     item.delete()
 
     return redirect('carrinhocompras')
@@ -185,7 +223,7 @@ def remover_produto(request, item_id):
 
 
 
-
+#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
 def finalizar_pedido(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -200,33 +238,3 @@ def finalizar_pedido(request):
     ).delete()
 
     return redirect('index')
-
-
-
-
-
-
-
-def batatafrita(request):
-    return render(request, 'batata-frita.html')
-
-def cachorroquente(request):
-    return render(request, 'cachorro_quente.html')
-
-def hamburguer(request):
-    return render(request, 'hamburguer.html')
-
-def pizza(request):
-    return render(request, 'pizza.html')
-
-def refrigerante(request):
-    return render(request, 'refrigerante.html')
-
-def salgados(request):
-    return render(request, 'salgados.html')
-
-def sobremesas(request):
-    return render(request, 'sobremesas.html')
-
-def sucos(request):
-    return render(request, 'sucos.html')

@@ -19,12 +19,4 @@ urlpatterns = [
     path('diminuir/<int:item_id>/', diminuir_quantidade, name='diminuir_quantidade'),
     path('finalizar/', finalizar_pedido, name='finalizar_pedido'),
 
-    path('batata-frita/', batatafrita, name='batata-frita'),
-    path('cachorro_quente/', cachorroquente, name='cachorro_quente'),
-    path('hamburguer/', hamburguer, name='hamburguer'),
-    path('pizza/', pizza, name='pizza'),
-    path('refrigerante/', refrigerante, name='refrigerante'),
-    path('salgados/', salgados, name='salgados'),
-    path('sobremesas/', sobremesas, name='sobremesas'),
-    path('sucos/', sucos, name='sucos'),
 ]

@@ -34,9 +34,8 @@ Página Inicial
 
             <img src="{{ item.produto.imagem.url }}" width="120">
 
-            <div class="info">
-                <h3>{{ item.produto.nome }}</h3>
-                <p>Preço: R$ {{ item.produto.preco }}</p>
+            <div class="price">
+                R$ {{ item.subtotal }}
             </div>
 
             <div class="qty">
