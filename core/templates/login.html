@@ -10,17 +10,21 @@ Login
 {% endblock %}
 
 {% block conteudo %}
-
 <div class="login-container">
     <div class="login-box">
         <h3>Já sou cliente</h3>
         <form method="POST">
             {% csrf_token %}
-            <label>E-mail</label>
-            <input type="email" name="email" placeholder="Digite seu e-mail" required>
-
-            <label>Senha</label>
-            <input type="password" name="password" placeholder="Digite sua senha" required>
+            
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" name="email" placeholder="Digite seu e-mail" required>
+            </div>
+<br>
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" name="password" placeholder="Digite sua senha" required>
+            </div>
 
             {% if messages %}
                 {% for message in messages %}
@@ -28,22 +32,19 @@ Login
                 {% endfor %}
             {% endif %}
 
-            <button type="submit" class="btn-primary">Acessar conta</button>
+            <div class="buttons-row">
+                <button type="submit" class="btn-primary">Acessar conta</button>
+                <button type="button" class="btn-outline full">Esqueci minha senha</button>
+            </div>
         </form>
-
-        <button class="btn-outline full">Esqueci minha senha</button>
     </div>
-
 
     <div class="divider"></div>
 
-
-    <div class="login-box">
+    <div class="login-box register-box">
         <h3>Criar conta</h3>
         <p>Ainda não possui cadastro?</p>
-
         <a href="{% url 'register' %}" class="btn-primary">Criar conta</a>
     </div>
 </div>
-
 {% endblock %}
