@@ -70,37 +70,53 @@ a{
   width: 100%;
 }
 
-.nav-buttons button{
-  margin-left: 10px;
-  padding: 6px 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  border: 1px solid #000;
+.nav-buttons {
+  margin: 5px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
   transition: all 0.3s ease;
 }
+
+.nav-buttons button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 10px;
+  cursor: pointer;
+}
     
-.btn-outline{
+.btn-outline, .btn-dark {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-outline {
   background: #fff;
   color: #000;
   border: 1px solid #000;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-.btn-outline:hover{
-  background: #000;
-  color: #fff;
-  transform: scale(1.1);
-}
-
-.btn-dark{
+.btn-outline:hover {
   background: #000;
   color: #fff;
 }
 
-.btn-dark:hover{
+.btn-dark {
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+}
+
+.btn-dark:hover {
   background: #222;
-  transform: scale(1.05);
+  border-color: #222;
 }
 
 .index{

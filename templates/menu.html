@@ -1,5 +1,8 @@
 <header class="navbar">
-    <div class="logo"><a href="{% url 'index' %}"><img src="/static/imgs/logo1.png" width="70px"></a></div>
+    <div class="logo">
+        <a href="{% url 'index' %}"><img src="/static/imgs/logo1.png" width="70px"></a>
+    </div>
+    
     <nav class="nav-links">
       <a href="{% url 'index' %}">Home</a>
       <a href="{% url 'index' %}">Promoções</a>
@@ -9,21 +12,20 @@
       <a href="{% url 'index' %}">Cupons</a>
       <a href="{% url 'index' %}">Equipe</a>
     </nav>
+    
     <div class="nav-buttons">
-
       {% if user.is_authenticated %}
         {% if user.is_staff %}
-        <button><a href="{% url 'produto_gerenciar' %}" class="btn-outline">Painel Admin</a></button>
+          <a href="{% url 'produto_gerenciar' %}" class="btn-outline">Painel Admin</a>
         {% else %}
-        <button><a href="{% url 'perfil' %}" class="btn-outline">Meu Perfil</a></button>
+          <a href="{% url 'perfil' %}" class="btn-outline">Meu Perfil</a>
         {% endif %}
-
-        <button><a href="{% url 'logout' %}" class="btn-dark">Sair</a></button>
-
+        
+        <a href="{% url 'logout' %}" class="btn-dark">Sair</a>
       {% else %}
-      <button><a href="{% url 'login' %}" class="btn-outline">Entrar</a></button>
-      <button><a href="{% url 'register' %}" class="btn-dark">Criar Conta</a></button>
+        <a href="{% url 'login' %}" class="btn-outline">Entrar</a>
+        <a href="{% url 'register' %}" class="btn-dark">Criar Conta</a>
       {% endif %}
-
     </div>
+    
 </header>
