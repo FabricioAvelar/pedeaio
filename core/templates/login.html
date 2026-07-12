@@ -6,40 +6,44 @@ Login
 {% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/login.css' %}" />
+<link rel="stylesheet" href="{% static 'style/login.css' %}">
 {% endblock %}
 
-{% block scripts %}
-<script src="{% static 'script/login.js' %}"></script>
-{% endblock %}
+{% block conteudo %}
 
-  {% block conteudo %}
 <div class="login-container">
-
     <div class="login-box">
         <h3>Já sou cliente</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <label>E-mail</label>
+            <input type="email" name="email" placeholder="Digite seu e-mail" required>
 
-        <label>E-mail, CPF ou CNPJ</label>
-        <input type="text" id="usuario">
+            <label>Senha</label>
+            <input type="password" name="password" placeholder="Digite sua senha" required>
 
-        <label>Senha</label>
-        <input type="password" id="senha">
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="erro">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
 
-        <p id="erro"></p>
+            <button type="submit" class="btn-primary">Acessar conta</button>
+        </form>
 
-        <button class="btn-primary" id="entrar">Acessar conta</button>
         <button class="btn-outline full">Esqueci minha senha</button>
     </div>
 
+
     <div class="divider"></div>
+
 
     <div class="login-box">
         <h3>Criar conta</h3>
+        <p>Ainda não possui cadastro?</p>
 
-        <label>Informe seu e-mail</label>
-        <input type="email">
-
-        <button class="btn-primary">Prosseguir</button>
+        <a href="{% url 'register' %}" class="btn-primary">Criar conta</a>
     </div>
 </div>
+
 {% endblock %}

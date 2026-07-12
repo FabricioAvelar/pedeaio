@@ -10,7 +10,20 @@
       <a href="{% url 'index' %}">Equipe</a>
     </nav>
     <div class="nav-buttons">
-      <button class="btn-outline"><a href="{% url 'login' %}">Entrar</a></button>
-      <button class="btn-dark"><a href="{% url 'register' %}">Criar conta</a></button>
+
+      {% if user.is_authenticated %}
+        {% if user.is_staff %}
+        <button><a href="{% url 'produto_gerenciar' %}" class="btn-outline">Painel Admin</a></button>
+        {% else %}
+        <button><a href="{% url 'perfil' %}" class="btn-outline">Meu Perfil</a></button>
+        {% endif %}
+
+        <button><a href="{% url 'logout' %}" class="btn-dark">Sair</a></button>
+
+      {% else %}
+      <button><a href="{% url 'login' %}" class="btn-outline">Entrar</a></button>
+      <button><a href="{% url 'register' %}" class="btn-dark">Criar Conta</a></button>
+      {% endif %}
+
     </div>
 </header>

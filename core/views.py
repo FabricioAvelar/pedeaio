@@ -1,58 +1,94 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Produto, Carrinho, ItemCarrinho, Usuario
-from .forms import ProdutoForm
+from .forms import ProdutoForm, CadastroForm
 
 # Usuário
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import logout
 from django.contrib import messages
 
 
-
+# Página Inicial #
 def index(request):
     return render(request, 'index.html')
 
+
+
+
+
+# Autenticação #
+def register(request):
+    if request.method == 'POST':
+        form = CadastroForm(request.POST)
+        if form.is_valid():
+            usuario = form.save(commit=False)
+
+            usuario.username = usuario.email
+            usuario.save()
+
+            messages.success(
+                request,
+                'Conta criada com sucesso! Faça seu login.'
+            )
+            return redirect('login')
+    else:
+        form = CadastroForm()
+    return render(
+        request,
+        'register.html',
+        {
+            'form': form
+        }
+    )
+
 def login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
+        email = request.POST.get('email')
+        password = request.POST.get('password')
         usuario = authenticate(
             request,
-            username=username,
+            username=email,
             password=password
         )
-
         if usuario:
             auth_login(request, usuario)
             return redirect('index')
-
         messages.error(request, 'Usuário ou senha incorretos.')
-
     return render(request, 'login.html')
 
-def register(request):
-    return render(request, 'register.html')
+def sair(request):
+    logout(request)
+    return redirect('index')
 
+
+
+
+
+# Perfil #
+@login_required
 def perfil(request):
     return render(request, 'perfil.html')
 
 
+
+
+
+# Gerenciamento #
+@login_required
 def produto_gerenciar(request):
+    if not request.user.is_staff:
+        return redirect('index')
 
     if request.method == 'POST':
-
         form = ProdutoForm(request.POST, request.FILES)
-
         if form.is_valid():
             form.save()
             return redirect('produto_gerenciar')
-
     else:
-
         form = ProdutoForm()
-
     produtos = Produto.objects.all()
-
     return render(
         request,
         'produto_gerenciar.html',
@@ -62,7 +98,11 @@ def produto_gerenciar(request):
         }
     )
 
+@login_required
 def produto_editar(request, id):
+    if not request.user.is_staff:
+        return redirect('index')
+
     produto = get_object_or_404(Produto, id=id)
     if request.method == 'POST':
         form = ProdutoForm(
@@ -83,52 +123,42 @@ def produto_editar(request, id):
         }
     )
 
-
+@login_required
 def produto_remover(request, id):
+    if not request.user.is_staff:
+        return redirect('index')
 
     if request.method == 'POST':
-
         produto = get_object_or_404(
             Produto,
             id=id
         )
-
         produto.delete()
-
     return redirect('produto_gerenciar')
 
 
 
 
 
-
+# Produtos #
 def produtos(request):
-
     produtos = Produto.objects.all()
-
     busca = request.GET.get('buscar')
-
     categoria = request.GET.get('categoria')
-
     if busca:
         produtos = produtos.filter(nome__icontains=busca)
 
     if categoria:
         produtos = produtos.filter(categoria=categoria)
-
     return render(request,'produtos.html',{
         'produtos': produtos,
         'busca': busca,
         'categoria': categoria
     })
 
-#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
+@login_required
 def adicionar_produto(request, produto_id):
-    if not request.user.is_authenticated:
-        return redirect('login')
-
     produto = get_object_or_404(Produto, id=produto_id)
-
     carrinho, criado = Carrinho.objects.get_or_create(
         usuario=request.user
     )
@@ -137,104 +167,93 @@ def adicionar_produto(request, produto_id):
         carrinho=carrinho,
         produto=produto
     )
-
     if not criado:
         item.quantidade += 1
         item.save()
-
     return redirect('carrinhocompras')
 
 
-#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
-def carrinhocompras(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
 
+
+
+# Carrinho de Compras #
+@login_required
+def carrinhocompras(request):
     carrinho, criado = Carrinho.objects.get_or_create(
         usuario=request.user
     )
-
     itens = ItemCarrinho.objects.filter(carrinho=carrinho)
-
     total = 0
-
     for item in itens:
         total += item.produto.preco * item.quantidade
+    return render(
+        request,
+        'carrinhocompras.html',
+        {
+            'itens': itens,
+            'total': total
+        }
+    )
 
-    return render(request,
-    'carrinhocompras.html',{
-    'itens': itens,
-    'total': total})
-
-#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
+@login_required
 def aumentar_quantidade(request, item_id):
-
-    if not request.user.is_authenticated:
-        return redirect('login')
-
     item = get_object_or_404(
         ItemCarrinho,
         id=item_id,
         carrinho__usuario=request.user
     )
-
     item.quantidade += 1
     item.save()
-
     return redirect('carrinhocompras')
 
-#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
+@login_required
 def diminuir_quantidade(request, item_id):
-
-    if not request.user.is_authenticated:
-        return redirect('login')
-
     item = get_object_or_404(
         ItemCarrinho,
         id=item_id,
         carrinho__usuario=request.user
     )
-
     if item.quantidade > 1:
         item.quantidade -= 1
         item.save()
     else:
         item.delete()
-
     return redirect('carrinhocompras')
 
-#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
+@login_required
 def remover_produto(request, item_id):
-
-    if not request.user.is_authenticated:
-        return redirect('login')
-
     item = get_object_or_404(
         ItemCarrinho,
         id=item_id,
         carrinho__usuario=request.user
     )
-
     item.delete()
-
     return redirect('carrinhocompras')
 
 
 
 
 
-#DEF COM AUTENTICAÇÃO PRA ATIVAR DPS DE AJEITAR LOGIN E CADASTRO
+# Finalizar Pedido #
+@login_required
 def finalizar_pedido(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-
     carrinho = get_object_or_404(
         Carrinho,
         usuario=request.user
     )
-
     ItemCarrinho.objects.filter(
         carrinho=carrinho
     ).delete()
-
     return redirect('index')
+
+
+
+
+# -------------------------------------- #
+# SERÃO ADICIONADAS EM VERSÕES FUTURAS:
+# Página para Entregador
+# Formas de Pagamento
+# Endereço e taxa de entrega
+# Rastreamento
+# Nota fiscal
+# -------------------------------------- #
