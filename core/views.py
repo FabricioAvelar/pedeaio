@@ -37,7 +37,7 @@ def register(request):
         form = CadastroForm()
     return render(
         request,
-        'register.html',
+        'privado/register.html',
         {
             'form': form
         }
@@ -56,7 +56,7 @@ def login(request):
             auth_login(request, usuario)
             return redirect('index')
         messages.error(request, 'Usuário ou senha incorretos.')
-    return render(request, 'login.html')
+    return render(request, 'privado/login.html')
 
 def sair(request):
     logout(request)
@@ -69,7 +69,7 @@ def sair(request):
 # Perfil #
 @login_required
 def perfil(request):
-    return render(request, 'perfil.html')
+    return render(request, 'privado/perfil.html')
 
 
 
@@ -91,7 +91,7 @@ def produto_gerenciar(request):
     produtos = Produto.objects.all()
     return render(
         request,
-        'produto_gerenciar.html',
+        'privado/produto_gerenciar.html',
         {
             'form': form,
             'produtos': produtos
@@ -117,7 +117,7 @@ def produto_editar(request, id):
         form = ProdutoForm(instance=produto)
     return render(
         request,
-        'produto_gerenciar.html',
+        'privado/produto_gerenciar.html',
         {
             'form': form
         }
@@ -199,7 +199,7 @@ def carrinhocompras(request):
         total += item.produto.preco * item.quantidade
     return render(
         request,
-        'carrinhocompras.html',
+        'privado/carrinhocompras.html',
         {
             'itens': itens,
             'total': total

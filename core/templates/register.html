@@ -1,81 +1,16 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block titulo %}
-Cadastro
-{% endblock %}
-
-{% block estilo %}
-<link rel="stylesheet" href="{% static 'style/register.css' %}">
-{% endblock %}
-
-{% block conteudo %}
-<div class="container">
-    <div class="tabs">
-        <button class="tab active">Pessoa Física</button>
-    </div>
-
-    <form method="POST" class="form-box">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Cadastro</h1>
+    <form method="post">
         {% csrf_token %}
-        <div class="form-row">
-            <div class="form-item">
-                <label>Nome*</label>
-                <input type="text" name="first_name" required>
-            </div>
-
-            <div class="form-item">
-                <label>Sobrenome*</label>
-                <input type="text" name="last_name" required>
-            </div>
-
-            <div class="form-item">
-                <label>CPF*</label>
-                <input type="text" name="cpf" required>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-item">
-                <label>Data de nascimento*</label>
-                <input type="date" name="nascimento" required>
-            </div>
-
-            <div class="form-item">
-                <label>E-mail*</label>
-                <input type="email" name="email" required>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-item">
-                <label>Senha*</label>
-                <input type="password" name="password1" required>
-            </div>
-
-            <div class="form-item">
-                <label>Confirmar senha*</label>
-                <input type="password" name="password2" required>
-            </div>
-        </div>
-
-        {% if form.errors %}
-        <div class="erro-form">
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            {% endfor %}
-
-            {% for error in form.non_field_errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <div class="form-submit">
-            <button type="submit" class="btn-criar">Criar conta</button>
-        </div>
+        {{form}}
+        <p><input type="submit" value="Criar conta"></p>
     </form>
-</div>
-
-{% endblock %}
+</body>
+</html>

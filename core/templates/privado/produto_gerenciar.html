@@ -10,15 +10,9 @@ Gerenciar Produtos
 {% endblock %}
 
 {% block conteudo %}
-
 <div class="container-gerenciar">
-
-    <!-- LISTA DE PRODUTOS -->
-
     <div class="painel">
-
         <div class="painel-header">
-
             <h2>Gerenciamento de Produtos</h2>
             <p>Cadastre, edite e remova produtos do cardápio.</p>
             <br>
@@ -32,31 +26,22 @@ Gerenciar Produtos
                     <th>Preço</th>
                     <th>Ações</th>
                 </tr>
-
             </thead>
 
             <tbody>
-
             {% for produto in produtos %}
-
                 <tr>
-
                     <td>
-
                         {% if produto.imagem %}
                             <img src="{{ produto.imagem.url }}" width="75px" alt="{{ produto.nome }}">
                         {% else %}
                             <span>Sem imagem</span>
                         {% endif %}
-
                     </td>
 
                     <td>{{ produto.nome }}</td>
-
                     <td>R$ {{ produto.preco }}</td>
-
                     <td>
-
                         <a href="{% url 'produto_editar' produto.id %}">
                             <button type="button" class="btn-editar">
                                 Editar
@@ -67,27 +52,20 @@ Gerenciar Produtos
                             {% csrf_token %}
                             <button class="btn-excluir" type="submit">Excluir</button>
                         </form>
-
                     </td>
-
                 </tr>
 
             {% empty %}
 
                 <tr>
-
                     <td colspan="4" style="text-align:center; padding:25px;">
                         Nenhum produto cadastrado.
                     </td>
-
                 </tr>
 
             {% endfor %}
-
             </tbody>
-
         </table>
-
     </div>
 
 
@@ -137,11 +115,8 @@ Gerenciar Produtos
                 {% endif %}
 
             </button>
-
         </form>
-
     </div>
-
 </div>
 
 {% endblock %}

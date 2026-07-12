@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Login
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/login.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="login-container">
+    <div class="login-box">
+        <h3>Já sou cliente</h3>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" name="email" placeholder="Digite seu e-mail" required>
+            </div>
+<br>
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" name="password" placeholder="Digite sua senha" required>
+            </div>
+<br>
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="erro">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+
+            <div class="buttons-row">
+                <button type="submit" class="btn-primary">Acessar conta</button>
+                <button type="button" class="btn-outline full">Esqueci minha senha</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="login-box register-box">
+        <h3>Criar conta</h3>
+        <p>Ainda não possui cadastro?</p>
+        <a href="{% url 'register' %}" class="btn-primary">Criar conta</a>
+    </div>
+</div>
+{% endblock %}
