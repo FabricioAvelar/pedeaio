@@ -10,7 +10,7 @@ Cadastro
 {% endblock %}
 
 {% block scripts %}
-<script src="static/script/register.js"></script>
+<script src="{% static '/script/register.js' %}"></script>
 {% endblock %}
 
   {% block conteudo %}
@@ -52,20 +52,5 @@ Cadastro
     </div>
 </form>
 
-<form id="pj-form" class="form-box" style="display:none;">
-    <div class="form-row">
-      <div class="form-item"><label>Razão Social*</label><input type="text" required></div>
-      <div class="form-item"><label>CNPJ*</label><input type="text" required></div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-item"><label><br>Telefone</label><input type="text"></div>
-      <div class="form-item"><label><br>E-mail</label><input type="email"></div>
-    </div>
-
-    <div class="form-submit">
-      <button type="submit" class="btn-criar">Criar conta</button>
-    </div>
-</form>
 </div>
 {% endblock %}

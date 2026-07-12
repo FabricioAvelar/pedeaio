@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Gerenciar Produtos
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/produto_gerenciar.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container-gerenciar">
+
+    <!-- LISTA DE PRODUTOS -->
+
+    <div class="painel">
+
+        <div class="painel-header">
+
+            <h2>Gerenciamento de Produtos</h2>
+            <p>Cadastre, edite e remova produtos do cardápio.</p>
+            <br>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Imagem</th>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for produto in produtos %}
+
+                <tr>
+
+                    <td>
+
+                        {% if produto.imagem %}
+                            <img src="{{ produto.imagem.url }}" width="75px" alt="{{ produto.nome }}">
+                        {% else %}
+                            <span>Sem imagem</span>
+                        {% endif %}
+
+                    </td>
+
+                    <td>{{ produto.nome }}</td>
+
+                    <td>R$ {{ produto.preco }}</td>
+
+                    <td>
+
+                        <a href="{% url 'produto_editar' produto.id %}">
+                            <button type="button" class="btn-editar">
+                                Editar
+                            </button>
+                        </a>
+
+                        <form action="{% url 'produto_remover' produto.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="btn-excluir" type="submit">Excluir</button>
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            {% empty %}
+
+                <tr>
+
+                    <td colspan="4" style="text-align:center; padding:25px;">
+                        Nenhum produto cadastrado.
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- FORMULÁRIO -->
+
+    <div class="cadastro">
+        <h2>
+            {% if form.instance.pk %}
+                Editar Produto
+            {% else %}
+                Cadastrar Produto
+            {% endif %}
+        </h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="campo">
+                <label for="{{ form.nome.id_for_label }}">Nome</label>
+                {{ form.nome }}
+            </div>
+
+            <div class="campo">
+                <label for="{{ form.descricao.id_for_label }}">Descrição</label>
+                {{ form.descricao }}
+            </div>
+
+            <div class="campo">
+                <label for="{{ form.preco.id_for_label }}">Preço</label>
+                {{ form.preco }}
+            </div>
+
+            <div class="campo">
+                <label for="{{ form.imagem.id_for_label }}">Imagem</label>
+                {{ form.imagem }}
+            </div>
+
+            <button class="btn-salvar" type="submit">
+
+                {% if form.instance.pk %}
+                    Salvar Alterações
+                {% else %}
+                    Cadastrar Produto
+                {% endif %}
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

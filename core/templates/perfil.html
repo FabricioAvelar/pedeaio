@@ -10,7 +10,7 @@ Perfil
 {% endblock %}
 
 {% block scripts %}
-<script src="static/script/perfil.js"></script>
+<script src="{% static 'script/perfil.js' %}"></script>
 {% endblock %}
 
 {% block conteudo %}
@@ -19,7 +19,7 @@ Perfil
 <div class="container">
     <aside class="sidebar">
         <div class="perfil-user">
-            <img src="static/imgs/logo.png">
+            <img src="{% static 'imgs/logo1.png' %}" width="60px">
             <h2>Pede Aió</h2>
             <p>pedeaio@email.com</p>
         </div>
