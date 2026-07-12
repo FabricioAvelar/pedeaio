@@ -119,6 +119,10 @@ a{
   border-color: #222;
 }
 
+.btn-carrinho{
+    cursor: pointer;
+}
+
 .index{
   text-align: center;
   padding: 100px 20px;

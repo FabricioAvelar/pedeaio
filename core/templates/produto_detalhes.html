@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+{{ produto.nome }}
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/produto_detalhes.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container">
+    <div class="product">
+        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+        <div class="info">
+
+            {% if produto.promocao %}
+            {% endif %}
+
+            <h2>{{ produto.nome }}</h2>
+
+            <p class="price">
+                R$ {{ produto.preco }}
+            </p><br>
+
+            
+
+            <a href="{% url 'adicionar_produto' produto.id %}" class="btn-car">
+                Adicionar ao carrinho
+            </a>
+
+            <p class="desc"><br>
+                {{ produto.descricao }}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

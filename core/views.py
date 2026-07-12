@@ -156,6 +156,17 @@ def produtos(request):
         'categoria': categoria
     })
 
+def produto_detalhes(request, id):
+    produto = get_object_or_404(Produto, id=id)
+
+    return render(
+        request,
+        'produto_detalhes.html',
+        {
+            'produto': produto
+        }
+    )
+
 @login_required
 def adicionar_produto(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
