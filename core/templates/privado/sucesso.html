@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Pedido realizado{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/sucesso.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="sucesso">
+
+    <div class="check">
+        ✓
+    </div>
+
+    <h1>Pedido realizado!</h1>
+
+    <p>
+        Seu pedido foi enviado com sucesso.<br>
+        Em instantes ele será preparado pelo restaurante.
+    </p>
+
+    <div class="botoes">
+        <a href="{% url 'produtos' %}" class="btn-outline">
+            Continuar comprando
+        </a>
+            
+        <a href="{% url 'index' %}" class="btn-dark">
+            Voltar ao início
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

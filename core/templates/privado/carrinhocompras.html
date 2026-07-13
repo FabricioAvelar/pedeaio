@@ -10,16 +10,10 @@ Carrinho
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'script/carrinho.js' %}"></script>
+
 {% endblock %}
 
 {% block conteudo %}
-<div class="steps">
-    <span class="active">Carrinho</span>
-    <span>Entrega</span>
-    <span>Pagamento</span>
-    <span>Confirmação</span>
-</div>
 
 <main class="container">
 
@@ -35,7 +29,12 @@ Carrinho
             <img src="{{ item.produto.imagem.url }}" width="120">
 
             <div class="price">
-                R$ {{ item.subtotal }}
+                R$ {{ item.produto.preco }}
+            </div>
+            
+            <div class="info">
+                <h3>{{ item.produto.nome }}</h3>
+                <p>Preço unitário: R$ {{ item.produto.preco }}</p>
             </div>
 
             <div class="qty">
@@ -53,12 +52,16 @@ Carrinho
             </div>
 
             <div class="price">
-                R$ {{ item.produto.preco }}
+                R$ {{ item.subtotal }}
             </div>
 
-            <a href="{% url 'remover_produto' item.id %}">
-                Remover
-            </a>
+            <div class="remover">
+                <a href="{% url 'remover_produto' item.id %}">
+                    <span style="text-decoration: underline;">
+                        Remover
+                    </span>
+                </a>
+            </div>
 
         </div>
 

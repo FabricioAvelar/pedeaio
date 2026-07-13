@@ -10,6 +10,26 @@ from django.contrib.auth import logout
 from django.contrib import messages
 
 
+# Função auxiliar do carrinho
+
+def quantidade_carrinho(request):
+    if not request.user.is_authenticated:
+        return 0
+
+    carrinho = Carrinho.objects.filter(usuario=request.user).first()
+
+    if not carrinho:
+        return 0
+
+    return ItemCarrinho.objects.filter(carrinho=carrinho).count()
+
+
+# Página Inicial
+def index(request):
+    return render(request, 'index.html', {
+        'quantidade_carrinho': quantidade_carrinho(request)
+    })
+
 # Página Inicial #
 def index(request):
     return render(request, 'index.html')
@@ -181,7 +201,7 @@ def adicionar_produto(request, produto_id):
     if not criado:
         item.quantidade += 1
         item.save()
-    return redirect('carrinhocompras')
+    return redirect(request.META.get('HTTP_REFERER', 'produtos'))
 
 
 
@@ -255,7 +275,10 @@ def finalizar_pedido(request):
     ItemCarrinho.objects.filter(
         carrinho=carrinho
     ).delete()
-    return redirect('index')
+    return render(request, 'privado/sucesso.html')
+
+def sucesso(request):
+    return render(request, 'privado/sucesso.html')
 
 
 @login_required
