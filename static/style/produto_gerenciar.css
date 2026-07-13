@@ -1,120 +1,174 @@
-/* Área principal */
+/* ===========================
+   PAINEL ADMINISTRATIVO
+=========================== */
 
 .container-gerenciar{
-    width: 1200px;
-    margin: 40px auto;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 35px;
+    width:1200px;
+    margin:30px auto 50px auto;
+    display:flex;
+    gap:30px;
+    align-items:flex-start;
 }
 
+/* ===========================
+   DASHBOARD
+=========================== */
 
-/* Painel */
+.dashboard-header{
+    width:1200px;
+    margin:35px auto 25px auto;
+}
+
+.dashboard-header h1{
+    font-size:38px;
+    color:#111;
+    margin-bottom:8px;
+}
+
+.dashboard-header p{
+    color:#666;
+    font-size:17px;
+    margin-bottom:25px;
+}
+
+.dashboard-cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.dashboard-card{
+    background:#fff;
+    border-radius:15px;
+    padding:28px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    text-align:center;
+    transition:.3s;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-5px);
+}
+
+.dashboard-card h3{
+    font-size:20px;
+    margin-bottom:15px;
+    color:#222;
+}
+
+.dashboard-card p{
+    font-size:32px;
+    font-weight:bold;
+    color:#d62828;
+}
+
+/* ===========================
+   PAINEL
+=========================== */
 
 .painel{
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,.08);
-    padding: 30px;
-    flex: 2;
-    width: 70%;
+    flex:2;
+    background:#fff;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
 .painel-header{
-    margin-bottom: 20px;
+    margin-bottom:25px;
 }
 
 .painel-header h2{
-    font-size: 30px;
-    margin-bottom: 6px;
+    font-size:30px;
+    margin-bottom:6px;
 }
 
 .painel-header p{
-    color: #666;
+    color:#666;
 }
 
-
-/* Tabela */
+/* ===========================
+   TABELA
+=========================== */
 
 table{
-    width: 100%;
-    border-collapse: collapse;
+    width:100%;
+    border-collapse:collapse;
 }
 
 thead{
-    background: #f5f5f5;
+    background:#f7f7f7;
 }
 
 th{
-    padding: 15px;
-    text-align: left;
-    font-size: 15px;
+    padding:15px;
+    text-align:left;
+    font-size:15px;
 }
 
 td{
-    padding: 15px;
-    border-top: 1px solid #ececec;
-    vertical-align: middle;
+    padding:15px;
+    border-top:1px solid #ececec;
+    vertical-align:middle;
 }
 
 td img{
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 10px;
+    width:70px;
+    height:70px;
+    object-fit:cover;
+    border-radius:10px;
 }
 
-
-/* Botões */
+/* ===========================
+   BOTÕES
+=========================== */
 
 .btn-editar,
 .btn-excluir{
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: .3s;
-    margin-right: 8px;
+    padding:9px 16px;
+    border:none;
+    border-radius:7px;
+    cursor:pointer;
+    transition:.3s;
+    margin-right:8px;
 }
 
 .btn-editar{
-    background: #111;
-    color: white;
+    background:#111;
+    color:white;
 }
 
 .btn-editar:hover{
-    background: #333;
+    background:#333;
 }
 
 .btn-excluir{
-    background: #d62828;
-    color: white;
+    background:#d62828;
+    color:white;
 }
 
 .btn-excluir:hover{
-    background: #b30000;
+    background:#b30000;
 }
 
-
-/* Cadastro */
+/* ===========================
+   FORMULÁRIO
+=========================== */
 
 .cadastro{
+    flex:1;
     background:#fff;
-    border-radius:12px;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-    padding:35px;
-    flex: 1;
-    width: 200px;
-    position: sticky;
-    top: 30px;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    position:sticky;
+    top:30px;
 }
 
 .cadastro h2{
     text-align:center;
+    font-size:28px;
     margin-bottom:25px;
-    font-size:30px;
 }
 
 .cadastro form{
@@ -128,8 +182,8 @@ td img{
 
 .campo label{
     display:block;
-    font-weight:600;
     margin-bottom:8px;
+    font-weight:600;
 }
 
 .cadastro input,
@@ -140,7 +194,6 @@ td img{
     border:1px solid #d5d5d5;
     border-radius:8px;
     font-size:15px;
-    transition:.3s;
 }
 
 .cadastro textarea{
@@ -152,7 +205,7 @@ td img{
 .cadastro textarea:focus,
 .cadastro select:focus{
     outline:none;
-    border-color:#000;
+    border-color:#d62828;
 }
 
 .cadastro input[type=file]{
@@ -164,7 +217,7 @@ td img{
     margin-top:20px;
     padding:14px;
     background:#111;
-    color:#fff;
+    color:white;
     border:none;
     border-radius:8px;
     cursor:pointer;
@@ -173,22 +226,43 @@ td img{
 }
 
 .btn-salvar:hover{
-    background:#333;
-    transform:scale(1.02);
+    background:#d62828;
 }
 
+/* ===========================
+   RESPONSIVO
+=========================== */
 
-/* Responsivo */
+@media(max-width:1200px){
 
-@media(max-width:1100px){
-
+    .dashboard-header,
     .container-gerenciar{
         width:95%;
     }
 
-    table{
-        display:block;
-        overflow-x:auto;
+}
+
+@media(max-width:1000px){
+
+    .container-gerenciar{
+        flex-direction:column;
+    }
+
+    .dashboard-cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .cadastro{
+        width:100%;
+        position:static;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .dashboard-cards{
+        grid-template-columns:1fr;
     }
 
 }

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block titulo %}
-Gerenciar Produtos
+Painel Administrativo
 {% endblock %}
 
 {% block estilo %}
@@ -10,8 +10,42 @@ Gerenciar Produtos
 {% endblock %}
 
 {% block conteudo %}
+
+<div class="dashboard-header">
+
+    <h1>Painel Administrativo</h1>
+    <p>Gerencie os produtos e acompanhe o funcionamento do sistema.</p>
+
+    <div class="dashboard-cards">
+
+        <div class="dashboard-card">
+            <h3>📦 Produtos</h3>
+            <p>{{ produtos|length }}</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>🛒 Pedidos</h3>
+            <p>Em breve</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>👥 Clientes</h3>
+            <p>Em breve</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>💰 Vendas</h3>
+            <p>Em breve</p>
+        </div>
+
+    </div>
+
+</div>
+
 <div class="container-gerenciar">
+
     <div class="painel">
+
         <div class="painel-header">
             <h2>Gerenciamento de Produtos</h2>
             <p>Cadastre, edite e remova produtos do cardápio.</p>
@@ -19,6 +53,7 @@ Gerenciar Produtos
         </div>
 
         <table>
+
             <thead>
                 <tr>
                     <th>Imagem</th>
@@ -29,8 +64,11 @@ Gerenciar Produtos
             </thead>
 
             <tbody>
+
             {% for produto in produtos %}
+
                 <tr>
+
                     <td>
                         {% if produto.imagem %}
                             <img src="{{ produto.imagem.url }}" width="75px" alt="{{ produto.nome }}">
@@ -40,8 +78,11 @@ Gerenciar Produtos
                     </td>
 
                     <td>{{ produto.nome }}</td>
+
                     <td>R$ {{ produto.preco }}</td>
+
                     <td>
+
                         <a href="{% url 'produto_editar' produto.id %}">
                             <button type="button" class="btn-editar">
                                 Editar
@@ -50,37 +91,50 @@ Gerenciar Produtos
 
                         <form action="{% url 'produto_remover' produto.id %}" method="POST" style="display:inline;">
                             {% csrf_token %}
-                            <button class="btn-excluir" type="submit">Excluir</button>
+                            <button class="btn-excluir" type="submit">
+                                Excluir
+                            </button>
                         </form>
+
                     </td>
+
                 </tr>
 
             {% empty %}
 
                 <tr>
-                    <td colspan="4" style="text-align:center; padding:25px;">
+
+                    <td colspan="4" style="text-align:center;padding:25px;">
                         Nenhum produto cadastrado.
+
                     </td>
+
                 </tr>
 
             {% endfor %}
+
             </tbody>
+
         </table>
+
     </div>
 
-
-    <!-- FORMULÁRIO -->
-
     <div class="cadastro">
+
         <h2>
+
             {% if form.instance.pk %}
                 Editar Produto
             {% else %}
                 Cadastrar Produto
             {% endif %}
+
         </h2>
+
         <form method="POST" enctype="multipart/form-data">
+
             {% csrf_token %}
+
             <div class="campo">
                 <label for="{{ form.nome.id_for_label }}">Nome</label>
                 {{ form.nome }}
@@ -100,7 +154,7 @@ Gerenciar Produtos
                 <label for="{{ form.categoria.id_for_label }}">Categoria</label>
                 {{ form.categoria }}
             </div>
-            
+
             <div class="campo">
                 <label for="{{ form.imagem.id_for_label }}">Imagem</label>
                 {{ form.imagem }}
@@ -115,8 +169,11 @@ Gerenciar Produtos
                 {% endif %}
 
             </button>
+
         </form>
+
     </div>
+
 </div>
 
 {% endblock %}

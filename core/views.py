@@ -258,6 +258,16 @@ def finalizar_pedido(request):
     return redirect('index')
 
 
+@login_required
+def perfil(request):
+    if request.user.is_staff:
+        return render(request, 'privado/dashboard_admin.html')
+
+    return render(request, 'privado/perfil.html')
+
+
+
+
 
 
 # -------------------------------------- #

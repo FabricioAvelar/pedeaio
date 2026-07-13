@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block titulo %}
-Perfil
+Meu Perfil
 {% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/perfil.css' %}" />
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}">
 {% endblock %}
 
 {% block scripts %}
@@ -15,59 +15,87 @@ Perfil
 
 {% block conteudo %}
 
-<!--Por enquanto os botões laterais de seleção: Perfil, Pedidos recentes, Endereço, Favoritos e Cupons/Saldo não funcionam, apenas o de sair.-->
 <div class="container">
+
     <aside class="sidebar">
+
         <div class="perfil-user">
-            <img src="{% static 'imgs/logo1.png' %}" width="60px">
-            <h2>Pede Aió</h2>
-            <p>pedeaio@email.com</p>
+            <h2>{{ request.user.first_name|default:request.user.username }}</h2>
+            <p>{{ request.user.email }}</p>
         </div>
+
         <nav>
             <ul>
-                <li>🏠 Perfil</li>
-                <li>🛍️ Pedidos Recentes</li>
-                <li>📍 Endereço</li>
+                <li>🏠 Meu Perfil</li>
+                <li>🛍️ Meus Pedidos</li>
+                <li>📍 Endereços</li>
                 <li>❤️ Favoritos</li>
-                <li>🎟️ Cupons / Saldo</li>
-                <li class="sair">🚪 Sair</li>
+                <li>🎟️ Cupons</li>
+
+                <li class="sair">
+                    <a href="{% url 'logout' %}">
+                        🚪 Sair
+                    </a>
+                </li>
             </ul>
         </nav>
+
     </aside>
+
+
     <main class="conteudo">
-    <section class="boas-vindas">
-            <h1>Bem-vindo, Admin</h1>
-            <p>Confira seus pedidos, favoritos e cupons disponíveis.</p>
+
+        <section class="boas-vindas">
+            <h1>
+                Olá,
+                {{ request.user.first_name|default:request.user.username }}!
+            </h1>
+
+            <p>
+                Bem-vindo ao seu painel. Aqui você acompanha seus pedidos,
+                favoritos e informações da sua conta.
+            </p>
         </section>
+
+
         <section class="cards">
+
             <div class="card">
                 <h3>🛍️ Pedidos</h3>
-                <p>12 pedidos realizados</p>
+                <p>Visualize seus pedidos realizados.</p>
             </div>
+
             <div class="card">
                 <h3>❤️ Favoritos</h3>
-                <p>8 itens favoritos</p>
+                <p>Veja seus produtos favoritos.</p>
             </div>
+
             <div class="card">
                 <h3>🎟️ Cupons</h3>
-                <p>3 cupons disponíveis</p>
+                <p>Confira seus cupons disponíveis.</p>
             </div>
+
             <div class="card">
                 <h3>📍 Endereço</h3>
-                <p>Canguaretama - RN</p>
+                <p>Gerencie seus endereços.</p>
             </div>
+
         </section>
+
+
         <section class="pedidos">
-            <h2>Pedidos Recentes</h2>
+
+            <h2>Últimos Pedidos</h2>
+
             <div class="pedido-card">
-                <h3>🍕 Pizza Calabresa</h3>
-                <p>Status: Em preparo</p>
+                <h3>Nenhum pedido encontrado.</h3>
+                <p>Quando você realizar uma compra, ela aparecerá aqui.</p>
             </div>
-            <div class="pedido-card">
-                <h3>🍔 Hambúrguer Artesanal</h3>
-                <p>Status: Entregue</p>
-            </div>
+
         </section>
+
     </main>
+
 </div>
+
 {% endblock %}

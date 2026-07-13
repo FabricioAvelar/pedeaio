@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Painel Administrativo
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'script/perfil.js' %}"></script>
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container">
+
+    <aside class="sidebar">
+        <div class="perfil-user">
+            <img src="{% static 'imgs/logo1.png' %}" width="60">
+            <h2>Administrador</h2>
+            <p>admin@pedeaio.com</p>
+        </div>
+
+        <nav>
+            <ul>
+                <li>🏠 Início</li>
+                <li>📦 Produtos</li>
+                <li>➕ Novo Produto</li>
+                <li>🛒 Pedidos</li>
+                <li>👥 Clientes</li>
+                <li>📊 Relatórios</li>
+                <li>⚙️ Configurações</li>
+                <li class="sair">🚪 Sair</li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+
+        <section class="boas-vindas">
+            <h1>Painel Administrativo</h1>
+            <p>Gerencie os produtos, pedidos e clientes do PedeAió.</p>
+        </section>
+
+        <section class="cards">
+
+            <div class="card">
+                <h3>📦 Produtos</h3>
+                <p>32 cadastrados</p>
+            </div>
+
+            <div class="card">
+                <h3>🛒 Pedidos</h3>
+                <p>18 pedidos hoje</p>
+            </div>
+
+            <div class="card">
+                <h3>👥 Clientes</h3>
+                <p>105 cadastrados</p>
+            </div>
+
+            <div class="card">
+                <h3>📊 Relatórios</h3>
+                <p>Visualizar estatísticas</p>
+            </div>
+
+        </section>
+
+        <section class="pedidos">
+
+            <h2>Últimos Pedidos</h2>
+
+            <div class="pedido-card">
+                <h3>Pedido #001</h3>
+                <p>Cliente: João Silva</p>
+                <p>Status: Em preparo</p>
+            </div>
+
+            <div class="pedido-card">
+                <h3>Pedido #002</h3>
+                <p>Cliente: Maria Souza</p>
+                <p>Status: Saiu para entrega</p>
+            </div>
+
+            <div class="pedido-card">
+                <h3>Pedido #003</h3>
+                <p>Cliente: Pedro Santos</p>
+                <p>Status: Entregue</p>
+            </div>
+
+        </section>
+
+        <section class="pedidos">
+
+            <h2>Gerenciamento</h2>
+
+            <div class="pedido-card">
+                <h3>📦 Gerenciar Produtos</h3>
+                <p>Acesse a tela de cadastro, edição e exclusão de produtos.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}
