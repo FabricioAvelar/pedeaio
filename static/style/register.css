@@ -104,89 +104,95 @@ a{
 }
 
 .container{
-  width: 880px;
-  background: #fff;
-  margin: 40px auto;
-  padding: 35px;
-  border-radius: 12px;
-  border: 1px solid #e6e6e6;
+    width: 900px;
+    max-width: 95%;
+    margin: 50px auto;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 14px;
+    padding: 40px;
 }
 
 .tabs{
-  display: flex;
-  gap: 12px;
-  margin-bottom: 22px;
+    margin-bottom: 35px;
 }
 
 .tab{
-  border: none;
-  background: transparent;
-  padding: 12px 2px;
-  cursor: pointer;
-  font-weight: 500;
-  color: #666;
-  font-size: 15px;
-}
-
-.tab.active{
-  border-bottom: 3px solid #111;
-  color: #111;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #111;
+    cursor: default;
 }
 
 .form-box{
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
 }
 
 .form-row{
     display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+    gap: 30px;
 }
 
 .form-item{
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-item label{
-  margin-bottom: 5px;
-  color: #333;
-  font-weight: 500;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
 }
 
-input, select{
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
-  padding: 9px;
-  font-size: 14px;
-  transition: 0.2s;
+.form-item input{
+    width: 100%;
+    height: 46px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 0 14px;
+    font-size: 15px;
+    transition: .2s;
 }
 
-input:focus, select:focus{
-  border-color: #111;
-  outline: none;
+.form-item input:focus{
+    outline: none;
+    border-color: #000;
+    box-shadow: 0 0 0 3px rgba(0,0,0,.08);
+}
+
+.erro-form{
+    background: #fff5f5;
+    border: 1px solid #f3b5b5;
+    color: #b60000;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.form-submit{
+    margin-top: 15px;
 }
 
 .btn-criar{
-  background: #000000;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 22px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    background: #000;
+    color: white;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: .25s;
 }
 
 .btn-criar:hover{
-  background: #222;
-  transform: scale(1.05);
-}
-
-.btn-criar:active{
-  transform: scale(0.97);
+    background: #222;
+    transform: translateY(-2px);
 }
 
 .footer{
@@ -238,4 +244,17 @@ input:focus, select:focus{
 .column li:hover{
   color: #000;
   transform: translateX(3px);
+}
+
+@media (max-width: 768px){
+
+    .container{
+        padding: 25px;
+    }
+
+    .form-row{
+        flex-direction: column;
+        gap: 20px;
+    }
+
 }

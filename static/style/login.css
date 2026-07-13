@@ -51,8 +51,8 @@ input:focus {
 /* --- LINHA DOS BOTÕES (LADO A LADO) --- */
 .buttons-row {
   display: flex;
-  gap: 15px;         /* Espaço entre os dois botões */
-  margin-top: 20px;
+  gap: 10px;         /* Espaço entre os dois botões */
+  margin-top: 10px;
 }
 
 .buttons-row .btn-primary,
