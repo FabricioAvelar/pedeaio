@@ -12,21 +12,33 @@ Login
 {% block conteudo %}
 <div class="login-container">
     <div class="login-box">
-        <h3>Já sou cliente</h3>
-        <br>
+        <h1>Já sou cliente</h1>
         <form method="POST">
             {% csrf_token %}
             
             <div class="form-group">
-                <label>E-mail</label>
-                <input type="email" name="email" placeholder="Digite seu e-mail" required>
+            <label for="email">E-mail</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                autocomplete="email"
+                placeholder="Digite seu e-mail"
+                required>
             </div>
-<br>
-            <div class="form-group">
-                <label>Senha</label>
-                <input type="password" name="password" placeholder="Digite sua senha" required>
-            </div>
-<br>
+
+
+        <div class="form-group">
+        <label for="password">Senha</label>
+        <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            placeholder="Digite sua senha"
+            required>
+</div>
+
             {% if messages %}
                 {% for message in messages %}
                     <p class="erro">{{ message }}</p>
@@ -40,12 +52,13 @@ Login
         </form>
     </div>
 
-    <div class="divider"></div>
+    <div class="divider" aria-hidden="true"></div>
 
     <div class="login-box register-box">
-        <h3>Criar conta</h3>
+        <h2>Criar conta</h2>
         <p>Ainda não possui cadastro?</p>
         <a href="{% url 'register' %}" class="btn-primary">Criar conta</a>
     </div>
 </div>
+
 {% endblock %}

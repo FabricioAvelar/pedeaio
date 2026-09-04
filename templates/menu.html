@@ -1,7 +1,11 @@
+{% load static %}
+
 <header class="navbar">
     <div class="logo">
-        <a href="{% url 'index' %}"><img src="/static/imgs/logo1.png" width="70px"></a>
-    </div>
+      <a href="{% url 'index' %}" aria-label="Página inicial">
+        <img src="{% static 'imgs/logo1.png' %}" alt="PedeAió" class="logo-img">
+    </a>
+  </div>
     
     <nav class="nav-links">
       <a href="{% url 'index' %}">Home</a>

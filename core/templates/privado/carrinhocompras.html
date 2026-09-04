@@ -18,7 +18,7 @@ Carrinho
 <main class="container">
 
     <section class="cart">
-    <h2>CARRINHO</h2>
+    <h1>CARRINHO</h1>
 
     {% if itens %}
 
@@ -26,28 +26,27 @@ Carrinho
 
         <div class="item">
 
-            <img src="{{ item.produto.imagem.url }}" width="120">
+            <img
+                src="{{ item.produto.imagem.url }}"
+                alt="{{ item.produto.nome }}"
+                width="120">
 
             <div class="price">
                 R$ {{ item.produto.preco }}
             </div>
             
             <div class="info">
-                <h3>{{ item.produto.nome }}</h3>
+                <h2>{{ item.produto.nome }}</h2>
                 <p>Preço unitário: R$ {{ item.produto.preco }}</p>
             </div>
 
             <div class="qty">
 
-                <a href="{% url 'diminuir_quantidade' item.id %}">
-                    <button>-</button>
-                </a>
+                <a href="{% url 'diminuir_quantidade' item.id %}" class="qty-btn">-</a>
 
                 <span>{{ item.quantidade }}</span>
 
-                <a href="{% url 'aumentar_quantidade' item.id %}">
-                    <button>+</button>
-                </a>
+                <a href="{% url 'aumentar_quantidade' item.id %}" class="qty-btn">+</a>
 
             </div>
 
@@ -69,7 +68,7 @@ Carrinho
 
     {% else %}
 
-        <h3>Seu carrinho está vazio.</h3>
+        <h2>Seu carrinho está vazio.</h2>
 
     {% endif %}
 
@@ -77,19 +76,16 @@ Carrinho
 
     <aside class="summary">
 
-    <h3>Resumo</h3>
+    <h2>Resumo</h2>
 
     <div class="line">
         <span>Total</span>
         <span>R$ {{ total }}</span>
     </div>
 
-    <a href="{% url 'finalizar_pedido' %}">
-        <button class="btn full">
-            Finalizar Pedido
-        </button>
-    </a>
+    <a href="{% url 'finalizar_pedido' %}" class="btn full">Finalizar Pedido</a>
 
 </aside>
 </main>
+
 {% endblock %}

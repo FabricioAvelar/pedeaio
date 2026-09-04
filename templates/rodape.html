@@ -1,9 +1,20 @@
+{% load static %}
+
+
 <footer class="footer">
-    <div class="logo"><a href="{% url 'index' %}"><img src="/static/imgs/logo1.png" width="90px"></a></div>
+    <div class="footer-logo">
+        <a href="{% url 'index' %}" aria-label="Página inicial">
+            <img src="{% static 'imgs/logo1.png' %}" alt="PedeAió">
+        </a>
+    </div>
+
+    <br><br>
+
+    <!-- restante do rodapé -->
     <br><br>
     <div class="footer-columns">
       <div class="column">
-        <h4>Produtos e Compras</h4>
+        <h2>Produtos e Compras</h2>
         <ul>
           <li>Compre por Categoria</li>
           <li>Refeições</li>
@@ -15,7 +26,7 @@
         </ul>
       </div>
       <div class="column">
-        <h4>Informações e Ajuda</h4>
+        <h2>Informações e Ajuda</h2>
         <ul>
           <li>Ajuda e Suporte</li>
           <li>Fale Conosco</li>
@@ -27,7 +38,7 @@
         </ul>
       </div>
       <div class="column">
-        <h4>Empresa e Recursos</h4>
+        <h2>Empresa e Recursos</h2>
         <ul>
           <li>Sobre Nós</li>
           <li>Nossa História</li>
@@ -40,5 +51,3 @@
       </div>
     </div>
 </footer>
-</body>
-</html>

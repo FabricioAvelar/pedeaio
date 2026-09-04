@@ -22,8 +22,15 @@ Página Inicial
     </div>
 </section>
 
-<section class="image-section">
-    <div class="image-box"><img src="static/imgs/motoboys.png"></div>
-    <div class="image-box"><img src="static/imgs/pizzaria.jpg" width="600px" height="350px"></div>
-</section>
+<div class="image-section">
+    <div class="image-box">
+    <img src="{% static 'imgs/motoboys.png' %}"
+         alt="Entregadores realizando serviço de delivery">
+</div>
+
+<div class="image-box">
+    <img src="{% static 'imgs/pizzaria.jpg' %}"
+         alt="Ambiente de estabelecimento alimentício">
+</div>
+</div>
 {% endblock %}

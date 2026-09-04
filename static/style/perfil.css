@@ -142,13 +142,15 @@ a{
     margin-bottom: 40px;
 }
 
-.perfil-user h2{
+.perfil-user .perfil-nome{
     margin-bottom: 5px;
     color: #222;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .perfil-user p{
-    color: #777;
+    color: #595959;
     font-size: 14px;
 }
 
@@ -218,6 +220,12 @@ a{
 
 .card:hover{
     transform: translateY(-5px);
+}
+
+.card h2{
+    color: #000000;
+    margin-bottom: 10px;
+    font-size: 1.17em;
 }
 
 .card h3{

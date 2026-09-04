@@ -10,7 +10,7 @@ Meu Perfil
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'script/perfil.js' %}"></script>
+<!-- <script src="{% static 'script/perfil.js' %}"></script> -->
 {% endblock %}
 
 {% block conteudo %}
@@ -20,7 +20,7 @@ Meu Perfil
     <aside class="sidebar">
 
         <div class="perfil-user">
-            <h2>{{ request.user.first_name|default:request.user.username }}</h2>
+            <p class="perfil-nome">{{ request.user.first_name|default:request.user.username }}</p>
             <p>{{ request.user.email }}</p>
         </div>
 
@@ -61,22 +61,22 @@ Meu Perfil
         <section class="cards">
 
             <div class="card">
-                <h3>🛍️ Pedidos</h3>
+                <h2>🛍️ Pedidos</h2>
                 <p>Visualize seus pedidos realizados.</p>
             </div>
 
             <div class="card">
-                <h3>❤️ Favoritos</h3>
+                <h2>❤️ Favoritos</h2>
                 <p>Veja seus produtos favoritos.</p>
             </div>
 
             <div class="card">
-                <h3>🎟️ Cupons</h3>
+                <h2>🎟️ Cupons</h2>
                 <p>Confira seus cupons disponíveis.</p>
             </div>
 
             <div class="card">
-                <h3>📍 Endereço</h3>
+                <h2>📍 Endereço</h2>
                 <p>Gerencie seus endereços.</p>
             </div>
 
@@ -97,5 +97,6 @@ Meu Perfil
     </main>
 
 </div>
+
 
 {% endblock %}

@@ -17,7 +17,15 @@
   flex-direction: column;
 }
 
-/* --- FORMULÁRIO E INPUTS (Empilhados) --- */
+/* --- TÍTULOS --- */
+.login-box h1,
+.login-box h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* --- FORMULÁRIO E INPUTS --- */
 .login-box form {
   display: flex;
   flex-direction: column;
@@ -41,32 +49,34 @@ input {
   padding: 10px;
   font-size: 14px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 input:focus {
   border-color: #111;
-  outline: none;
+  outline: 2px solid #111;
+  outline-offset: 2px;
 }
 
-/* --- LINHA DOS BOTÕES (LADO A LADO) --- */
+/* --- LINHA DOS BOTÕES --- */
 .buttons-row {
   display: flex;
-  gap: 10px;         /* Espaço entre os dois botões */
+  gap: 10px;
   margin-top: 10px;
 }
 
 .buttons-row .btn-primary,
 .buttons-row .btn-outline.full {
-  flex: 1;           /* Faz os dois botões terem exatamente o mesmo tamanho */
-  margin-top: 0;     /* Remove margens antigas que quebravam o alinhamento */
+  flex: 1;
+  margin-top: 0;
 }
 
-/* --- COLUNA DA DIREITA: Totalmente Centralizada --- */
+/* --- COLUNA DA DIREITA --- */
 .register-box {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centraliza verticalmente */
-  align-items: center;     /* Centraliza horizontalmente */
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
@@ -76,11 +86,18 @@ input:focus {
 
 .register-box .btn-primary {
   width: 100%;
-  max-width: 250px; /* Impede que o botão "Criar conta" fique esticado demais */
+  max-width: 250px;
   margin-top: 0;
 }
 
-/* --- ESTILO DOS BOTÕES --- */
+/* --- FOCO VISÍVEL --- */
+.btn-primary:focus-visible,
+.btn-outline.full:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 3px;
+}
+
+/* --- BOTÃO PRINCIPAL --- */
 .btn-primary {
   background: #000000;
   color: #fff;
@@ -100,6 +117,7 @@ input:focus {
   transform: scale(1.02);
 }
 
+/* --- BOTÃO SECUNDÁRIO --- */
 .btn-outline.full {
   background: #ffffff;
   color: #000000;
@@ -110,6 +128,7 @@ input:focus {
   font-weight: 500;
   font-size: 14px;
   text-align: center;
+  text-decoration: none;
   transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
@@ -119,8 +138,27 @@ input:focus {
   transform: scale(1.02);
 }
 
-/* --- DIVISOR VERTICAL --- */
+/* --- DIVISOR --- */
 .divider {
   width: 1px;
   background: #e5e5e5;
+}
+
+/* --- RESPONSIVIDADE / REFLOW --- */
+@media (max-width: 768px) {
+  .login-container {
+    width: calc(100% - 32px);
+    padding: 24px;
+    gap: 30px;
+    flex-direction: column;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  .buttons-row {
+    flex-direction: column;
+  }
 }

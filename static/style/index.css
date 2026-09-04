@@ -31,6 +31,12 @@ a{
   text-decoration: none;
 }
 
+.logo-img {
+    width: 70px;
+    height: auto;
+    display: block;
+}
+
 .logo{
   font-size: 22px;
   font-weight: bold;
@@ -115,7 +121,7 @@ a{
 }
 
 .btn-dark:hover {
-  background: #222;
+  background-color: #222;
   border-color: #222;
 }
 
@@ -238,6 +244,18 @@ a{
   line-height: 1.5;
 }
 
+.footer-logo img {
+    width: 90px;
+    height: auto;
+    display: block;
+}
+
+.logo img {
+    width: 70px;
+    height: auto;
+    display: block;
+}
+
 .footer{
   display: flex;
   flex-direction: column;
@@ -267,7 +285,7 @@ a{
   text-align: left;
 }
 
-.column h4{
+.column h2{
   font-size: 16px;
   margin-bottom: 15px;
 }
