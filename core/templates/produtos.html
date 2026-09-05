@@ -11,7 +11,7 @@ Produtos
 
 {% block conteudo %}
 <section class="features">
-    <h2>Produtos</h2>
+    <h1>Produtos</h1>
     <p class="subheading">Em estoque</p>
 
     <form method="GET" class="busca">
@@ -65,8 +65,9 @@ Produtos
 
             </a>
 
-            <a href="{% url 'adicionar_produto' produto.id %}"><br>
-                <button class="btn-outline btn-carrinho">Adicionar ao carrinho</button>
+            <a href="{% url 'adicionar_produto' produto.id %}"
+                class="btn-outline btn-carrinho">
+                Adicionar ao carrinho
             </a>
 
         </div>
