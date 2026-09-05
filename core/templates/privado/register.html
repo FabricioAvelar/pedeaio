@@ -10,52 +10,104 @@ Cadastro
 {% endblock %}
 
 {% block conteudo %}
+
 <div class="container">
+
+    <h1>Cadastro</h1>
+
     <div class="tabs">
-        <button class="tab active">Pessoa Física</button>
+        <button type="button" class="tab active">Pessoa Física</button>
     </div>
 
     <form method="POST" class="form-box">
         {% csrf_token %}
+
         <div class="form-row">
+
             <div class="form-item">
-                <label>Nome*</label>
-                <input type="text" name="first_name" required>
+                <label for="first_name">Nome*</label>
+                <input
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    autocomplete="given-name"
+                    required
+                >
             </div>
 
             <div class="form-item">
-                <label>Sobrenome*</label>
-                <input type="text" name="last_name" required>
+                <label for="last_name">Sobrenome*</label>
+                <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    autocomplete="family-name"
+                    required
+                >
             </div>
 
             <div class="form-item">
-                <label>CPF*</label>
-                <input type="text" name="cpf" required>
+                <label for="cpf">CPF*</label>
+                <input
+                    type="text"
+                    id="cpf"
+                    name="cpf"
+                    required
+                >
             </div>
+
         </div>
 
         <div class="form-row">
+
             <div class="form-item">
-                <label>Data de nascimento*</label>
-                <input type="date" name="nascimento" required>
+                <label for="nascimento">Data de nascimento*</label>
+                <input
+                    type="date"
+                    id="nascimento"
+                    name="nascimento"
+                    autocomplete="bday"
+                    required
+                >
             </div>
 
             <div class="form-item">
-                <label>E-mail*</label>
-                <input type="email" name="email" required>
+                <label for="email">E-mail*</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                >
             </div>
+
         </div>
 
         <div class="form-row">
+
             <div class="form-item">
-                <label>Senha*</label>
-                <input type="password" name="password1" required>
+                <label for="password1">Senha*</label>
+                <input
+                    type="password"
+                    id="password1"
+                    name="password1"
+                    autocomplete="new-password"
+                    required
+                >
             </div>
 
             <div class="form-item">
-                <label>Confirmar senha*</label>
-                <input type="password" name="password2" required>
+                <label for="password2">Confirmar senha*</label>
+                <input
+                    type="password"
+                    id="password2"
+                    name="password2"
+                    autocomplete="new-password"
+                    required
+                >
             </div>
+
         </div>
 
         {% if form.errors %}
@@ -73,8 +125,13 @@ Cadastro
         {% endif %}
 
         <div class="form-submit">
-            <button type="submit" class="btn-criar">Criar conta</button>
+            <button type="submit" class="btn-criar">
+                Criar conta
+            </button>
         </div>
+
     </form>
+
 </div>
+
 {% endblock %}

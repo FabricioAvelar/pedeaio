@@ -10,14 +10,31 @@ Produtos
 {% endblock %}
 
 {% block conteudo %}
+
 <section class="features">
+
     <h1>Produtos</h1>
     <p class="subheading">Em estoque</p>
 
     <form method="GET" class="busca">
-        <input type="text" name="buscar" placeholder="Buscar produto..." value="{{ busca|default_if_none:'' }}">
-        
-        <select name="categoria">
+
+        <label for="buscar" class="sr-only">
+            Buscar produto
+        </label>
+
+        <input
+            type="text"
+            id="buscar"
+            name="buscar"
+            placeholder="Buscar produto..."
+            value="{{ busca|default_if_none:'' }}"
+        >
+
+        <label for="categoria" class="sr-only">
+            Filtrar por categoria
+        </label>
+
+        <select id="categoria" name="categoria">
             <option value="">Todas</option>
             <option value="Hamburguer">Hambúrguer</option>
             <option value="Pizza">Pizza</option>
@@ -33,40 +50,47 @@ Produtos
 
     </form>
 
-    <br><br>
-
     <div class="features-grid">
 
         {% for produto in produtos %}
 
         <div class="feature">
 
-            <a href="{% url 'produto_detalhes' produto.id %}" style="text-decoration:none; color:inherit;">
+            <a href="{% url 'produto_detalhes' produto.id %}"
+               style="text-decoration:none; color:inherit;">
 
                 <div class="image">
 
                     {% if produto.imagem %}
-                        <img src="{{ produto.imagem.url }}"
-                             alt="{{ produto.nome }}"
-                             width="230"
-                             height="190">
+
+                        <img
+                            src="{{ produto.imagem.url }}"
+                            alt="{{ produto.nome }}"
+                            width="230"
+                            height="190"
+                        >
+
                     {% else %}
-                        <img src="{% static 'imgs/sem-imagem.png' %}"
-                             alt="Sem imagem"
-                             width="230"
-                             height="190">
+
+                        <img
+                            src="{% static 'imgs/sem-imagem.png' %}"
+                            alt="Sem imagem disponível para {{ produto.nome }}"
+                            width="230"
+                            height="190"
+                        >
+
                     {% endif %}
 
                 </div>
 
-                <h3><br>{{ produto.nome }}</h3>
+                <h2>{{ produto.nome }}</h2>
 
                 <p>R$ {{ produto.preco }}</p>
 
             </a>
 
             <a href="{% url 'adicionar_produto' produto.id %}"
-                class="btn-outline btn-carrinho">
+               class="btn-outline btn-carrinho">
                 Adicionar ao carrinho
             </a>
 
@@ -74,7 +98,7 @@ Produtos
 
         {% empty %}
 
-            <h2><br>Nenhum produto cadastrado.</h2>
+            <h2>Nenhum produto cadastrado.</h2>
 
         {% endfor %}
 
