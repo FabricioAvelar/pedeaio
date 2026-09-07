@@ -10,7 +10,7 @@ Painel Administrativo
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'script/perfil.js' %}"></script>
+<!-- <script src="{% static 'script/perfil.js' %}"></script> -->
 {% endblock %}
 
 {% block conteudo %}
@@ -19,8 +19,8 @@ Painel Administrativo
 
     <aside class="sidebar">
         <div class="perfil-user">
-            <img src="{% static 'imgs/logo1.png' %}" width="60">
-            <h2>Administrador</h2>
+            <img src="{% static 'imgs/logo1.png' %}" alt="Logo PedeAió" width="60">
+            <p class="perfil-nome">Administrador</p>
             <p>admin@pedeaio.com</p>
         </div>
 
@@ -48,22 +48,22 @@ Painel Administrativo
         <section class="cards">
 
             <div class="card">
-                <h3>📦 Produtos</h3>
+                <h2>📦 Produtos</h2>
                 <p>32 cadastrados</p>
             </div>
 
             <div class="card">
-                <h3>🛒 Pedidos</h3>
+                <h2>🛒 Pedidos</h2>
                 <p>18 pedidos hoje</p>
             </div>
 
             <div class="card">
-                <h3>👥 Clientes</h3>
+                <h2>👥 Clientes</h2>
                 <p>105 cadastrados</p>
             </div>
 
             <div class="card">
-                <h3>📊 Relatórios</h3>
+                <h2>📊 Relatórios</h2>
                 <p>Visualizar estatísticas</p>
             </div>
 
