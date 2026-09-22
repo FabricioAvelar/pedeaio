@@ -1,35 +1,56 @@
 {% load static %}
+
 <header class="navbar">
+
     <div class="logo">
-      <a href="{% url 'index' %}" aria-label="Página inicial">
-        <img src="{% static 'imgs/logo1.png' %}" alt="PedeAió" class="logo-img">
-    </a>
-  </div>
-    
-    <nav class="nav-links">
-      <a href="{% url 'index' %}">Home</a>
-      <a href="{% url 'index' %}">Promoções</a>
-      <a href="{% url 'produtos' %}">Produtos</a>
-      <a href="{% url 'index' %}">Entrega</a>
-      <a href="{% url 'index' %}">Combos</a>
-      <a href="{% url 'index' %}">Cupons</a>
-      <a href="{% url 'index' %}">Equipe</a>
-      <a href="{% url 'carrinhocompras' %}">🛒 Carrinho</a>
-    </nav>
-    
-    <div class="nav-buttons">
-      {% if user.is_authenticated %}
-        {% if user.is_staff %}
-          <a href="{% url 'produto_gerenciar' %}" class="btn-outline">Painel Admin</a>
-        {% else %}
-          <a href="{% url 'meus_dados' %}" class="btn-outline">Meu Perfil</a>
-        {% endif %}
-        
-        <a href="{% url 'logout' %}" class="btn-dark">Sair</a>
-      {% else %}
-        <a href="{% url 'login' %}" class="btn-outline">Entrar</a>
-        <a href="{% url 'register' %}" class="btn-dark">Criar Conta</a>
-      {% endif %}
+
+        <a href="{% url 'index' %}" aria-label="Página inicial" class="logo-animada logo-rodape">
+      <!-- Efeito de velocidade -->
+        <img src="{% static 'imgs/velocidade.png' %}" class="logo-velocidade"alt="">
+      <!-- Hambúrguer -->
+        <img src="{% static 'imgs/hamburguer.png' %}" class="logo-hamburguer" alt="PedeAió">
+      <!-- Efeito final -->
+        <img src="{% static 'imgs/pling.png' %}" class="logo-pling" alt="">
+      </a>
+
     </div>
-    
+
+
+    <nav class="nav-links">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'index' %}">Promoções</a>
+        <a href="{% url 'produtos' %}">Produtos</a>
+        <a href="{% url 'index' %}">Entrega</a>
+        <a href="{% url 'index' %}">Combos</a>
+        <a href="{% url 'index' %}">Cupons</a>
+        <a href="{% url 'index' %}">Equipe</a>
+        <a href="{% url 'carrinhocompras' %}">🛒 Carrinho</a>
+    </nav>
+
+
+    <div class="nav-buttons">
+
+        {% if user.is_authenticated %}
+
+            {% if user.is_staff %}
+
+                <a href="{% url 'produto_gerenciar' %}" class="btn-outline">Painel Admin</a>
+
+            {% else %}
+
+                <a href="{% url 'meus_dados' %}" class="btn-outline">Meu Perfil</a>
+
+            {% endif %}
+
+            <a href="{% url 'logout' %}" class="btn-dark">Sair</a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}" class="btn-outline">Entrar</a>
+            <a href="{% url 'register' %}" class="btn-dark">Criar Conta</a>
+
+        {% endif %}
+
+    </div>
+
 </header>
