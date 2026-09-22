@@ -84,15 +84,38 @@ Meu Perfil
 
 
         <section class="pedidos">
-
             <h2>Últimos Pedidos</h2>
+
+            {% if pedidos %}
+                {% for pedido in pedidos %}
+                    <div class="pedido-card">
+                        <h3>Pedido #{{ pedido.id }}</h3>
+                <p>
+                    Data:
+                    {{ pedido.criado_em|date:"d/m/Y H:i" }}
+                </p>
+                <p>
+                    Status:
+                    {{ pedido.get_status_display }}
+                </p>
+                <p>
+                    Total:
+                    R$ {{ pedido.valor_total }}
+                </p>
+            </div>
+        {% endfor %}
+
+    {% else %}
 
             <div class="pedido-card">
                 <h3>Nenhum pedido encontrado.</h3>
-                <p>Quando você realizar uma compra, ela aparecerá aqui.</p>
-            </div>
-
-        </section>
+                <p>
+                    Quando você realizar uma compra, ela aparecerá aqui.
+                </p>
+        </div>
+        
+    {% endif %}
+</section>
 
     </main>
 

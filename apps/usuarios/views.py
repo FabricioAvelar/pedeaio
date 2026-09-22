@@ -8,6 +8,7 @@ from django.contrib import messages
 # Usuário
 from .models import Usuario
 from .forms import UsuarioForm, EnderecoForm
+from apps.pedidos.models import Pedido
 
 @login_required
 def perfil(request):
@@ -17,7 +18,13 @@ def perfil(request):
 def meus_dados(request):
     if request.user.is_staff:
         return render(request, 'privado/dash_adm.html')
-    return render(request, 'privado/meus_dados.html')
+
+    pedidos = Pedido.objects.filter(usuario=request.user).order_by('-criado_em')[:3]
+
+    context = {
+        'pedidos': pedidos
+    }
+    return render(request, 'privado/meus_dados.html', context)
 
 @login_required
 def endereco_cadastrar(request):
