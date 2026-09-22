@@ -4,10 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import logout
 from django.contrib import messages
+from django.db import transaction
 
 # Usuário
 from .models import Produto, Carrinho, ItemCarrinho
 from .forms import ProdutoForm
+from apps.usuarios.models import Endereco
+from apps.pedidos.models import Pedido, ItemPedido
+
 
 @login_required
 def produto_gerenciar(request):
@@ -170,10 +174,48 @@ def finalizar_pedido(request):
         Carrinho,
         usuario=request.user
     )
-    ItemCarrinho.objects.filter(
-        carrinho=carrinho
-    ).delete()
-    return render(request, 'privado/sucesso.html')
+
+    itens = ItemCarrinho.objects.filter(carrinho=carrinho)
+
+    if not itens.exists():
+        messages.error(request, 'Seu carrinho está vazio.')
+        return redirect('carrinhocompras')
+
+    endereco = Endereco.objects.filter(
+        usuario=request.user
+    ).first()
+
+    if not endereco:
+        messages.error(
+            request,
+            'Cadastre um endereço antes de finalizar o pedido.'
+        )
+        return redirect('carrinhocompras')
+
+    total = sum(item.subtotal for item in itens)
+
+    with transaction.atomic():
+        pedido = Pedido.objects.create(
+            usuario=request.user,
+            endereco=endereco,
+            valor_total=total
+        )
+
+        for item in itens:
+            ItemPedido.objects.create(
+                pedido=pedido,
+                produto=item.produto,
+                quantidade=item.quantidade,
+                preco_unitario=item.produto.preco
+            )
+
+        itens.delete()
+
+    context[
+        'pedido': pedido
+    ]
+
+    return render(request, 'privado/sucesso.html', context)
 
 def sucesso(request):
     return render(request, 'privado/sucesso.html')
