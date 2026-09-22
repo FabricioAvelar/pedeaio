@@ -50,3 +50,12 @@ def endereco_cadastrar(request):
     }
 
     return render(request, 'privado/endereco_cadastrar.html', context)
+
+@login_required
+def meus_pedidos(request):
+    pedidos = Pedido.objects.filter(usuario=request.user).order_by('-criado_em')
+
+    context = {
+        'pedidos': pedidos
+    }
+    return render(request, 'privado/meus_pedidos.html', context)

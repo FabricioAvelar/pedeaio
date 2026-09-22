@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Meus Pedidos
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="perfil-user">
+            <p class="perfil-nome">
+                {{ request.user.first_name|default:request.user.username }}
+            </p>
+            <p>{{ request.user.email }}</p>
+        </div>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'meus_dados' %}">
+                        🏠 Meu Perfil
+                    </a>
+                </li>
+
+                <li>🛍️ Meus Pedidos</li>
+
+                <li>📍 Endereços</li>
+                <li>❤️ Favoritos</li>
+                <li>🎟️ Cupons</li>
+
+                <li class="sair">
+                    <a href="{% url 'logout' %}">
+                        🚪 Sair
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </aside>
+
+    <main class="conteudo">
+
+        <section class="pedidos">
+
+            <h1>Meus Pedidos</h1>
+
+            {% if pedidos %}
+
+                {% for pedido in pedidos %}
+
+                    <div class="pedido-card">
+
+                        <h3>Pedido #{{ pedido.id }}</h3>
+
+                        <p>
+                            Data:
+                            {{ pedido.criado_em|date:"d/m/Y H:i" }}
+                        </p>
+
+                        <p>
+                            Status:
+                            {{ pedido.get_status_display }}
+                        </p>
+
+                        <p>
+                            Total:
+                            R$ {{ pedido.valor_total }}
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="pedido-card">
+                    <h3>Nenhum pedido encontrado.</h3>
+
+                    <p>
+                        Quando você realizar uma compra,
+                        ela aparecerá aqui.
+                    </p>
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

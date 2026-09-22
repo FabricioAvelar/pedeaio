@@ -7,4 +7,6 @@ urlpatterns = [
 
     path('endereco/cadastrar/', endereco_cadastrar, name='endereco_cadastrar'),
 
+    path('meus_pedidos/', meus_pedidos, name='meus_pedidos'),
+
 ]
