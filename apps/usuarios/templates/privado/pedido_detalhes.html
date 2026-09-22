@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Pedido #{{ pedido.id }}
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="perfil-user">
+            <p class="perfil-nome">
+                {{ request.user.first_name|default:request.user.username }}
+            </p>
+
+            <p>{{ request.user.email }}</p>
+        </div>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'meus_dados' %}">
+                        🏠 Meu Perfil
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'meus_pedidos' %}">
+                        🛍️ Meus Pedidos
+                    </a>
+                </li>
+
+                <li>📍 Endereços</li>
+                <li>❤️ Favoritos</li>
+                <li>🎟️ Cupons</li>
+
+                <li class="sair">
+                    <a href="{% url 'logout' %}">
+                        🚪 Sair
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </aside>
+
+    <main class="conteudo">
+
+        <section class="pedidos">
+
+            <h1>Pedido #{{ pedido.id }}</h1>
+
+            <div class="pedido-card">
+
+                <p>
+                    Data:
+                    {{ pedido.criado_em|date:"d/m/Y H:i" }}
+                </p>
+
+                <p>
+                    Status:
+                    {{ pedido.get_status_display }}
+                </p>
+
+                <h2>Itens</h2>
+
+                {% for item in pedido.itens.all %}
+
+                    <div>
+                        <strong>{{ item.produto.nome }}</strong>
+
+                        <p>
+                            {{ item.quantidade }} x
+                            R$ {{ item.preco_unitario }}
+                            = R$ {{ item.subtotal }}
+                        </p>
+                    </div>
+
+                {% endfor %}
+
+                <h2>Endereço de entrega</h2>
+
+                <p>
+                    {{ pedido.endereco.rua }},
+                    {{ pedido.endereco.numero }}
+                </p>
+
+                <p>
+                    {{ pedido.endereco.cidade }}/{{ pedido.endereco.estado }}
+                </p>
+
+                <h2>
+                    Total: R$ {{ pedido.valor_total }}
+                </h2>
+
+            </div>
+
+            <a href="{% url 'meus_pedidos' %}">← Voltar para Meus Pedidos</a>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

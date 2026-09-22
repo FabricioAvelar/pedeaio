@@ -75,6 +75,8 @@ Meus Pedidos
                             R$ {{ pedido.valor_total }}
                         </p>
 
+                        <a href="{% url 'pedido_detalhes' pedido.id %}">Ver detalhes</a>
+
                     </div>
 
                 {% endfor %}

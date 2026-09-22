@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -59,3 +59,16 @@ def meus_pedidos(request):
         'pedidos': pedidos
     }
     return render(request, 'privado/meus_pedidos.html', context)
+
+@login_required
+def pedido_detalhes(request, pedido_id):
+    pedido = get_object_or_404(
+        Pedido,
+        id=pedido_id,
+        usuario=request.user
+    )
+
+    context = {
+        'pedido': pedido
+    }
+    return render(request, 'privado/pedido_detalhes.html', context)
