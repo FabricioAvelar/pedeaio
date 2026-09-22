@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Cadastrar endereço
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/register.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<main class="container">
+
+    <h1>Cadastrar endereço</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            Salvar endereço
+        </button>
+    </form>
+
+</main>
+
+{% endblock %}

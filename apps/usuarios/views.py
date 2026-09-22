@@ -7,7 +7,7 @@ from django.contrib import messages
 
 # Usuário
 from .models import Usuario
-from .forms import UsuarioForm
+from .forms import UsuarioForm, EnderecoForm
 
 @login_required
 def perfil(request):
@@ -18,3 +18,28 @@ def meus_dados(request):
     if request.user.is_staff:
         return render(request, 'privado/dash_adm.html')
     return render(request, 'privado/meus_dados.html')
+
+@login_required
+def endereco_cadastrar(request):
+    if request.method == 'POST':
+        form = EnderecoForm(request.POST)
+
+        if form.is_valid():
+            endereco = form.save(commit=False)
+            endereco.usuario = request.user
+            endereco.save()
+
+            messages.success(
+                request,
+                'Endereço cadastrado com sucesso!'
+            )
+
+            return redirect('carrinhocompras')
+    else:
+        form = EnderecoForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'privado/endereco_cadastrar.html', context)

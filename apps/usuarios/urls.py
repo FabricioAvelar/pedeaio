@@ -4,4 +4,7 @@ from .views import *
 urlpatterns = [
     path('perfil/', perfil, name='perfil'),
     path('meus_dados/', meus_dados, name='meus_dados'),
+
+    path('endereco/cadastrar/', endereco_cadastrar, name='endereco_cadastrar'),
+
 ]

@@ -181,16 +181,24 @@ def finalizar_pedido(request):
         messages.error(request, 'Seu carrinho está vazio.')
         return redirect('carrinhocompras')
 
+    print('USUÁRIO LOGADO:', request.user)
+    print('CPF LOGADO:', request.user.cpf)
+    print('ENDEREÇOS NO BANCO:', Endereco.objects.all())
+    print(
+        'ENDEREÇOS DO USUÁRIO:',
+        Endereco.objects.filter(usuario=request.user)
+    )
+
     endereco = Endereco.objects.filter(
         usuario=request.user
     ).first()
 
     if not endereco:
-        messages.error(
+        messages.info(
             request,
-            'Cadastre um endereço antes de finalizar o pedido.'
+            'Cadastre um endereço para continuar.'
         )
-        return redirect('carrinhocompras')
+        return redirect('endereco_cadastrar')
 
     total = sum(item.subtotal for item in itens)
 
@@ -211,9 +219,9 @@ def finalizar_pedido(request):
 
         itens.delete()
 
-    context[
+    context = {
         'pedido': pedido
-    ]
+    }
 
     return render(request, 'privado/sucesso.html', context)
 
