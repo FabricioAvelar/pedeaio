@@ -334,3 +334,114 @@ a{
   color: #000;
   transform: translateX(3px);
 }
+
+/* DETALHES DO PEDIDO */
+
+.pedido-detalhes{
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.pedido-detalhes-cabecalho{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.pedido-detalhes-cabecalho h1{
+    font-size: 32px;
+    color: #222;
+    margin-bottom: 6px;
+}
+
+.pedido-data{
+    color: #777;
+    font-size: 14px;
+}
+
+.pedido-status{
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.pedido-detalhes-card{
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.pedido-secao{
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.pedido-secao h2{
+    font-size: 20px;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.pedido-secao p{
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.pedido-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.pedido-item-info{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pedido-item-info strong{
+    font-size: 16px;
+}
+
+.pedido-item-info span{
+    color: #777;
+    font-size: 14px;
+}
+
+.pedido-item-subtotal{
+    font-size: 16px;
+}
+
+.pedido-total{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pedido-total span{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.pedido-total strong{
+    font-size: 24px;
+}
+
+.voltar-pedidos{
+    display: inline-block;
+    margin-top: 25px;
+    font-weight: 600;
+    color: #333;
+    transition: 0.2s;
+}
+
+.voltar-pedidos:hover{
+    transform: translateX(-4px);
+}

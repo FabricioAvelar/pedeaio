@@ -53,58 +53,89 @@ Pedido #{{ pedido.id }}
 
     <main class="conteudo">
 
-        <section class="pedidos">
+        <section class="pedido-detalhes">
+            <div class="pedido-detalhes-cabecalho">
+                
+                <div>
+                    <h1>Pedido #{{ pedido.id }}</h1>
 
-            <h1>Pedido #{{ pedido.id }}</h1>
-
-            <div class="pedido-card">
-
-                <p>
-                    Data:
-                    {{ pedido.criado_em|date:"d/m/Y H:i" }}
-                </p>
-
-                <p>
-                    Status:
-                    {{ pedido.get_status_display }}
-                </p>
-
-                <h2>Itens</h2>
-
-                {% for item in pedido.itens.all %}
-
-                    <div>
-                        <strong>{{ item.produto.nome }}</strong>
-
-                        <p>
-                            {{ item.quantidade }} x
-                            R$ {{ item.preco_unitario }}
-                            = R$ {{ item.subtotal }}
-                        </p>
-                    </div>
-
-                {% endfor %}
-
-                <h2>Endereço de entrega</h2>
-
-                <p>
-                    {{ pedido.endereco.rua }},
-                    {{ pedido.endereco.numero }}
-                </p>
-
-                <p>
-                    {{ pedido.endereco.cidade }}/{{ pedido.endereco.estado }}
-                </p>
-
-                <h2>
-                    Total: R$ {{ pedido.valor_total }}
-                </h2>
-
+                    <p class="pedido-data">
+                        Realizado em
+                        {{ pedido.criado_em|date:"d/m/Y" }}
+                        às
+                        {{ pedido.criado_em|date:"H:i" }}
+                    </p>
             </div>
 
-            <a href="{% url 'meus_pedidos' %}">← Voltar para Meus Pedidos</a>
+            <span class="pedido-status">{{ pedido.get_status_display }}</span>
 
-        </section>
+        </div>
+
+
+    <div class="pedido-detalhes-card">
+
+        <div class="pedido-secao">
+
+            <h2>Itens do pedido</h2>
+
+            {% for item in pedido.itens.all %}
+
+                <div class="pedido-item">
+
+                    <div class="pedido-item-info">
+                        <strong>{{ item.produto.nome }}</strong>
+
+                        <span>
+                            {{ item.quantidade }} x
+                            R$ {{ item.preco_unitario }}
+                        </span>
+                    </div>
+
+                    <strong class="pedido-item-subtotal">
+                        R$ {{ item.subtotal }}
+                    </strong>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="pedido-secao">
+
+            <h2>📍 Endereço de entrega</h2>
+
+            <p>
+                {{ pedido.endereco.rua }},
+                {{ pedido.endereco.numero }}
+            </p>
+
+            <p>
+                {{ pedido.endereco.cidade }}/{{ pedido.endereco.estado }}
+            </p>
+
+        </div>
+
+
+        <div class="pedido-total">
+
+            <span>Total do pedido</span>
+
+            <strong>
+                R$ {{ pedido.valor_total }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <a href="{% url 'meus_pedidos' %}" class="voltar-pedidos">
+        ← Voltar para Meus Pedidos
+    </a>
+
+</section>
 
     </main>
 
