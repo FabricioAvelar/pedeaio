@@ -92,38 +92,77 @@ Meu Perfil
         </section>
 
 
-        <section class="pedidos">
-            <h2>Últimos Pedidos</h2>
+        <section class="ultimos-pedidos">
 
-            {% if pedidos %}
-                {% for pedido in pedidos %}
-                    <div class="pedido-card">
-                        <h3>Pedido #{{ pedido.id }}</h3>
-                <p>
-                    Data:
-                    {{ pedido.criado_em|date:"d/m/Y H:i" }}
-                </p>
-                <p>
-                    Status:
-                    {{ pedido.get_status_display }}
-                </p>
-                <p>
-                    Total:
-                    R$ {{ pedido.valor_total }}
-                </p>
-            </div>
+    <div class="ultimos-pedidos-cabecalho">
+
+        <h2>Últimos Pedidos</h2>
+
+        <a href="{% url 'meus_pedidos' %}">
+            Ver todos →
+        </a>
+
+    </div>
+
+    {% if pedidos %}
+
+        {% for pedido in pedidos %}
+
+            <a
+                href="{% url 'pedido_detalhes' pedido.id %}"
+                class="ultimo-pedido-card"
+            >
+
+                <div class="ultimo-pedido-info">
+
+                    <h3>Pedido #{{ pedido.id }}</h3>
+
+                    <p>
+                        Realizado em
+                        {{ pedido.criado_em|date:"d/m/Y" }}
+                        às
+                        {{ pedido.criado_em|date:"H:i" }}
+                    </p>
+
+                </div>
+
+                <div class="ultimo-pedido-resumo">
+
+                    <span class="pedido-status">
+                        {{ pedido.get_status_display }}
+                    </span>
+
+                    <div class="ultimo-pedido-total">
+
+                        <span>Total</span>
+
+                        <strong>
+                            R$ {{ pedido.valor_total }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </a>
+
         {% endfor %}
 
     {% else %}
 
-            <div class="pedido-card">
-                <h3>Nenhum pedido encontrado.</h3>
-                <p>
-                    Quando você realizar uma compra, ela aparecerá aqui.
-                </p>
+        <div class="pedido-card pedido-vazio">
+
+            <h3>Nenhum pedido encontrado.</h3>
+
+            <p>
+                Quando você realizar uma compra,
+                ela aparecerá aqui.
+            </p>
+
         </div>
-        
+
     {% endif %}
+
 </section>
 
     </main>

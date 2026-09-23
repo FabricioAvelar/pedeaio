@@ -542,3 +542,83 @@ a{
 .pedido-vazio p{
     color: #777;
 }
+
+/* ÚLTIMOS PEDIDOS - MEU PERFIL */
+
+.ultimos-pedidos{
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.ultimos-pedidos-cabecalho{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.ultimos-pedidos-cabecalho h2{
+    color: #222;
+}
+
+.ultimos-pedidos-cabecalho a{
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    transition: 0.2s;
+}
+
+.ultimos-pedidos-cabecalho a:hover{
+    color: #000;
+    transform: translateX(3px);
+}
+
+.ultimo-pedido-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 22px 28px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: 0.2s;
+}
+
+.ultimo-pedido-card:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.10);
+}
+
+.ultimo-pedido-info h3{
+    margin-bottom: 6px;
+    color: #222;
+}
+
+.ultimo-pedido-info p{
+    color: #777;
+    font-size: 14px;
+}
+
+.ultimo-pedido-resumo{
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.ultimo-pedido-total{
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 4px;
+}
+
+.ultimo-pedido-total span{
+    color: #777;
+    font-size: 13px;
+}
+
+.ultimo-pedido-total strong{
+    color: #222;
+    font-size: 18px;
+}
