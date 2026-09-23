@@ -50,51 +50,77 @@ Meus Pedidos
 
         <section class="pedidos">
 
+    <div class="pedidos-cabecalho">
+        <div>
             <h1>Meus Pedidos</h1>
+            <p>Acompanhe seus pedidos realizados.</p>
+        </div>
+    </div>
 
-            {% if pedidos %}
+    {% if pedidos %}
 
-                {% for pedido in pedidos %}
+        {% for pedido in pedidos %}
 
-                    <div class="pedido-card">
+            <div class="pedido-card">
 
+                <div class="pedido-card-topo">
+
+                    <div>
                         <h3>Pedido #{{ pedido.id }}</h3>
 
-                        <p>
-                            Data:
-                            {{ pedido.criado_em|date:"d/m/Y H:i" }}
+                        <p class="pedido-data">
+                            Realizado em
+                            {{ pedido.criado_em|date:"d/m/Y" }}
+                            às
+                            {{ pedido.criado_em|date:"H:i" }}
                         </p>
-
-                        <p>
-                            Status:
-                            {{ pedido.get_status_display }}
-                        </p>
-
-                        <p>
-                            Total:
-                            R$ {{ pedido.valor_total }}
-                        </p>
-
-                        <a href="{% url 'pedido_detalhes' pedido.id %}">Ver detalhes</a>
-
                     </div>
 
-                {% endfor %}
+                    <span class="pedido-status">
+                        {{ pedido.get_status_display }}
+                    </span>
 
-            {% else %}
-
-                <div class="pedido-card">
-                    <h3>Nenhum pedido encontrado.</h3>
-
-                    <p>
-                        Quando você realizar uma compra,
-                        ela aparecerá aqui.
-                    </p>
                 </div>
 
-            {% endif %}
+                <div class="pedido-card-rodape">
 
-        </section>
+                    <div class="pedido-card-total">
+                        <span>Total do pedido</span>
+
+                        <strong>
+                            R$ {{ pedido.valor_total }}
+                        </strong>
+                    </div>
+
+                    <a
+                        href="{% url 'pedido_detalhes' pedido.id %}"
+                        class="btn-detalhes"
+                    >
+                        Ver detalhes
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="pedido-card pedido-vazio">
+
+            <h3>Nenhum pedido encontrado.</h3>
+
+            <p>
+                Quando você realizar uma compra,
+                ela aparecerá aqui.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
 
     </main>
 
