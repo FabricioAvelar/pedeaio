@@ -1,86 +1,118 @@
-.sucesso{
-    max-width:700px;
-    margin:80px auto;
-    padding:60px;
-    background:#fff;
-    border:1px solid #ddd;
-    border-radius:12px;
+/* ========================================
+   CONTAINER DE SUCESSO
+======================================== */
 
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
+.sucesso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    max-width: 700px;
+
+    margin: 80px auto;
+    padding: 60px;
+
+    background: #fff;
+
+    border: 1px solid #ddd;
+    border-radius: 12px;
+
+    text-align: center;
 }
 
-.check{
-    width:90px;
-    height:90px;
-    border:3px solid #000;
-    border-radius:50%;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+/* ========================================
+   ÍCONE DE CONFIRMAÇÃO
+======================================== */
 
-    font-size:46px;
-    font-weight:bold;
+.check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    margin-bottom:30px;
+    width: 90px;
+    height: 90px;
+
+    margin-bottom: 30px;
+
+    border: 3px solid #000;
+    border-radius: 50%;
+
+    font-size: 46px;
+    font-weight: bold;
 }
 
-.sucesso h1{
-    font-size:52px;
-    font-weight:700;
-    margin:0 0 25px 0;
+
+/* ========================================
+   MENSAGEM DE SUCESSO
+======================================== */
+
+.sucesso h1 {
+    margin-bottom: 25px;
+
+    font-size: 52px;
+    font-weight: 700;
 }
 
-.sucesso p{
-    font-size:18px;
-    color:#555;
-    line-height:1.7;
-    margin:0 0 40px 0;
+.sucesso p {
+    margin-bottom: 40px;
+
+    color: #555;
+
+    font-size: 18px;
+    line-height: 1.7;
 }
 
-.botoes{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:18px;
+
+/* ========================================
+   AÇÕES
+======================================== */
+
+.botoes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 18px;
 }
 
-.botoes a{
-    width:170px;
-    height:48px;
+.botoes a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    border-radius:7px;
-    font-size:15px;
-    font-weight:500;
-    transition:.3s;
+    width: 170px;
+    min-height: 48px;
 }
 
-.btn-outline{
-    background:#fff;
-    color:#000;
-    border:1px solid #000;
-}
 
-.btn-outline:hover{
-    background:#000;
-    color:#fff;
-}
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
 
-.btn-dark{
-    background:#000;
-    color:#fff;
-    border:1px solid #000;
-}
+@media (max-width: 768px) {
 
-.btn-dark:hover{
-    background:#222;
-    border-color:#222;
+    .sucesso {
+        margin: 40px 20px;
+        padding: 40px 25px;
+    }
+
+    .sucesso h1 {
+        font-size: 36px;
+    }
+
+    .sucesso p {
+        font-size: 16px;
+    }
+
+    .botoes {
+        width: 100%;
+
+        flex-direction: column;
+    }
+
+    .botoes a {
+        width: 100%;
+    }
 }

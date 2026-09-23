@@ -1,164 +1,257 @@
-/* --- CONTAINER PRINCIPAL --- */
+/* ========================================
+   CONTAINER PRINCIPAL
+======================================== */
+
 .login-container {
-  width: 100%;
-  max-width: 880px;
-  background: #fff;
-  margin: 40px auto;
-  padding: 50px;
-  display: flex;
-  gap: 60px;
-  border-radius: 12px;
-  border: 1px solid #e6e6e6;
+    display: flex;
+
+    width: 100%;
+    max-width: 880px;
+
+    margin: 40px auto;
+    padding: 50px;
+
+    gap: 60px;
+
+    background: #fff;
+
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
 }
+
+
+/* ========================================
+   ÁREA DE LOGIN
+======================================== */
 
 .login-box {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
 }
 
-/* --- TÍTULOS --- */
 .login-box h1,
 .login-box h2 {
-  margin-bottom: 20px;
-  font-size: 18px;
-  font-weight: 600;
+    margin-bottom: 20px;
 }
 
-/* --- FORMULÁRIO E INPUTS --- */
 .login-box form {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
+
+
+/* ========================================
+   CAMPOS DO FORMULÁRIO
+======================================== */
 
 .form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 20px;
 }
 
-label {
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: #333;
+.form-group label {
+    margin-bottom: 6px;
+
+    color: #333;
+
+    font-size: 14px;
 }
 
-input {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 14px;
-  width: 100%;
-  box-sizing: border-box;
+.form-group input {
+    width: 100%;
+
+    padding: 10px;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    font-size: 14px;
 }
 
-input:focus {
-  border-color: #111;
-  outline: 2px solid #111;
-  outline-offset: 2px;
+.form-group input:focus {
+    border-color: #111;
+
+    outline: 2px solid #111;
+    outline-offset: 2px;
 }
 
-/* --- LINHA DOS BOTÕES --- */
+
+/* ========================================
+   MENSAGEM DE ERRO
+======================================== */
+
+.erro {
+    margin-bottom: 10px;
+
+    color: #b00020;
+
+    font-size: 14px;
+}
+
+
+/* ========================================
+   LINHA DE BOTÕES
+======================================== */
+
 .buttons-row {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 10px;
 }
 
 .buttons-row .btn-primary,
 .buttons-row .btn-outline.full {
-  flex: 1;
-  margin-top: 0;
+    flex: 1;
+
+    margin-top: 0;
 }
 
-/* --- COLUNA DA DIREITA --- */
-.register-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
 
-.register-box p {
-  margin-bottom: 20px;
-}
+/* ========================================
+   BOTÃO PRINCIPAL
+======================================== */
 
-.register-box .btn-primary {
-  width: 100%;
-  max-width: 250px;
-  margin-top: 0;
-}
-
-/* --- FOCO VISÍVEL --- */
-.btn-primary:focus-visible,
-.btn-outline.full:focus-visible {
-  outline: 2px solid #111;
-  outline-offset: 3px;
-}
-
-/* --- BOTÃO PRINCIPAL --- */
 .btn-primary {
-  background: #000000;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  text-align: center;
-  text-decoration: none;
-  transition: background 0.3s ease, transform 0.2s ease;
+    padding: 12px;
+
+    background: #000;
+    color: #fff;
+
+    border: 1px solid #000;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.2s ease;
 }
 
 .btn-primary:hover {
-  background: #222;
-  transform: scale(1.02);
+    background: #222;
+
+    transform: scale(1.02);
 }
 
-/* --- BOTÃO SECUNDÁRIO --- */
+
+/* ========================================
+   BOTÃO SECUNDÁRIO
+======================================== */
+
 .btn-outline.full {
-  background: #ffffff;
-  color: #000000;
-  border: 1px solid #000000;
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  text-align: center;
-  text-decoration: none;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    padding: 12px;
+
+    background: #fff;
+    color: #000;
+
+    border: 1px solid #000;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.2s ease;
 }
 
 .btn-outline.full:hover {
-  background: #000;
-  color: #fff;
-  transform: scale(1.02);
+    background: #000;
+    color: #fff;
+
+    transform: scale(1.02);
 }
 
-/* --- DIVISOR --- */
+
+/* ========================================
+   FOCO DOS BOTÕES
+======================================== */
+
+.btn-primary:focus-visible,
+.btn-outline.full:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 3px;
+}
+
+
+/* ========================================
+   DIVISOR
+======================================== */
+
 .divider {
-  width: 1px;
-  background: #e5e5e5;
+    width: 1px;
+
+    background: #e6e6e6;
 }
 
-/* --- RESPONSIVIDADE / REFLOW --- */
-@media (max-width: 768px) {
-  .login-container {
-    width: calc(100% - 32px);
-    padding: 24px;
-    gap: 30px;
-    flex-direction: column;
-  }
 
-  .divider {
+/* ========================================
+   ÁREA DE CADASTRO
+======================================== */
+
+.register-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    text-align: center;
+}
+
+.register-box p {
+    margin-bottom: 20px;
+}
+
+.register-box .btn-primary {
     width: 100%;
-    height: 1px;
-  }
+    max-width: 250px;
 
-  .buttons-row {
-    flex-direction: column;
-  }
+    margin-top: 0;
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 768px) {
+
+    .login-container {
+        flex-direction: column;
+
+        width: auto;
+
+        margin: 30px 20px;
+        padding: 30px;
+
+        gap: 30px;
+    }
+
+    .divider {
+        width: 100%;
+        height: 1px;
+    }
+
+    .buttons-row {
+        flex-direction: column;
+    }
+
+    .register-box .btn-primary {
+        max-width: none;
+    }
 }

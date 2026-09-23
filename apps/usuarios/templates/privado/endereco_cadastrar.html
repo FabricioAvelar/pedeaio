@@ -6,21 +6,25 @@ Cadastrar endereço
 {% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/register.css' %}">
+<link rel="stylesheet" href="{% static 'style/endereco.css' %}">
 {% endblock %}
 
 {% block conteudo %}
 
-<main class="container">
+<main class="endereco-container">
 
     <h1>Cadastrar endereço</h1>
 
-    <form method="POST">
+    <p class="endereco-descricao">
+        Informe o endereço que será utilizado para suas entregas.
+    </p>
+
+    <form method="POST" class="endereco-form">
         {% csrf_token %}
 
         {{ form.as_p }}
 
-        <button type="submit">
+        <button type="submit" class="btn-salvar-endereco">
             Salvar endereço
         </button>
     </form>

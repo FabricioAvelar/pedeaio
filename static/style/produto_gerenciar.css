@@ -1,268 +1,393 @@
-/* ===========================
-   PAINEL ADMINISTRATIVO
-=========================== */
+/* ========================================
+   CABEÇALHO DO DASHBOARD
+======================================== */
 
-.container-gerenciar{
-    width:1200px;
-    margin:30px auto 50px auto;
-    display:flex;
-    gap:30px;
-    align-items:flex-start;
+.dashboard-header {
+    width: 90%;
+    max-width: 1400px;
+
+    margin: 50px auto 30px;
 }
 
-/* ===========================
-   DASHBOARD
-=========================== */
+.dashboard-header h1 {
+    margin-bottom: 8px;
 
-.dashboard-header{
-    width:1200px;
-    margin:35px auto 25px auto;
+    font-size: 36px;
 }
 
-.dashboard-header h1{
-    font-size:38px;
-    color:#111;
-    margin-bottom:8px;
+.dashboard-header > p {
+    color: #666;
 }
 
-.dashboard-header p{
-    color:#666;
-    font-size:17px;
-    margin-bottom:25px;
+
+/* ========================================
+   CARDS DO DASHBOARD
+======================================== */
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+
+    margin-top: 30px;
 }
 
-.dashboard-cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
+.dashboard-card {
+    padding: 22px;
+
+    background: #fff;
+
+    border-radius: 12px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.dashboard-card{
-    background:#fff;
-    border-radius:15px;
-    padding:28px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
-    text-align:center;
-    transition:.3s;
+.dashboard-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
 }
 
-.dashboard-card:hover{
-    transform:translateY(-5px);
+.dashboard-card h3 {
+    margin-bottom: 10px;
+
+    font-size: 17px;
 }
 
-.dashboard-card h3{
-    font-size:20px;
-    margin-bottom:15px;
-    color:#222;
+.dashboard-card p {
+    font-size: 24px;
+    font-weight: 600;
 }
 
-.dashboard-card p{
-    font-size:32px;
-    font-weight:bold;
-    color:#d62828;
+
+/* ========================================
+   ESTRUTURA DO GERENCIAMENTO
+======================================== */
+
+.container-gerenciar {
+    display: flex;
+    align-items: flex-start;
+
+    width: 90%;
+    max-width: 1400px;
+
+    margin: 0 auto 60px;
+
+    gap: 30px;
 }
 
-/* ===========================
-   PAINEL
-=========================== */
 
-.painel{
-    flex:2;
-    background:#fff;
-    border-radius:15px;
-    padding:30px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
+/* ========================================
+   PAINEL DE PRODUTOS
+======================================== */
+
+.painel {
+    flex: 2;
+
+    padding: 30px;
+
+    background: #fff;
+
+    border-radius: 15px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+    overflow-x: auto;
 }
 
-.painel-header{
-    margin-bottom:25px;
+.painel-header h2 {
+    margin-bottom: 6px;
+
+    font-size: 30px;
 }
 
-.painel-header h2{
-    font-size:30px;
-    margin-bottom:6px;
+.painel-header p {
+    color: #666;
 }
 
-.painel-header p{
-    color:#666;
+
+/* ========================================
+   TABELA DE PRODUTOS
+======================================== */
+
+.painel table {
+    width: 100%;
+
+    border-collapse: collapse;
 }
 
-/* ===========================
-   TABELA
-=========================== */
-
-table{
-    width:100%;
-    border-collapse:collapse;
+.painel thead {
+    background: #f7f7f7;
 }
 
-thead{
-    background:#f7f7f7;
+.painel th {
+    padding: 15px;
+
+    font-size: 15px;
+    text-align: left;
 }
 
-th{
-    padding:15px;
-    text-align:left;
-    font-size:15px;
+.painel td {
+    padding: 15px;
+
+    border-top: 1px solid #ececec;
+
+    vertical-align: middle;
 }
 
-td{
-    padding:15px;
-    border-top:1px solid #ececec;
-    vertical-align:middle;
+.painel td img {
+    width: 70px;
+    height: 70px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
 }
 
-td img{
-    width:70px;
-    height:70px;
-    object-fit:cover;
-    border-radius:10px;
+
+/* ========================================
+   PRODUTO VAZIO
+======================================== */
+
+.produto-vazio {
+    padding: 25px;
+
+    text-align: center;
 }
 
-/* ===========================
-   BOTÕES
-=========================== */
+
+/* ========================================
+   AÇÕES DO PRODUTO
+======================================== */
+
+.acoes-produto {
+    display: inline;
+}
+
+
+/* ========================================
+   BOTÕES DE EDITAR E EXCLUIR
+======================================== */
 
 .btn-editar,
-.btn-excluir{
-    padding:9px 16px;
-    border:none;
-    border-radius:7px;
-    cursor:pointer;
-    transition:.3s;
-    margin-right:8px;
+.btn-excluir {
+    margin-right: 8px;
+    padding: 9px 16px;
+
+    color: #fff;
+
+    border: none;
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.2s ease;
 }
 
-.btn-editar{
-    background:#111;
-    color:white;
+.btn-editar {
+    background: #111;
 }
 
-.btn-editar:hover{
-    background:#333;
+.btn-editar:hover {
+    background: #333;
+
+    transform: translateY(-1px);
 }
 
-.btn-excluir{
-    background:#d62828;
-    color:white;
+.btn-excluir {
+    background: #d62828;
 }
 
-.btn-excluir:hover{
-    background:#b30000;
+.btn-excluir:hover {
+    background: #b30000;
+
+    transform: translateY(-1px);
 }
 
-/* ===========================
-   FORMULÁRIO
-=========================== */
 
-.cadastro{
-    flex:1;
-    background:#fff;
-    border-radius:15px;
-    padding:30px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
-    position:sticky;
-    top:30px;
+/* ========================================
+   FORMULÁRIO DE PRODUTO
+======================================== */
+
+.cadastro {
+    position: sticky;
+    top: 120px;
+
+    flex: 1;
+
+    padding: 30px;
+
+    background: #fff;
+
+    border-radius: 15px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
-.cadastro h2{
-    text-align:center;
-    font-size:28px;
-    margin-bottom:25px;
+.cadastro h2 {
+    margin-bottom: 25px;
+
+    font-size: 28px;
+    text-align: center;
 }
 
-.cadastro form{
-    display:flex;
-    flex-direction:column;
+.cadastro form {
+    display: flex;
+    flex-direction: column;
 }
 
-.campo{
-    margin-bottom:18px;
+
+/* ========================================
+   CAMPOS DO FORMULÁRIO
+======================================== */
+
+.campo {
+    margin-bottom: 18px;
 }
 
-.campo label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:600;
+.campo label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: 600;
 }
 
 .cadastro input,
 .cadastro textarea,
-.cadastro select{
-    width:100%;
-    padding:12px;
-    border:1px solid #d5d5d5;
-    border-radius:8px;
-    font-size:15px;
+.cadastro select {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #d5d5d5;
+    border-radius: 8px;
+
+    font-size: 15px;
 }
 
-.cadastro textarea{
-    min-height:120px;
-    resize:vertical;
+.cadastro textarea {
+    min-height: 120px;
+
+    resize: vertical;
 }
 
 .cadastro input:focus,
 .cadastro textarea:focus,
-.cadastro select:focus{
-    outline:none;
-    border-color:#d62828;
+.cadastro select:focus {
+    border-color: #111;
+
+    outline: 2px solid #111;
+    outline-offset: 2px;
 }
 
-.cadastro input[type=file]{
-    border:none;
-    padding:0;
+
+/* ========================================
+   UPLOAD DE IMAGEM
+======================================== */
+
+.cadastro input[type="file"] {
+    padding: 0;
+
+    border: none;
 }
 
-.btn-salvar{
-    margin-top:20px;
-    padding:14px;
-    background:#111;
-    color:white;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-    transition:.3s;
+
+/* ========================================
+   BOTÃO SALVAR
+======================================== */
+
+.btn-salvar {
+    margin-top: 20px;
+    padding: 14px;
+
+    background: #111;
+    color: #fff;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.2s ease;
 }
 
-.btn-salvar:hover{
-    background:#d62828;
+.btn-salvar:hover {
+    background: #333;
+
+    transform: translateY(-1px);
 }
 
-/* ===========================
-   RESPONSIVO
-=========================== */
 
-@media(max-width:1200px){
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 1200px) {
 
     .dashboard-header,
-    .container-gerenciar{
-        width:95%;
+    .container-gerenciar {
+        width: 95%;
     }
-
 }
 
-@media(max-width:1000px){
 
-    .container-gerenciar{
-        flex-direction:column;
+@media (max-width: 1000px) {
+
+    .container-gerenciar {
+        flex-direction: column;
     }
 
-    .dashboard-cards{
-        grid-template-columns:repeat(2,1fr);
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .cadastro{
-        width:100%;
-        position:static;
+    .painel,
+    .cadastro {
+        width: 100%;
     }
 
+    .cadastro {
+        position: static;
+    }
 }
 
-@media(max-width:650px){
 
-    .dashboard-cards{
-        grid-template-columns:1fr;
+@media (max-width: 650px) {
+
+    .dashboard-header {
+        margin-top: 30px;
     }
 
+    .dashboard-header h1 {
+        font-size: 28px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .painel {
+        padding: 20px;
+    }
+
+    .painel-header h2 {
+        font-size: 24px;
+    }
+
+    .cadastro {
+        padding: 20px;
+    }
 }
