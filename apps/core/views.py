@@ -1,13 +1,8 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth.decorators import login_required
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth import logout
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib import messages
 
 # Usuário
-from apps.usuarios.models import Usuario
-from apps.produtos.models import Produto, Carrinho, ItemCarrinho 
 from .forms import CadastroForm
 
 def register(request):
@@ -24,13 +19,11 @@ def register(request):
             return redirect('login')
     else:
         form = CadastroForm()
-    return render(
-        request,
-        'privado/register.html',
-        {
-            'form': form
-        }
-    )
+
+    context = {
+        'form': form
+    }
+    return render(request, 'privado/register.html', context)
 
 def login(request):
     if request.method == 'POST':
