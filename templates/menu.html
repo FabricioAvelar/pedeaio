@@ -4,14 +4,32 @@
 
     <div class="logo">
 
-        <a href="{% url 'index' %}" aria-label="Página inicial" class="logo-animada logo-rodape">
-      <!-- Efeito de velocidade -->
-        <img src="{% static 'imgs/velocidade.png' %}" class="logo-velocidade"alt="">
-      <!-- Hambúrguer -->
-        <img src="{% static 'imgs/hamburguer.png' %}" class="logo-hamburguer" alt="PedeAió">
-      <!-- Efeito final -->
-        <img src="{% static 'imgs/pling.png' %}" class="logo-pling" alt="">
-      </a>
+        <a href="{% url 'index' %}"
+           aria-label="Página inicial"
+           class="logo-menu-nova">
+
+            <!-- Parte superior: hambúrguer -->
+            <img
+                src="{% static 'imgs/nome_burguer.png' %}"
+                class="logo-menu-burguer"
+                alt=""
+            >
+
+            <!-- Parte inferior: nome PedeAió -->
+            <img
+                src="{% static 'imgs/nome_burguer.png' %}"
+                class="logo-menu-nome"
+                alt="PedeAió"
+            >
+
+            <!-- Efeito bling -->
+            <img
+                src="{% static 'imgs/pling.png' %}"
+                class="logo-menu-pling"
+                alt=""
+            >
+
+        </a>
 
     </div>
 
@@ -34,20 +52,36 @@
 
             {% if user.is_staff %}
 
-                <a href="{% url 'produto_gerenciar' %}" class="btn-outline">Painel Admin</a>
+                <a href="{% url 'produto_gerenciar' %}"
+                   class="btn-outline">
+                    Painel Admin
+                </a>
 
             {% else %}
 
-                <a href="{% url 'meus_dados' %}" class="btn-outline">Meu Perfil</a>
+                <a href="{% url 'meus_dados' %}"
+                   class="btn-outline">
+                    Meu Perfil
+                </a>
 
             {% endif %}
 
-            <a href="{% url 'logout' %}" class="btn-dark">Sair</a>
+            <a href="{% url 'logout' %}"
+               class="btn-dark">
+                Sair
+            </a>
 
         {% else %}
 
-            <a href="{% url 'login' %}" class="btn-outline">Entrar</a>
-            <a href="{% url 'register' %}" class="btn-dark">Criar Conta</a>
+            <a href="{% url 'login' %}"
+               class="btn-outline">
+                Entrar
+            </a>
+
+            <a href="{% url 'register' %}"
+               class="btn-dark">
+                Criar Conta
+            </a>
 
         {% endif %}
 

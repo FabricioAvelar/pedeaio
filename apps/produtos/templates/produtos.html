@@ -6,7 +6,7 @@ Produtos
 {% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/index.css' %}" />
+<link rel="stylesheet" href="{% static 'style/index.css' %}">
 {% endblock %}
 
 {% block conteudo %}
@@ -18,87 +18,134 @@ Produtos
 
     <form method="GET" class="busca">
 
-        <label for="buscar" class="sr-only">
-            Buscar produto
-        </label>
+        <div class="busca-campo busca-produto">
 
-        <input
-            type="text"
-            id="buscar"
-            name="buscar"
-            placeholder="Buscar produto..."
-            value="{{ busca|default_if_none:'' }}"
-        >
+            <label for="buscar">
+                Buscar produto
+            </label>
 
-        <label for="categoria" class="sr-only">
-            Filtrar por categoria
-        </label>
+            <input
+                type="text"
+                id="buscar"
+                name="buscar"
+                placeholder="Digite o nome do produto..."
+                value="{{ busca|default_if_none:'' }}"
+            >
 
-        <select id="categoria" name="categoria">
-            <option value="">Todas</option>
-            <option value="Hamburguer">Hambúrguer</option>
-            <option value="Pizza">Pizza</option>
-            <option value="Batata">Batata</option>
-            <option value="Bebida">Bebidas</option>
-            <option value="Sobremesa">Sobremesas</option>
-            <option value="Salgado">Salgados</option>
-        </select>
+        </div>
 
-        <button type="submit">
+        <div class="busca-campo busca-categoria">
+
+            <label for="categoria">
+                Categoria
+            </label>
+
+            <select id="categoria" name="categoria">
+
+                <option value="">
+                    Todas as categorias
+                </option>
+
+                <option value="Hamburguer">
+                    Hambúrguer
+                </option>
+
+                <option value="Pizza">
+                    Pizza
+                </option>
+
+                <option value="Batata">
+                    Batata
+                </option>
+
+                <option value="Bebida">
+                    Bebidas
+                </option>
+
+                <option value="Sobremesa">
+                    Sobremesas
+                </option>
+
+                <option value="Salgado">
+                    Salgados
+                </option>
+
+            </select>
+
+        </div>
+
+        <button type="submit" class="btn-buscar">
             Buscar
         </button>
 
     </form>
 
+
     <div class="features-grid">
 
         {% for produto in produtos %}
 
-        <div class="feature">
+            <div class="feature">
 
-            <a href="{% url 'produto_detalhes' produto.id %}"
-               style="text-decoration:none; color:inherit;">
+                <a
+                    href="{% url 'produto_detalhes' produto.id %}"
+                    style="text-decoration: none; color: inherit;"
+                >
 
-                <div class="image">
+                    <div class="image">
 
-                    {% if produto.imagem %}
+                        {% if produto.imagem %}
 
-                        <img
-                            src="{{ produto.imagem.url }}"
-                            alt="{{ produto.nome }}"
-                            width="230"
-                            height="190"
-                        >
+                            <img
+                                src="{{ produto.imagem.url }}"
+                                alt="{{ produto.nome }}"
+                                width="230"
+                                height="190"
+                            >
 
-                    {% else %}
+                        {% else %}
 
-                        <img
-                            src="{% static 'imgs/sem-imagem.png' %}"
-                            alt="Sem imagem disponível para {{ produto.nome }}"
-                            width="230"
-                            height="190"
-                        >
+                            <img
+                                src="{% static 'imgs/sem-imagem.png' %}"
+                                alt="Sem imagem disponível para {{ produto.nome }}"
+                                width="230"
+                                height="190"
+                            >
 
-                    {% endif %}
+                        {% endif %}
 
-                </div>
+                    </div>
 
-                <h2>{{ produto.nome }}</h2>
+                    <h2>{{ produto.nome }}</h2>
 
-                <p>R$ {{ produto.preco }}</p>
+                    <p>
+                        R$ {{ produto.preco }}
+                    </p>
 
-            </a>
+                </a>
 
-            <a href="{% url 'adicionar_produto' produto.id %}"
-               class="btn-outline btn-carrinho">
-                Adicionar ao carrinho
-            </a>
+                <a
+                    href="{% url 'adicionar_produto' produto.id %}"
+                    class="btn-outline btn-carrinho"
+                >
+                    Adicionar ao carrinho
+                </a>
 
-        </div>
+            </div>
 
         {% empty %}
 
-            <h2>Nenhum produto cadastrado.</h2>
+            <div class="sem-produtos">
+
+                <h2>
+                    Nenhum produto cadastrado.
+                </h2>
+
+                <p>
+                    Tente alterar a busca ou selecionar outra categoria.
+                </p>
+
+            </div>
 
         {% endfor %}
 

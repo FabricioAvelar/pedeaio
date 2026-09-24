@@ -1,239 +1,328 @@
-/* ========================================
-   PÁGINA INICIAL
-======================================== */
-
 .index {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     padding: 60px 20px;
-
     text-align: center;
-
     animation: fadeInUp 1.2s ease;
 }
-
-
-/* ========================================
-   LOGO PRINCIPAL DA HOME
-======================================== */
 
 .index-logo {
     display: flex;
     justify-content: center;
     align-items: center;
-
     margin-bottom: 25px;
 }
 
 .index-logo-img {
     display: block;
-
     width: 400px;
     max-width: 90%;
     height: auto;
 }
 
-
-/* ========================================
-   BOTÕES DA HOME
-======================================== */
-
 .index-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
-
     gap: 10px;
-
     flex-wrap: wrap;
 }
 
 .index-buttons button {
     margin: 5px;
     padding: 10px 20px;
-
     border-radius: 6px;
-
     font-weight: 500;
-
-    transition: all 0.3s ease;
+    transition: 0.3s ease;
 }
 
 .index-buttons button:hover {
     transform: translateY(-3px);
-
     cursor: pointer;
 }
-
-
-/* ========================================
-   IMAGENS DA HOME
-======================================== */
 
 .image-section {
     display: flex;
     justify-content: center;
-
     gap: 30px;
-
     padding: 60px 20px;
-
     flex-wrap: wrap;
-
     animation: fadeInUp 1.4s ease;
 }
 
 .image-box {
     position: relative;
-
     width: 600px;
     height: 300px;
-
     overflow: hidden;
-
-    background: linear-gradient(
-        135deg,
-        #f7f7f7,
-        #ececec
-    );
-
+    background: linear-gradient(135deg, #f7f7f7, #ececec);
     border-radius: 12px;
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .image-box img {
     display: block;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
 }
 
 .image-box:hover {
     transform: scale(1.05);
-
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 
-/* ========================================
-   CATÁLOGO DE PRODUTOS
-======================================== */
+/* PRODUTOS */
 
 .features {
     padding: 60px 20px;
-
     text-align: center;
-
     animation: fadeInUp 1.6s ease;
 }
 
-.features h2 {
-    margin-bottom: 10px;
-
-    font-size: 28px;
+.features h1 {
+    margin-bottom: 4px;
+    font-size: 30px;
 }
 
 .subheading {
-    margin-bottom: 40px;
-
+    margin-bottom: 30px;
     color: #666;
 }
 
-
-/* ========================================
-   GRID DE PRODUTOS
-======================================== */
-
 .features-grid {
     display: grid;
-
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(250px, 1fr)
-    );
-
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
-
     max-width: 1100px;
-
     margin: 0 auto;
 }
-
-
-/* ========================================
-   CARD DE PRODUTO
-======================================== */
 
 .feature {
     padding: 20px;
     margin-bottom: 10px;
-
     background: #fafafa;
-
     border: 1px solid #eee;
     border-radius: 10px;
-
     text-align: left;
-
     font-size: 20px;
-
     cursor: pointer;
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .feature:hover {
     transform: translateY(-5px);
-
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
-.feature h3 {
-    margin-bottom: 8px;
-
+.feature h2 {
+    margin: 15px 0 8px;
     font-size: 18px;
 }
 
 .feature p {
+    margin-bottom: 15px;
     color: #555;
-
     font-size: 14px;
     line-height: 1.5;
 }
-
-
-/* ========================================
-   IMAGEM DO PRODUTO
-======================================== */
 
 .image {
     display: flex;
     justify-content: center;
 }
 
-
-/* ========================================
-   BOTÃO DO CARRINHO
-======================================== */
+.image img {
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
 
 .btn-carrinho {
     cursor: pointer;
 }
 
 
-/* ========================================
-   ANIMAÇÕES
-======================================== */
+/* BUSCA */
+
+.busca {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto 40px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.busca-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    text-align: left;
+}
+
+.busca-campo label {
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.busca-produto {
+    flex: 1;
+}
+
+.busca-categoria {
+    width: 220px;
+}
+
+.busca input,
+.busca select {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    outline: none;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.busca input:focus,
+.busca select:focus {
+    border-color: #000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
+}
+
+.btn-buscar {
+    height: 42px;
+    padding: 0 24px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #000;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-buscar:hover {
+    background: #222;
+    transform: translateY(-2px);
+}
+
+.sem-produtos {
+    grid-column: 1 / -1;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+.sem-produtos h2 {
+    margin-bottom: 8px;
+    font-size: 21px;
+}
+
+.sem-produtos p {
+    color: #666;
+    font-size: 14px;
+}
+
+
+/* LOGO DO MENU */
+
+.logo-menu-nova {
+    position: relative;
+    display: block;
+    width: 150px;
+    height: 75px;
+    overflow: visible;
+    cursor: pointer;
+}
+
+.logo-menu-burguer,
+.logo-menu-nome {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+}
+
+.logo-menu-burguer {
+    clip-path: inset(0 0 34% 0);
+    transform-origin: 50% 33%;
+    z-index: 2;
+}
+
+.logo-menu-nome {
+    clip-path: inset(66% 0 0 0);
+    z-index: 1;
+}
+
+.logo-menu-pling {
+    position: absolute;
+    width: 29px;
+    left: 61%;
+    top: -6px;
+    opacity: 0;
+    z-index: 4;
+    pointer-events: none;
+    transform: translate(-4px, 4px) scale(0) rotate(-12deg);
+    transform-origin: bottom left;
+    transition: opacity 160ms ease,
+                transform 220ms cubic-bezier(.22, 1.5, .5, 1);
+}
+
+.logo-menu-nova:hover .logo-menu-burguer {
+    animation: tremidinha-burguer 420ms ease-in-out;
+}
+
+.logo-menu-nova:hover .logo-menu-pling {
+    opacity: 1;
+    transform: translate(0) scale(1) rotate(0);
+    transition-delay: 290ms;
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width: 700px) {
+    .busca {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .busca-categoria,
+    .btn-buscar {
+        width: 100%;
+    }
+}
+
+
+/* ANIMAÇÕES */
+
+@keyframes tremidinha-burguer {
+    0%, 100% {
+        transform: translateX(0) rotate(0);
+    }
+
+    20%, 60% {
+        transform: translateX(-2px) rotate(-1deg);
+    }
+
+    40%, 80% {
+        transform: translateX(2px) rotate(1deg);
+    }
+}
 
 @keyframes fadeInUp {
     from {
