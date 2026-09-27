@@ -82,3 +82,13 @@ def dados_pessoais(request):
     }
 
     return render(request, 'privado/dados_pessoais.html', context)
+
+@login_required
+def meus_enderecos(request):
+    enderecos = request.user.enderecos.all()
+
+    context = {
+        'enderecos': enderecos,
+    }
+
+    return render(request, 'privado/meus_enderecos.html', context)

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Meus Endereços
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}">
+<link rel="stylesheet" href="{% static 'style/enderecos.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container">
+
+    {% include 'privado/sidebar.html' %}
+
+    <main class="conteudo">
+        <section class="enderecos">
+            <div class="enderecos-cabecalho">
+                <div>
+                    <h1>Meus Endereços</h1>
+
+                    <p>
+                        Gerencie os endereços utilizados nas suas entregas.
+                    </p>
+                </div>
+
+                <a href="{% url 'endereco_cadastrar' %}" class="btn-novo-endereco">
+                    + Adicionar endereço
+                </a>
+            </div>
+
+            {% if enderecos %}
+                <div class="lista-enderecos">
+
+                    {% for endereco in enderecos %}
+                        <div class="endereco-card">
+                            <div class="endereco-info">
+                                <div class="endereco-icone">
+                                    📍
+                                </div>
+                                <div>
+                                    <h2>
+                                        {{ endereco.rua }},
+                                        {{ endereco.numero }}
+                                    </h2>
+
+                                    <p>
+                                        {{ endereco.cidade }}/{{ endereco.estado }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="endereco-acoes">
+                                <button type="button" class="btn-editar-endereco" disabled>
+                                    Editar
+                                </button>
+
+                                <button type="button" class="btn-excluir-endereco" disabled>
+                                    Excluir
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="sem-enderecos">
+                    <p>📍</p>
+                    <h2>Nenhum endereço cadastrado</h2>
+                    <p>
+                        Adicione um endereço para utilizá-lo
+                        nas suas próximas entregas.
+                    </p>
+
+                    <a href="{% url 'endereco_cadastrar' %}" class="btn-novo-endereco">
+                        Adicionar endereço
+                    </a>
+                </div>
+
+            {% endif %}
+        </section>
+    </main>
+</div>
+
+{% endblock %}
