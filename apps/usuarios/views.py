@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import ProtectedError
 
 # Pedidos
 from apps.pedidos.models import Pedido
@@ -139,11 +140,18 @@ def endereco_excluir(request, endereco_id):
     )
 
     if request.method == 'POST':
-        endereco.delete()
+        try:
+            endereco.delete()
 
-        messages.success(
-            request,
-            'Endereço excluído com sucesso!'
-        )
+            messages.success(
+                request,
+                'Endereço excluído com sucesso!'
+            )
+
+        except ProtectedError:
+            messages.error(
+                request,
+                'Este endereço não pode ser excluído porque está vinculado a um ou mais pedidos.'
+            )
 
     return redirect('meus_enderecos')
