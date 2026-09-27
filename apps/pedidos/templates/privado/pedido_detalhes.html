@@ -13,43 +13,7 @@ Pedido #{{ pedido.id }}
 
 <div class="container">
 
-    <aside class="sidebar">
-
-        <div class="perfil-user">
-            <p class="perfil-nome">
-                {{ request.user.first_name|default:request.user.username }}
-            </p>
-
-            <p>{{ request.user.email }}</p>
-        </div>
-
-        <nav>
-            <ul>
-                <li>
-                    <a href="{% url 'meus_dados' %}">
-                        🏠 Meu Perfil
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{% url 'meus_pedidos' %}">
-                        🛍️ Meus Pedidos
-                    </a>
-                </li>
-
-                <li>📍 Endereços</li>
-                <li>❤️ Favoritos</li>
-                <li>🎟️ Cupons</li>
-
-                <li class="sair">
-                    <a href="{% url 'logout' %}">
-                        🚪 Sair
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
-    </aside>
+    {% include 'privado/sidebar.html' %}
 
     <main class="conteudo">
 

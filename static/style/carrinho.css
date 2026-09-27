@@ -1,138 +1,56 @@
 /* ========================================
-   ESTRUTURA DA ÁREA DE PEDIDOS
+   PÁGINA - CARRINHO
 ======================================== */
 
 .container {
     display: flex;
+    align-items: flex-start;
 
-    min-height: 100vh;
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 50px auto;
+    padding: 0 30px;
+
+    gap: 35px;
 }
 
-.sidebar {
-    width: 250px;
 
-    padding: 30px 20px;
+/* ========================================
+   CARRINHO
+======================================== */
 
-    background-color: #fff;
-
-    border-right: 2px solid #e6e6e6;
-}
-
-.conteudo {
+.cart {
     flex: 1;
-
-    padding: 40px;
+    min-width: 0;
 }
 
-
-/* ========================================
-   INFORMAÇÕES DO USUÁRIO
-======================================== */
-
-.perfil-user {
-    margin-bottom: 40px;
-
-    text-align: center;
-}
-
-.perfil-user .perfil-nome {
-    margin-bottom: 5px;
-
-    color: #222;
-
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.perfil-user p {
-    color: #595959;
-
-    font-size: 14px;
-}
-
-
-/* ========================================
-   MENU LATERAL
-======================================== */
-
-.sidebar nav ul {
-    list-style: none;
-}
-
-.sidebar nav ul li {
-    margin-bottom: 15px;
-    padding: 15px;
-
-    background-color: #fff8e7;
-
-    border-radius: 12px;
-
-    cursor: pointer;
-
-    font-weight: 600;
-
-    transition: 0.3s;
-}
-
-.sidebar nav ul li:hover {
-    background-color: #f7b731;
-    color: #fff;
-}
-
-
-/* ========================================
-   BOTÃO SAIR
-======================================== */
-
-.sair {
-    margin-top: 40px;
-
-    background-color: #ffdddd !important;
-    color: #cc0000;
-}
-
-.sair:hover {
-    background-color: #cc0000 !important;
-    color: #fff;
-}
-
-
-/* ========================================
-   HISTÓRICO DE PEDIDOS
-======================================== */
-
-.pedidos {
-    max-width: 1000px;
-
-    margin: 0 auto;
-}
-
-.pedidos-cabecalho {
+.cart h1 {
     margin-bottom: 25px;
-}
-
-.pedidos-cabecalho h1 {
-    margin-bottom: 6px;
 
     color: #222;
 
     font-size: 32px;
 }
 
-.pedidos-cabecalho p {
-    color: #777;
-
-    font-size: 14px;
-}
-
 
 /* ========================================
-   CARD DO PEDIDO
+   ITEM DO CARRINHO
 ======================================== */
 
-.pedido-card {
+.item {
+    display: grid;
+    grid-template-columns: 120px 1fr auto auto;
+    grid-template-areas:
+        "imagem info quantidade subtotal"
+        "imagem preco quantidade remover";
+
+    align-items: center;
+
+    gap: 10px 25px;
+
     margin-bottom: 20px;
-    padding: 25px 30px;
+    padding: 20px;
 
     background-color: #fff;
 
@@ -141,85 +59,206 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
-.pedido-card-topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+.item img {
+    grid-area: imagem;
 
-    gap: 20px;
+    width: 120px;
+    height: 120px;
 
-    padding-bottom: 20px;
+    object-fit: cover;
 
-    border-bottom: 1px solid #e6e6e6;
+    border-radius: 12px;
 }
 
-.pedido-card-topo h3 {
-    margin-bottom: 6px;
+
+/* ========================================
+   INFORMAÇÕES DO PRODUTO
+======================================== */
+
+.info {
+    grid-area: info;
+}
+
+.info h2 {
+    margin-bottom: 8px;
 
     color: #222;
 
     font-size: 20px;
 }
 
-.pedido-data {
-    color: #777;
+.info p {
+    color: #666;
 
     font-size: 14px;
 }
 
-.pedido-card-rodape {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
 
-    padding-top: 20px;
-}
+/* ========================================
+   PREÇO
+======================================== */
 
-.pedido-card-total {
-    display: flex;
-    flex-direction: column;
+/*
+   O HTML possui dois elementos .price:
+   o primeiro mostra o preço unitário e
+   o segundo mostra o subtotal.
+*/
 
-    gap: 5px;
-}
+.item > .price:first-of-type {
+    grid-area: preco;
 
-.pedido-card-total span {
-    color: #777;
+    color: #666;
 
     font-size: 14px;
 }
 
-.pedido-card-total strong {
+.item > .price:nth-of-type(2) {
+    grid-area: subtotal;
+
     color: #222;
 
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 700;
+
+    text-align: right;
 }
 
 
 /* ========================================
-   STATUS DO PEDIDO
+   QUANTIDADE
 ======================================== */
 
-.pedido-status {
-    padding: 8px 16px;
+.qty {
+    grid-area: quantidade;
 
-    background-color: #fff3cd;
-    color: #856404;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border-radius: 20px;
+    gap: 12px;
+}
+
+.qty span {
+    min-width: 20px;
+
+    text-align: center;
+
+    font-weight: 600;
+}
+
+.qty-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    background-color: #fff;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    color: #222;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.qty-btn:hover {
+    background-color: #f7b731;
+    color: #fff;
+
+    border-color: #f7b731;
+}
+
+
+/* ========================================
+   REMOVER PRODUTO
+======================================== */
+
+.remover {
+    grid-area: remover;
+
+    text-align: right;
+}
+
+.remover a {
+    color: #cc0000;
 
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.remover a:hover {
+    color: #990000;
 }
 
 
 /* ========================================
-   BOTÃO DE DETALHES
+   RESUMO DO PEDIDO
 ======================================== */
 
-.btn-detalhes {
-    display: inline-block;
+.summary {
+    width: 320px;
 
-    padding: 10px 18px;
+    padding: 25px;
+
+    background-color: #fff;
+
+    border-radius: 15px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.summary h2 {
+    margin-bottom: 20px;
+
+    color: #222;
+
+    font-size: 22px;
+}
+
+
+/* ========================================
+   TOTAL
+======================================== */
+
+.line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+    padding-top: 15px;
+
+    border-top: 1px solid #e6e6e6;
+
+    color: #222;
+
+    font-size: 16px;
+}
+
+.line span:last-child {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+/* ========================================
+   BOTÃO FINALIZAR PEDIDO
+======================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 20px;
 
     background-color: #000;
     color: #fff;
@@ -232,59 +271,22 @@
     transition: 0.2s;
 }
 
-.btn-detalhes:hover {
+.btn:hover {
     background-color: #222;
 
-    transform: translateY(-2px);
+    transform: translateY(-1px);
+}
+
+.full {
+    width: 100%;
 }
 
 
 /* ========================================
-   PEDIDO VAZIO
+   CARRINHO VAZIO
 ======================================== */
 
-.pedido-vazio {
-    padding: 40px;
-
-    text-align: center;
-}
-
-.pedido-vazio h3 {
-    margin-bottom: 8px;
-}
-
-.pedido-vazio p {
-    color: #777;
-}
-
-
-/* ========================================
-   DETALHES DO PEDIDO
-======================================== */
-
-.pedido-detalhes {
-    max-width: 1000px;
-
-    margin: 0 auto;
-}
-
-.pedido-detalhes-cabecalho {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 25px;
-}
-
-.pedido-detalhes-cabecalho h1 {
-    margin-bottom: 6px;
-
-    color: #222;
-
-    font-size: 32px;
-}
-
-.pedido-detalhes-card {
+.cart > h2 {
     padding: 30px;
 
     background-color: #fff;
@@ -292,107 +294,13 @@
     border-radius: 15px;
 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
-
-
-/* ========================================
-   SEÇÕES DO PEDIDO
-======================================== */
-
-.pedido-secao {
-    margin-bottom: 25px;
-    padding-bottom: 25px;
-
-    border-bottom: 1px solid #e6e6e6;
-}
-
-.pedido-secao h2 {
-    margin-bottom: 20px;
-
-    color: #222;
-
-    font-size: 20px;
-}
-
-.pedido-secao p {
-    margin-bottom: 5px;
 
     color: #666;
-}
 
-
-/* ========================================
-   ITENS DO PEDIDO
-======================================== */
-
-.pedido-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 15px 0;
-}
-
-.pedido-item-info {
-    display: flex;
-    flex-direction: column;
-
-    gap: 6px;
-}
-
-.pedido-item-info strong {
-    font-size: 16px;
-}
-
-.pedido-item-info span {
-    color: #777;
-
-    font-size: 14px;
-}
-
-.pedido-item-subtotal {
-    font-size: 16px;
-}
-
-
-/* ========================================
-   TOTAL DO PEDIDO
-======================================== */
-
-.pedido-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.pedido-total span {
     font-size: 18px;
-    font-weight: 600;
-}
+    font-weight: 500;
 
-.pedido-total strong {
-    font-size: 24px;
-}
-
-
-/* ========================================
-   VOLTAR PARA PEDIDOS
-======================================== */
-
-.voltar-pedidos {
-    display: inline-block;
-
-    margin-top: 25px;
-
-    color: #333;
-
-    font-weight: 600;
-
-    transition: 0.2s;
-}
-
-.voltar-pedidos:hover {
-    transform: translateX(-4px);
+    text-align: center;
 }
 
 
@@ -400,43 +308,64 @@
    RESPONSIVIDADE
 ======================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
     .container {
         flex-direction: column;
+
+        margin: 30px auto;
+        padding: 0 20px;
     }
 
-    .sidebar {
+    .cart {
         width: 100%;
-
-        border-right: none;
-        border-bottom: 2px solid #e6e6e6;
     }
 
-    .conteudo {
-        padding: 20px;
+    .summary {
+        width: 100%;
     }
 
-    .pedido-detalhes-cabecalho {
+    .item {
+        grid-template-columns: 100px 1fr auto;
+
+        grid-template-areas:
+            "imagem info subtotal"
+            "imagem preco subtotal"
+            "imagem quantidade remover";
+    }
+
+    .item img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .cart h1 {
+        font-size: 28px;
+    }
+
+    .item {
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
 
         gap: 15px;
     }
 
-    .pedido-card-topo {
-        flex-direction: column;
-        align-items: flex-start;
+    .item img {
+        width: 100%;
+        height: 200px;
     }
 
-    .pedido-card-rodape {
-        flex-direction: column;
-        align-items: flex-start;
-
-        gap: 20px;
+    .qty {
+        justify-content: flex-start;
     }
 
-    .pedido-item {
-        gap: 20px;
+    .item > .price:nth-of-type(2),
+    .remover {
+        text-align: left;
     }
 }
