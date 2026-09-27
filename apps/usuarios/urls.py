@@ -1,7 +1,18 @@
 from django.urls import path
-from .views import meus_dados, endereco_cadastrar, editar_perfil, dados_pessoais, meus_enderecos, endereco_editar, endereco_excluir
+from .views import (
+    meus_dados,
+    dados_pessoais,
+    editar_perfil,
+    meus_enderecos,
+    endereco_cadastrar,
+    endereco_editar,
+    endereco_excluir,
+    dashboard,
+)
 
 urlpatterns = [
+    path('dashboard/', dashboard, name='dashboard'),
+
     path('meus_dados/', meus_dados, name='meus_dados'),
     path('dados_pessoais/', dados_pessoais, name='dados_pessoais'),
     path('editar_perfil/', editar_perfil, name='editar_perfil'),

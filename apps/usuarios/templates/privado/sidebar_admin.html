@@ -1,0 +1,32 @@
+<aside class="sidebar-admin">
+
+    <div class="admin-info">
+        <h2>Administrador</h2>
+        <p>{{ request.user.email }}</p>
+    </div>
+
+    <nav class="sidebar-admin-menu">
+
+        <a href="{% url 'dashboard' %}">
+            🏠 Início
+        </a>
+
+        <a href="{% url 'produto_gerenciar' %}">
+            📦 Produtos
+        </a>
+
+        <a href="#">
+            🛒 Pedidos
+        </a>
+
+        <a href="#">
+            👥 Clientes
+        </a>
+
+    </nav>
+
+    <a href="{% url 'logout' %}" class="sidebar-admin-sair">
+        🚪 Sair
+    </a>
+
+</aside>

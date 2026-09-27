@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Painel Administrativo
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/dashboard.css' %}">
+{% endblock %}
+
+
+{% block conteudo %}
+
+<div class="container-admin">
+
+    {% include 'privado/sidebar_admin.html' %}
+
+    <main class="conteudo-admin">
+
+        <section class="dashboard-admin">
+            <div class="dashboard-cabecalho">
+                <h1>Painel Administrativo</h1>
+                <p>
+                    Gerencie os produtos, pedidos e clientes do PedeAió.
+                </p>
+            </div>
+
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <h2>📦 Produtos</h2>
+                    <p>{{ total_produtos }} cadastrados</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h2>🛒 Pedidos</h2>
+                    <p>{{ total_pedidos }} realizados</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h2>👥 Clientes</h2>
+                    <p>{{ total_clientes }} cadastrados</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h2>⏳ Pendentes</h2>
+                    <p>{{ pedidos_pendentes }} pedidos</p>
+                </div>
+            </div>
+
+
+            <section class="ultimos-pedidos-admin">
+                <div class="secao-cabecalho">
+                    <h2>Últimos Pedidos</h2>
+                </div>
+
+                {% if ultimos_pedidos %}
+                    <div class="lista-pedidos-admin">
+
+                        {% for pedido in ultimos_pedidos %}
+                            <div class="pedido-admin-card">
+                                <div class="pedido-admin-info">
+                                    <h3>Pedido #{{ pedido.id }}</h3>
+                                    <p>
+                                        Cliente:
+                                        {% if pedido.usuario.first_name %}
+                                            {{ pedido.usuario.first_name }}
+                                            {{ pedido.usuario.last_name }}
+                                        {% else %}
+                                            {{ pedido.usuario.email }}
+                                        {% endif %}
+                                    </p>
+                                    <p>
+                                        Realizado em
+                                        {{ pedido.criado_em|date:"d/m/Y \à\s H:i" }}
+                                    </p>
+                                </div>
+
+                                <div class="pedido-admin-status">
+                                    {{ pedido.status }}
+                                </div>
+                                <div class="pedido-admin-total">
+                                    <span>Total</span>
+
+                                    <strong>
+                                        R$ {{ pedido.valor_total|floatformat:2 }}
+                                    </strong>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    <div class="sem-pedidos-admin">
+                        <p>Nenhum pedido realizado até o momento.</p>
+                    </div>
+                {% endif %}
+            </section>
+
+            <section class="gerenciamento-admin">
+                <h2>Gerenciamento</h2>
+                <a href="{% url 'produto_gerenciar' %}" class="gerenciamento-card">
+                    <h3>📦 Gerenciar Produtos</h3>
+                    <p>
+                        Acesse a tela de cadastro, edição e exclusão
+                        de produtos.
+                    </p>
+                </a>
+            </section>
+        </section>
+    </main>
+</div>
+{% endblock %}

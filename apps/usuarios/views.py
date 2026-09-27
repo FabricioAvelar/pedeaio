@@ -1,3 +1,4 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -5,10 +6,37 @@ from django.db.models import ProtectedError
 
 # Pedidos
 from apps.pedidos.models import Pedido
+from apps.produtos.models import Produto
 
 # Usuários
-from .models import Endereco
+from .models import Usuario, Endereco
 from .forms import EnderecoForm, UsuarioEditarForm
+
+@staff_member_required
+def dashboard(request):
+    total_produtos = Produto.objects.count()
+    total_pedidos = Pedido.objects.count()
+    total_clientes = Usuario.objects.filter(
+        is_staff=False
+    ).count()
+
+    pedidos_pendentes = Pedido.objects.filter(
+        status='Pendente'
+    ).count()
+
+    ultimos_pedidos = Pedido.objects.select_related(
+        'usuario'
+    ).order_by('-criado_em')[:5]
+
+    context = {
+        'total_produtos': total_produtos,
+        'total_pedidos': total_pedidos,
+        'total_clientes': total_clientes,
+        'pedidos_pendentes': pedidos_pendentes,
+        'ultimos_pedidos': ultimos_pedidos,
+    }
+
+    return render(request, 'privado/dashboard.html', context)
 
 @login_required
 def meus_dados(request):

@@ -1,0 +1,506 @@
+/* ========================================
+   LAYOUT ADMINISTRATIVO
+======================================== */
+
+.container-admin {
+    display: flex;
+
+    width: 100%;
+    min-height: calc(100vh - 125px);
+
+    background-color: #fff;
+}
+
+.conteudo-admin {
+    flex: 1;
+
+    padding: 36px 40px;
+}
+
+.dashboard-admin {
+    width: 100%;
+    max-width: 1220px;
+
+    margin: 0 auto;
+}
+
+
+/* ========================================
+   SIDEBAR ADMINISTRATIVA
+======================================== */
+
+.sidebar-admin {
+    display: flex;
+    flex-direction: column;
+
+    width: 235px;
+    min-width: 235px;
+    min-height: calc(100vh - 125px);
+
+    padding: 28px 18px;
+
+    background-color: #fff;
+
+    border-right: 1px solid #ddd;
+}
+
+
+/* ========================================
+   INFORMAÇÕES DO ADMIN
+======================================== */
+
+.admin-info {
+    margin-bottom: 35px;
+
+    text-align: center;
+}
+
+.admin-info h2 {
+    margin: 0 0 5px;
+
+    color: #111;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.admin-info p {
+    margin: 0;
+
+    color: #555;
+
+    font-size: 14px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================
+   MENU DA SIDEBAR
+======================================== */
+
+.sidebar-admin-menu {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.sidebar-admin-menu a {
+    display: flex;
+    align-items: center;
+
+    min-height: 50px;
+
+    padding: 0 16px;
+
+    background-color: #fff7e8;
+
+    border-radius: 11px;
+
+    color: #111;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.sidebar-admin-menu a:hover {
+    background-color: #ffefd0;
+
+    transform: translateX(3px);
+}
+
+
+/* ========================================
+   SAIR
+======================================== */
+
+.sidebar-admin-sair {
+    display: flex;
+    align-items: center;
+
+    min-height: 50px;
+
+    margin-top: 38px;
+    padding: 0 16px;
+
+    background-color: #ffdada;
+
+    border-radius: 11px;
+
+    color: #b00000;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.sidebar-admin-sair:hover {
+    background-color: #ffcaca;
+}
+
+
+/* ========================================
+   CABEÇALHO DO DASHBOARD
+======================================== */
+
+.dashboard-cabecalho {
+    margin-bottom: 30px;
+}
+
+.dashboard-cabecalho h1 {
+    margin: 0 0 6px;
+
+    color: #111;
+
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.dashboard-cabecalho p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 15px;
+}
+
+
+/* ========================================
+   CARDS DO DASHBOARD
+======================================== */
+
+.dashboard-cards {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 38px;
+}
+
+.dashboard-card {
+    padding: 24px;
+
+    background-color: #fff;
+
+    border: 1px solid #f0f0f0;
+    border-radius: 14px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+
+    transition: 0.2s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card h2 {
+    margin: 0 0 9px;
+
+    color: #111;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.dashboard-card p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 15px;
+}
+
+
+/* ========================================
+   ÚLTIMOS PEDIDOS
+======================================== */
+
+.ultimos-pedidos-admin {
+    margin-bottom: 38px;
+}
+
+.secao-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.secao-cabecalho h2 {
+    margin: 0;
+
+    color: #111;
+
+    font-size: 23px;
+    font-weight: 700;
+}
+
+
+/* ========================================
+   LISTA DE PEDIDOS
+======================================== */
+
+.lista-pedidos-admin {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.pedido-admin-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 160px 130px;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 18px 22px;
+
+    background-color: #fff;
+
+    border: 1px solid #eee;
+    border-radius: 13px;
+
+    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.06);
+}
+
+.pedido-admin-info h3 {
+    margin: 0 0 5px;
+
+    color: #111;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.pedido-admin-info p {
+    margin: 2px 0;
+
+    color: #666;
+
+    font-size: 13px;
+}
+
+
+/* ========================================
+   STATUS DO PEDIDO
+======================================== */
+
+.pedido-admin-status {
+    justify-self: center;
+
+    padding: 7px 15px;
+
+    background-color: #fff0c2;
+
+    border-radius: 20px;
+
+    color: #805e00;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-align: center;
+}
+
+
+/* ========================================
+   TOTAL DO PEDIDO
+======================================== */
+
+.pedido-admin-total {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 3px;
+}
+
+.pedido-admin-total span {
+    color: #777;
+
+    font-size: 12px;
+}
+
+.pedido-admin-total strong {
+    color: #111;
+
+    font-size: 16px;
+}
+
+
+/* ========================================
+   SEM PEDIDOS
+======================================== */
+
+.sem-pedidos-admin {
+    padding: 30px;
+
+    background-color: #fafafa;
+
+    border: 1px solid #eee;
+    border-radius: 13px;
+
+    color: #666;
+
+    text-align: center;
+}
+
+.sem-pedidos-admin p {
+    margin: 0;
+}
+
+
+/* ========================================
+   GERENCIAMENTO
+======================================== */
+
+.gerenciamento-admin {
+    margin-bottom: 30px;
+}
+
+.gerenciamento-admin > h2 {
+    margin: 0 0 15px;
+
+    color: #111;
+
+    font-size: 23px;
+}
+
+.gerenciamento-card {
+    display: block;
+
+    padding: 22px;
+
+    background-color: #fff;
+
+    border: 1px solid #eee;
+    border-radius: 13px;
+
+    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.06);
+
+    color: inherit;
+
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.gerenciamento-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.09);
+}
+
+.gerenciamento-card h3 {
+    margin: 0 0 6px;
+
+    color: #111;
+
+    font-size: 17px;
+}
+
+.gerenciamento-card p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 1100px) {
+
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .container-admin {
+        display: block;
+    }
+
+    .sidebar-admin {
+        width: 100%;
+        min-width: 0;
+        min-height: auto;
+
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .admin-info {
+        text-align: left;
+    }
+
+    .sidebar-admin-menu {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sidebar-admin-sair {
+        margin-top: 14px;
+    }
+
+    .conteudo-admin {
+        padding: 28px 22px;
+    }
+
+    .pedido-admin-card {
+        grid-template-columns: 1fr;
+    }
+
+    .pedido-admin-status {
+        justify-self: start;
+    }
+
+    .pedido-admin-total {
+        align-items: flex-start;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-admin-menu {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-cabecalho h1 {
+        font-size: 27px;
+    }
+
+    .conteudo-admin {
+        padding: 24px 16px;
+    }
+
+}
