@@ -4,7 +4,7 @@ from django.contrib import messages
 
 # Usuário
 from apps.pedidos.models import Pedido
-from .forms import EnderecoForm
+from .forms import EnderecoForm, UsuarioEditarForm
 
 @login_required
 def meus_dados(request):
@@ -46,3 +46,29 @@ def endereco_cadastrar(request):
     }
 
     return render(request, 'privado/endereco_cadastrar.html', context)
+
+@login_required
+def editar_perfil(request):
+    if request.method == 'POST':
+        form = UsuarioEditarForm(
+            request.POST,
+            instance=request.user
+        )
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, 'Dados atualizados com sucesso!')
+
+            return redirect('meus_dados')
+
+    else:
+        form = UsuarioEditarForm(
+            instance=request.user
+        )
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'privado/editar_perfil.html', context)

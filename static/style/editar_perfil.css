@@ -1,0 +1,341 @@
+/* ========================================
+   ESTRUTURA
+======================================== */
+
+.container {
+    display: flex;
+
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+
+    padding: 30px 20px;
+
+    background-color: #fff;
+
+    border-right: 2px solid #e6e6e6;
+}
+
+.conteudo {
+    flex: 1;
+
+    padding: 40px;
+}
+
+
+/* ========================================
+   INFORMAÇÕES DO USUÁRIO
+======================================== */
+
+.perfil-user {
+    margin-bottom: 40px;
+
+    text-align: center;
+}
+
+.perfil-user .perfil-nome {
+    margin-bottom: 5px;
+
+    color: #222;
+
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.perfil-user p {
+    color: #595959;
+
+    font-size: 14px;
+}
+
+
+/* ========================================
+   MENU LATERAL
+======================================== */
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 15px;
+    padding: 15px;
+
+    background-color: #fff8e7;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.sidebar nav ul li:hover {
+    background-color: #f7b731;
+    color: #fff;
+}
+
+
+/* ========================================
+   BOTÃO SAIR
+======================================== */
+
+.sair {
+    margin-top: 40px;
+
+    background-color: #ffdddd !important;
+    color: #cc0000;
+}
+
+.sair:hover {
+    background-color: #cc0000 !important;
+    color: #fff;
+}
+
+
+/* ========================================
+   EDIÇÃO DO PERFIL
+======================================== */
+
+.editar-perfil {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.editar-cabecalho {
+    margin-bottom: 25px;
+}
+
+.editar-cabecalho h1 {
+    margin-bottom: 8px;
+
+    color: #222;
+
+    font-size: 32px;
+}
+
+.editar-cabecalho p {
+    color: #666;
+}
+
+
+/* ========================================
+   FORMULÁRIO
+======================================== */
+
+.editar-form {
+    padding: 30px;
+
+    background: #fff;
+
+    border-radius: 15px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.form-row {
+    display: flex;
+
+    gap: 20px;
+}
+
+.form-item {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    margin-bottom: 22px;
+}
+
+.form-item label {
+    margin-bottom: 8px;
+
+    color: #333;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   CAMPOS
+======================================== */
+
+.form-item input {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    background: #fff;
+
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+
+    font-size: 15px;
+}
+
+.form-item input:focus {
+    border-color: #111;
+
+    outline: 2px solid #111;
+    outline-offset: 2px;
+}
+
+
+/* ========================================
+   CPF BLOQUEADO
+======================================== */
+
+.campo-bloqueado {
+    padding: 12px 14px;
+
+    background: #f5f5f5;
+    color: #666;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.form-item small {
+    margin-top: 7px;
+
+    color: #777;
+
+    font-size: 12px;
+}
+
+
+/* ========================================
+   ERROS
+======================================== */
+
+.errorlist {
+    margin-top: 7px;
+    padding: 0;
+
+    color: #b60000;
+
+    font-size: 13px;
+
+    list-style: none;
+}
+
+.erro-form {
+    margin-bottom: 20px;
+    padding: 12px;
+
+    background: #fff5f5;
+    color: #b60000;
+
+    border: 1px solid #f3b5b5;
+    border-radius: 8px;
+}
+
+
+/* ========================================
+   AÇÕES
+======================================== */
+
+.form-acoes {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 10px;
+}
+
+.btn-cancelar,
+.btn-salvar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 22px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-cancelar {
+    background: #fff;
+    color: #000;
+
+    border: 1px solid #000;
+}
+
+.btn-cancelar:hover {
+    background: #f3f3f3;
+}
+
+.btn-salvar {
+    background: #000;
+    color: #fff;
+
+    border: 1px solid #000;
+}
+
+.btn-salvar:hover {
+    background: #222;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 768px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+
+        border-right: none;
+        border-bottom: 2px solid #e6e6e6;
+    }
+
+    .conteudo {
+        padding: 20px;
+    }
+
+    .editar-form {
+        padding: 25px;
+    }
+
+    .form-row {
+        flex-direction: column;
+
+        gap: 0;
+    }
+
+    .form-acoes {
+        flex-direction: column-reverse;
+    }
+
+    .btn-cancelar,
+    .btn-salvar {
+        width: 100%;
+    }
+}

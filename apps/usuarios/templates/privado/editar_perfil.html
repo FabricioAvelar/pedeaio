@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Editar Perfil
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/editar_perfil.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container">
+    <aside class="sidebar">
+        <div class="perfil-user">
+            <p class="perfil-nome">
+                {{ request.user.first_name|default:request.user.username }}
+            </p>
+
+            <p>{{ request.user.email }}</p>
+        </div>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'meus_dados' %}">
+                        🏠 Meu Perfil
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'meus_pedidos' %}">
+                        🛍️ Meus Pedidos
+                    </a>
+                </li>
+
+                <li>📍 Endereços</li>
+                <li>❤️ Favoritos</li>
+                <li>🎟️ Cupons</li>
+
+                <li class="sair">
+                    <a href="{% url 'logout' %}">
+                        🚪 Sair
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+        <section class="editar-perfil">
+            <div class="editar-cabecalho">
+                <h1>Editar perfil</h1>
+                <p>
+                    Atualize suas informações pessoais.
+                </p>
+            </div>
+
+            <form method="POST" class="editar-form">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="erro-form">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <div class="form-row">
+                    <div class="form-item">
+                        <label for="{{ form.first_name.id_for_label }}">
+                            Nome
+                        </label>
+
+                        {{ form.first_name }}
+                        {{ form.first_name.errors }}
+                    </div>
+
+                    <div class="form-item">
+                        <label for="{{ form.last_name.id_for_label }}">
+                            Sobrenome
+                        </label>
+
+                        {{ form.last_name }}
+                        {{ form.last_name.errors }}
+                    </div>
+                </div>
+
+                <div class="form-item">
+                    <label for="{{ form.email.id_for_label }}">
+                        E-mail
+                    </label>
+
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+
+                <div class="form-item">
+                    <label for="{{ form.nascimento.id_for_label }}">
+                        Data de nascimento
+                    </label>
+
+                    {{ form.nascimento }}
+                    {{ form.nascimento.errors }}
+                </div>
+
+                <div class="form-item">
+                    <label>CPF</label>
+                    <div class="campo-bloqueado">
+                        {{ request.user.cpf }}
+                    </div>
+
+                    <small>
+                        O CPF não pode ser alterado.
+                    </small>
+                </div>
+
+                <div class="form-acoes">
+                    <a href="{% url 'meus_dados' %}" class="btn-cancelar">
+                        Cancelar
+                    </a>
+
+                    <button type="submit" class="btn-salvar">
+                        Salvar alterações
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+
+{% endblock %}
