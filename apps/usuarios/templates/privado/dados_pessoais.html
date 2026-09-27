@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Meus Dados
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}">
+<link rel="stylesheet" href="{% static 'style/dados_pessoais.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container">
+    <aside class="sidebar">
+        <div class="perfil-user">
+            <p class="perfil-nome">
+                {{ request.user.first_name|default:request.user.username }}
+            </p>
+
+            <p>{{ request.user.email }}</p>
+        </div>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'meus_dados' %}">
+                        🏠 Meu Perfil
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'dados_pessoais' %}">
+                        👤 Meus Dados
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'meus_pedidos' %}">
+                        🛍️ Meus Pedidos
+                    </a>
+                </li>
+
+                <li>📍 Endereços</li>
+                <li>❤️ Favoritos</li>
+                <li>🎟️ Cupons</li>
+
+                <li class="sair">
+                    <a href="{% url 'logout' %}">
+                        🚪 Sair
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+        <section class="dados-pessoais">
+            <div class="dados-cabecalho">
+                <div>
+                    <h1>Meus Dados</h1>
+                    <p>
+                        Consulte suas informações pessoais e de contato.
+                    </p>
+                </div>
+
+                <a href="{% url 'editar_perfil' %}"
+                   class="btn-editar-dados">
+                    Editar dados
+                </a>
+            </div>
+
+            <div class="dados-card">
+                <h2>Informações pessoais</h2>
+                <div class="dados-grid">
+                    <div class="dado-item">
+                        <span>Nome</span>
+                        <strong>
+                            {{ request.user.first_name }}
+                            {{ request.user.last_name }}
+                        </strong>
+                    </div>
+                    <div class="dado-item">
+                        <span>E-mail</span>
+                        <strong>{{ request.user.email }}</strong>
+                    </div>
+                    <div class="dado-item">
+                        <span>CPF</span>
+                        <strong>{{ request.user.cpf }}</strong>
+                    </div>
+                    <div class="dado-item">
+                        <span>Data de nascimento</span>
+                        <strong>
+                            {% if request.user.nascimento %}
+                                {{ request.user.nascimento|date:"d/m/Y" }}
+                            {% else %}
+                                Não informada
+                            {% endif %}
+                        </strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dados-card">
+                <div class="card-cabecalho">
+                    <h2>Endereços</h2>
+                </div>
+
+                {% if enderecos %}
+                    <div class="lista-enderecos">
+
+                        {% for endereco in enderecos %}
+                            <div class="endereco-item">
+                                <div class="endereco-icone">
+                                    📍
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        {{ endereco.rua }},
+                                        {{ endereco.numero }}
+                                    </strong>
+
+                                    <p>
+                                        {{ endereco.cidade }}/{{ endereco.estado }}
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+
+                    <div class="sem-endereco">
+                        <p>
+                            Nenhum endereço cadastrado.
+                        </p>
+                    </div>
+
+                {% endif %}
+            </div>
+        </section>
+    </main>
+</div>
+
+{% endblock %}

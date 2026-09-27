@@ -60,7 +60,7 @@ def editar_perfil(request):
 
             messages.success(request, 'Dados atualizados com sucesso!')
 
-            return redirect('meus_dados')
+            return redirect('dados_pessoais')
 
     else:
         form = UsuarioEditarForm(
@@ -72,3 +72,13 @@ def editar_perfil(request):
     }
 
     return render(request, 'privado/editar_perfil.html', context)
+
+@login_required
+def dados_pessoais(request):
+    enderecos = request.user.enderecos.all()
+
+    context = {
+        'enderecos': enderecos,
+    }
+
+    return render(request, 'privado/dados_pessoais.html', context)
