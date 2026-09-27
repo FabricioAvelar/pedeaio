@@ -54,13 +54,17 @@ Meus Endereços
                             </div>
 
                             <div class="endereco-acoes">
-                                <button type="button" class="btn-editar-endereco" disabled>
+                                <a href="{% url 'endereco_editar' endereco.id %}" class="btn-editar-endereco">
                                     Editar
-                                </button>
+                                </a>
 
-                                <button type="button" class="btn-excluir-endereco" disabled>
-                                    Excluir
-                                </button>
+                                <form method="POST" action="{% url 'endereco_excluir' endereco.id %}" class="form-excluir-endereco">
+                                    {% csrf_token %}
+                                    
+                                    <button type="submit" class="btn-excluir-endereco" onclick="return confirm('Deseja realmente excluir este endereço?');">
+                                        Excluir
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     {% endfor %}

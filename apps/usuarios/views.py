@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-# Usuário
+# Pedidos
 from apps.pedidos.models import Pedido
+
+# Usuários
+from .models import Endereco
 from .forms import EnderecoForm, UsuarioEditarForm
 
 @login_required
@@ -92,3 +95,55 @@ def meus_enderecos(request):
     }
 
     return render(request, 'privado/meus_enderecos.html', context)
+
+@login_required
+def endereco_editar(request, endereco_id):
+    endereco = get_object_or_404(
+        Endereco,
+        id=endereco_id,
+        usuario=request.user
+    )
+
+    if request.method == 'POST':
+        form = EnderecoForm(
+            request.POST,
+            instance=endereco
+        )
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(
+                request,
+                'Endereço atualizado com sucesso!'
+            )
+
+            return redirect('meus_enderecos')
+
+    else:
+        form = EnderecoForm(instance=endereco)
+
+    context = {
+        'form': form,
+        'endereco': endereco,
+    }
+
+    return render(request, 'privado/endereco_editar.html', context)
+
+@login_required
+def endereco_excluir(request, endereco_id):
+    endereco = get_object_or_404(
+        Endereco,
+        id=endereco_id,
+        usuario=request.user
+    )
+
+    if request.method == 'POST':
+        endereco.delete()
+
+        messages.success(
+            request,
+            'Endereço excluído com sucesso!'
+        )
+
+    return redirect('meus_enderecos')

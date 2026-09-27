@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Editar Endereço
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}">
+<link rel="stylesheet" href="{% static 'style/endereco_editar.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container">
+
+    {% include 'privado/sidebar.html' %}
+
+    <main class="conteudo">
+        <section class="editar-endereco">
+            <div class="editar-endereco-cabecalho">
+                <h1>Editar Endereço</h1>
+                <p>
+                    Atualize as informações do endereço selecionado.
+                </p>
+            </div>
+
+            <form method="POST" class="endereco-form">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="erro-form">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <div class="form-item">
+                    <label for="{{ form.rua.id_for_label }}">
+                        Rua
+                    </label>
+
+                    {{ form.rua }}
+                    {{ form.rua.errors }}
+                </div>
+
+                <div class="form-item">
+                    <label for="{{ form.numero.id_for_label }}">
+                        Número
+                    </label>
+
+                    {{ form.numero }}
+                    {{ form.numero.errors }}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-item">
+                        <label for="{{ form.cidade.id_for_label }}">
+                            Cidade
+                        </label>
+
+                        {{ form.cidade }}
+                        {{ form.cidade.errors }}
+                    </div>
+
+                    <div class="form-item estado">
+                        <label for="{{ form.estado.id_for_label }}">
+                            Estado
+                        </label>
+
+                        {{ form.estado }}
+                        {{ form.estado.errors }}
+                    </div>
+                </div>
+
+                <div class="form-acoes">
+                    <a href="{% url 'meus_enderecos' %}" class="btn-cancelar">
+                        Cancelar
+                    </a>
+
+                    <button type="submit" class="btn-salvar">
+                        Salvar alterações
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+{% endblock %}

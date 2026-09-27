@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import meus_dados, endereco_cadastrar, editar_perfil, dados_pessoais, meus_enderecos
+from .views import meus_dados, endereco_cadastrar, editar_perfil, dados_pessoais, meus_enderecos, endereco_editar, endereco_excluir
 
 urlpatterns = [
     path('meus_dados/', meus_dados, name='meus_dados'),
@@ -8,4 +8,7 @@ urlpatterns = [
     
     path('enderecos/', meus_enderecos, name='meus_enderecos'),
     path('endereco/cadastrar/', endereco_cadastrar, name='endereco_cadastrar'),
+    path('endereco/<int:endereco_id>/editar/', endereco_editar, name='endereco_editar'),
+    path('endereco/<int:endereco_id>/excluir/', endereco_excluir, name='endereco_excluir'),
+    
 ]
