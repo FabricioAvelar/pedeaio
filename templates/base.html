@@ -7,27 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>PedeAió – {% block titulo %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="icon" type="image/png" href="{% static 'imgs/hamburguer.png' %}?v=3">
-    <link rel="stylesheet" href="{% static 'style/base.css' %}?v=2">
+    <link rel="stylesheet" href="{% static 'style/base.css' %}?v=10">
 
     {% block estilo %}
     {% endblock %}
-    
 </head>
 
 <body>
 
     {% include 'menu.html' %}
-
-    {% if messages %}
-        <div class="messages-container">
-            {% for message in messages %}
-                <div class="message {{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
 
     {% block conteudo %}
     {% endblock %}
@@ -38,5 +28,4 @@
     {% endblock %}
 
 </body>
-
 </html>
