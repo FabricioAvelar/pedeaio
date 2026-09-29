@@ -12,18 +12,18 @@
 {% block conteudo %}
 <div class="container">
     <div class="product">
-        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+        {% if produto.imagem %}
+            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+        {% else %}
+            <img src="{% static 'imgs/sem-imagem.png' %}" alt="Sem imagem disponível para {{ produto.nome }}">
+        {% endif %}
+
         <div class="info">
-
-            
-
             <h1>{{ produto.nome }}</h1>
 
             <p class="price">
                 R$ {{ produto.preco }}
             </p><br>
-
-            
 
             <a href="{% url 'adicionar_produto' produto.id %}" class="btn-car">
                 Adicionar ao carrinho

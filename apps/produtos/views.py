@@ -155,7 +155,7 @@ def produto_detalhes(request, id):
         'produto': produto
     }
 
-    return render(request, 'privado/produto_detalhes.html', context)
+    return render(request, 'produto_detalhes.html', context)
 
 @login_required
 def adicionar_produto(request, produto_id):
