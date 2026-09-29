@@ -29,6 +29,12 @@ class Pedido(models.Model):
         decimal_places=2
     )
 
+    taxa_entrega = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        default=0
+    )
+
     status = models.CharField(
         max_length=30,
         choices=STATUS_CHOICES,

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Finalizar Pedido
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/carrinho.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<main class="container">
+
+    <section class="cart">
+
+        <h1>FINALIZAR PEDIDO</h1>
+
+        <h2>Escolha o endereço de entrega</h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {% for endereco in enderecos %}
+
+                <div class="endereco-opcao">
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="endereco"
+                            value="{{ endereco.id }}"
+                            required
+                        >
+
+                        <strong>
+                            {{ endereco.rua }}, {{ endereco.numero }}
+                        </strong>
+
+                        <br>
+
+                        {{ endereco.cidade }}/{{ endereco.estado }}
+
+                    </label>
+
+                </div>
+
+            {% endfor %}
+
+            <h2>Itens do pedido</h2>
+
+            {% for item in itens %}
+
+                <div class="item">
+
+                    <div class="info">
+
+                        <h3>{{ item.produto.nome }}</h3>
+
+                        <p>
+                            {{ item.quantidade }} x
+                            R$ {{ item.produto.preco }}
+                        </p>
+
+                    </div>
+
+                    <div class="price">
+                        R$ {{ item.subtotal }}
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+            <div class="line">
+
+                <span>Subtotal</span>
+
+                <span>
+                    R$ {{ total }}
+                </span>
+
+            </div>
+
+            <button type="submit" class="btn full">
+                Confirmar Pedido
+            </button>
+
+        </form>
+
+    </section>
+
+</main>
+
+{% endblock %}

@@ -18,9 +18,11 @@ Pedido #{{ pedido.id }}
     <main class="conteudo">
 
         <section class="pedido-detalhes">
+
             <div class="pedido-detalhes-cabecalho">
-                
+
                 <div>
+
                     <h1>Pedido #{{ pedido.id }}</h1>
 
                     <p class="pedido-data">
@@ -29,77 +31,104 @@ Pedido #{{ pedido.id }}
                         às
                         {{ pedido.criado_em|date:"H:i" }}
                     </p>
-            </div>
-
-            <span class="pedido-status">{{ pedido.get_status_display }}</span>
-
-        </div>
-
-
-    <div class="pedido-detalhes-card">
-
-        <div class="pedido-secao">
-
-            <h2>Itens do pedido</h2>
-
-            {% for item in pedido.itens.all %}
-
-                <div class="pedido-item">
-
-                    <div class="pedido-item-info">
-                        <strong>{{ item.produto.nome }}</strong>
-
-                        <span>
-                            {{ item.quantidade }} x
-                            R$ {{ item.preco_unitario }}
-                        </span>
-                    </div>
-
-                    <strong class="pedido-item-subtotal">
-                        R$ {{ item.subtotal }}
-                    </strong>
 
                 </div>
 
-            {% endfor %}
+                <span class="pedido-status">
+                    {{ pedido.get_status_display }}
+                </span>
 
-        </div>
-
-
-        <div class="pedido-secao">
-
-            <h2>📍 Endereço de entrega</h2>
-
-            <p>
-                {{ pedido.endereco.rua }},
-                {{ pedido.endereco.numero }}
-            </p>
-
-            <p>
-                {{ pedido.endereco.cidade }}/{{ pedido.endereco.estado }}
-            </p>
-
-        </div>
+            </div>
 
 
-        <div class="pedido-total">
+            <div class="pedido-detalhes-card">
 
-            <span>Total do pedido</span>
+                <div class="pedido-secao">
 
-            <strong>
-                R$ {{ pedido.valor_total }}
-            </strong>
+                    <h2>Itens do pedido</h2>
 
-        </div>
+                    {% for item in pedido.itens.all %}
 
-    </div>
+                        <div class="pedido-item">
+
+                            <div class="pedido-item-info">
+
+                                <strong>
+                                    {{ item.produto.nome }}
+                                </strong>
+
+                                <span>
+                                    {{ item.quantidade }} x
+                                    R$ {{ item.preco_unitario }}
+                                </span>
+
+                            </div>
+
+                            <strong class="pedido-item-subtotal">
+                                R$ {{ item.subtotal }}
+                            </strong>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
 
 
-    <a href="{% url 'meus_pedidos' %}" class="voltar-pedidos">
-        ← Voltar para Meus Pedidos
-    </a>
+                <div class="pedido-secao">
 
-</section>
+                    <h2>📍 Endereço de entrega</h2>
+
+                    <p>
+                        {{ pedido.endereco.rua }},
+                        {{ pedido.endereco.numero }}
+                    </p>
+
+                    <p>
+                        {{ pedido.endereco.cidade }}/{{ pedido.endereco.estado }}
+                    </p>
+
+                </div>
+
+
+                <div class="pedido-total">
+
+                    <div>
+                        <span>Subtotal</span>
+
+                        <strong>
+                            R$ {{ subtotal }}
+                        </strong>
+                    </div>
+
+
+                    <div>
+                        <span>Taxa de entrega</span>
+
+                        <strong>
+                            R$ {{ pedido.taxa_entrega }}
+                        </strong>
+                    </div>
+
+
+                    <div>
+                        <span>Total do pedido</span>
+
+                        <strong>
+                            R$ {{ pedido.valor_total }}
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <a href="{% url 'meus_pedidos' %}" class="voltar-pedidos">
+                ← Voltar para Meus Pedidos
+            </a>
+
+        </section>
 
     </main>
 
