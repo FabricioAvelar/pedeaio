@@ -12,12 +12,10 @@ Painel Administrativo
 {% block conteudo %}
 
 <div class="dashboard-header">
-
     <h1>Painel Administrativo</h1>
     <p>Gerencie os produtos e acompanhe o funcionamento do sistema.</p>
 
     <div class="dashboard-cards">
-
         <div class="dashboard-card">
             <h3>📦 Produtos</h3>
             <p>{{ produtos|length }}</p>
@@ -37,15 +35,12 @@ Painel Administrativo
             <h3>💰 Vendas</h3>
             <p>Em breve</p>
         </div>
-
     </div>
-
 </div>
 
+
 <div class="container-gerenciar">
-
     <div class="painel">
-
         <div class="painel-header">
             <h2>Gerenciamento de Produtos</h2>
             <p>Cadastre, edite e remova produtos do cardápio.</p>
@@ -53,11 +48,11 @@ Painel Administrativo
         </div>
 
         <table>
-
             <thead>
                 <tr>
                     <th>Imagem</th>
                     <th>Produto</th>
+                    <th>Categoria</th>
                     <th>Preço</th>
                     <th>Ações</th>
                 </tr>
@@ -65,115 +60,142 @@ Painel Administrativo
 
             <tbody>
 
-            {% for produto in produtos %}
+                {% for produto in produtos %}
+                    <tr>
+                        <td>
+                            {% if produto.imagem %}
+                                <img
+                                    src="{{ produto.imagem.url }}"
+                                    width="75px"
+                                    alt="{{ produto.nome }}"
+                                >
+                            {% else %}
+                                <span>Sem imagem</span>
+                            {% endif %}
+                        </td>
 
-                <tr>
+                        <td>
+                            {{ produto.nome }}
+                        </td>
 
-                    <td>
-                        {% if produto.imagem %}
-                            <img src="{{ produto.imagem.url }}" width="75px" alt="{{ produto.nome }}">
-                        {% else %}
-                            <span>Sem imagem</span>
-                        {% endif %}
-                    </td>
+                        <td>
+                            {{ produto.categoria.nome }}
+                        </td>
 
-                    <td>{{ produto.nome }}</td>
+                        <td>
+                            R$ {{ produto.preco }}
+                        </td>
 
-                    <td>R$ {{ produto.preco }}</td>
+                        <td>
+                            <a href="{% url 'produto_editar' produto.id %}">
+                                <button type="button" class="btn-editar">
+                                    Editar
+                                </button>
+                            </a>
 
-                    <td>
+                            <form action="{% url 'produto_remover' produto.id %}" method="POST" style="display:inline;">
+                                {% csrf_token %}
 
-                        <a href="{% url 'produto_editar' produto.id %}">
-                            <button type="button" class="btn-editar">
-                                Editar
-                            </button>
-                        </a>
+                                <button class="btn-excluir" type="submit">
+                                    Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
 
-                        <form action="{% url 'produto_remover' produto.id %}" method="POST" style="display:inline;">
-                            {% csrf_token %}
-                            <button class="btn-excluir" type="submit">
-                                Excluir
-                            </button>
-                        </form>
+                {% empty %}
 
-                    </td>
-
-                </tr>
-
-            {% empty %}
-
-                <tr>
-
-                    <td colspan="4" style="text-align:center;padding:25px;">
-                        Nenhum produto cadastrado.
-
-                    </td>
-
-                </tr>
-
-            {% endfor %}
-
+                    <tr>
+                        <td colspan="5" style="text-align:center;padding:25px;">
+                            Nenhum produto cadastrado.
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
-
         </table>
-
     </div>
 
     <div class="cadastro">
-
         <h2>
-
-            {% if form.instance.pk %}
+            {% if produto_form.instance.pk %}
                 Editar Produto
             {% else %}
                 Cadastrar Produto
             {% endif %}
-
         </h2>
 
         <form method="POST" enctype="multipart/form-data">
-
             {% csrf_token %}
 
             <div class="campo">
-                <label for="{{ form.nome.id_for_label }}">Nome</label>
-                {{ form.nome }}
+                <label for="{{ produto_form.nome.id_for_label }}">
+                    Nome
+                </label>
+
+                {{ produto_form.nome }}
             </div>
 
             <div class="campo">
-                <label for="{{ form.descricao.id_for_label }}">Descrição</label>
-                {{ form.descricao }}
+                <label for="{{ produto_form.descricao.id_for_label }}">
+                    Descrição
+                </label>
+
+                {{ produto_form.descricao }}
             </div>
 
             <div class="campo">
-                <label for="{{ form.preco.id_for_label }}">Preço</label>
-                {{ form.preco }}
+                <label for="{{ produto_form.preco.id_for_label }}">
+                    Preço
+                </label>
+
+                {{ produto_form.preco }}
             </div>
 
             <div class="campo">
-                <label for="{{ form.categoria.id_for_label }}">Categoria</label>
-                {{ form.categoria }}
+                <label for="{{ produto_form.categoria.id_for_label }}">
+                    Categoria
+                </label>
+
+                {{ produto_form.categoria }}
             </div>
 
             <div class="campo">
-                <label for="{{ form.imagem.id_for_label }}">Imagem</label>
-                {{ form.imagem }}
+                <label for="{{ produto_form.imagem.id_for_label }}">
+                    Imagem
+                </label>
+
+                {{ produto_form.imagem }}
             </div>
 
-            <button class="btn-salvar" type="submit">
-
-                {% if form.instance.pk %}
+            <button class="btn-salvar" type="submit" name="cadastrar_produto">
+                {% if produto_form.instance.pk %}
                     Salvar Alterações
                 {% else %}
                     Cadastrar Produto
                 {% endif %}
-
             </button>
-
         </form>
+<br>
+        <hr>
+<br>
+        <h2>
+            Cadastrar Categoria
+        </h2>
 
+        <form method="POST">
+            {% csrf_token %}
+            <div class="campo">
+                <label for="{{ categoria_form.nome.id_for_label }}">
+                    Nome da categoria
+                </label>
+
+                {{ categoria_form.nome }}
+            </div>
+
+            <button class="btn-salvar" type="submit" name="cadastrar_categoria">
+                Cadastrar Categoria
+            </button>
+        </form>
     </div>
-
 </div>
-
 {% endblock %}

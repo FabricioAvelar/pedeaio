@@ -10,32 +10,20 @@ Produtos
 {% endblock %}
 
 {% block conteudo %}
-
 <section class="features">
-
     <h1>Produtos</h1>
     <p class="subheading">Em estoque</p>
 
     <form method="GET" class="busca">
-
         <div class="busca-campo busca-produto">
-
             <label for="buscar">
                 Buscar produto
             </label>
 
-            <input
-                type="text"
-                id="buscar"
-                name="buscar"
-                placeholder="Digite o nome do produto..."
-                value="{{ busca|default_if_none:'' }}"
-            >
-
+            <input type="text" id="buscar" name="buscar" placeholder="Digite o nome ou descrição..." value="{{ busca }}">
         </div>
 
         <div class="busca-campo busca-categoria">
-
             <label for="categoria">
                 Categoria
             </label>
@@ -46,111 +34,104 @@ Produtos
                     Todas as categorias
                 </option>
 
-                <option value="Hamburguer">
-                    Hambúrguer
-                </option>
-
-                <option value="Pizza">
-                    Pizza
-                </option>
-
-                <option value="Batata">
-                    Batata
-                </option>
-
-                <option value="Bebida">
-                    Bebidas
-                </option>
-
-                <option value="Sobremesa">
-                    Sobremesas
-                </option>
-
-                <option value="Salgado">
-                    Salgados
-                </option>
-
+                {% for item in categorias %}
+                    <option
+                        value="{{ item.id }}"
+                        {% if categoria == item.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ item.nome }}
+                    </option>
+                {% endfor %}
             </select>
-
         </div>
 
         <button type="submit" class="btn-buscar">
             Buscar
         </button>
 
+        {% if busca or categoria %}
+            <a href="{% url 'produtos' %}" class="btn-limpar">
+                Limpar
+            </a>
+        {% endif %}
     </form>
 
 
-    <div class="features-grid">
+        {% if categorias_com_produtos %}
+            <div class="catalogo-categorias">
 
-        {% for produto in produtos %}
-
-            <div class="feature">
-
-                <a
-                    href="{% url 'produto_detalhes' produto.id %}"
-                    style="text-decoration: none; color: inherit;"
-                >
-
-                    <div class="image">
-
-                        {% if produto.imagem %}
-
-                            <img
-                                src="{{ produto.imagem.url }}"
-                                alt="{{ produto.nome }}"
-                                width="230"
-                                height="190"
-                            >
-
-                        {% else %}
-
-                            <img
-                                src="{% static 'imgs/sem-imagem.png' %}"
-                                alt="Sem imagem disponível para {{ produto.nome }}"
-                                width="230"
-                                height="190"
-                            >
-
-                        {% endif %}
-
-                    </div>
-
-                    <h2>{{ produto.nome }}</h2>
-
-                    <p>
-                        R$ {{ produto.preco }}
-                    </p>
-
-                </a>
-
-                <a
-                    href="{% url 'adicionar_produto' produto.id %}"
-                    class="btn-outline btn-carrinho"
-                >
-                    Adicionar ao carrinho
-                </a>
-
-            </div>
-
-        {% empty %}
-
-            <div class="sem-produtos">
-
-                <h2>
-                    Nenhum produto cadastrado.
+            {% for grupo in categorias_com_produtos %}
+            <section class="categoria-bloco">
+                <h2 class="categoria-titulo">
+                    {{ grupo.categoria.nome }}
                 </h2>
 
-                <p>
-                    Tente alterar a busca ou selecionar outra categoria.
-                </p>
+                <div class="features-grid">
+                    {% for produto in grupo.produtos %}
+                        <div class="feature">
+                            <a
+                                href="{% url 'produto_detalhes' produto.id %}"
+                                class="produto-link"
+                            >
 
-            </div>
+                                <div class="image">
+
+                                    {% if produto.imagem %}
+
+                                        <img
+                                            src="{{ produto.imagem.url }}"
+                                            alt="{{ produto.nome }}"
+                                            width="230"
+                                            height="190"
+                                        >
+
+                                    {% else %}
+
+                                        <img
+                                            src="{% static 'imgs/sem-imagem.png' %}"
+                                            alt="Sem imagem disponível para {{ produto.nome }}"
+                                            width="230"
+                                            height="190"
+                                        >
+
+                                    {% endif %}
+
+                                </div>
+
+                                <h3>
+                                    {{ produto.nome }}
+                                </h3>
+
+                                <p>
+                                    R$ {{ produto.preco }}
+                                </p>
+
+                            </a>
+
+                            <a
+                                href="{% url 'adicionar_produto' produto.id %}"
+                                class="btn-outline btn-carrinho"
+                            >
+                                Adicionar ao carrinho
+                            </a>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
 
         {% endfor %}
-
     </div>
 
+        {% else %}
+            <div class="sem-produtos">
+                <h2>Nenhum produto encontrado.</h2>
+                <p>Tente alterar a busca ou selecionar outra categoria.</p>
+            </div>
+
+    {% endif %}
 </section>
 
 {% endblock %}

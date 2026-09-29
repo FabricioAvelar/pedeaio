@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 # Usuário
-from .models import Produto, Carrinho, ItemCarrinho
-from .forms import ProdutoForm
+from .models import Produto, Categoria, Carrinho, ItemCarrinho
+from .forms import ProdutoForm, CategoriaForm
 
 
 @login_required
@@ -11,24 +12,38 @@ def produto_gerenciar(request):
     if not request.user.is_staff:
         return redirect('index')
 
+    produto_form = ProdutoForm()
+    categoria_form = CategoriaForm()
+
     if request.method == 'POST':
-        form = ProdutoForm(
-            request.POST,
-            request.FILES
-        )
+        if 'cadastrar_produto' in request.POST:
+            produto_form = ProdutoForm(
+                request.POST,
+                request.FILES
+            )
 
-        if form.is_valid():
-            form.save()
-            return redirect('produto_gerenciar')
+            if produto_form.is_valid():
+                produto_form.save()
+                return redirect('produto_gerenciar')
 
-    else:
-        form = ProdutoForm()
+        elif 'cadastrar_categoria' in request.POST:
+            categoria_form = CategoriaForm(
+                request.POST
+            )
 
-    produtos = Produto.objects.all()
+            if categoria_form.is_valid():
+                categoria_form.save()
+                return redirect('produto_gerenciar')
+
+    produtos = Produto.objects.select_related('categoria').all()
+
+    categorias = Categoria.objects.all()
 
     context = {
-        'form': form,
-        'produtos': produtos
+        'produto_form': produto_form,
+        'categoria_form': categoria_form,
+        'produtos': produtos,
+        'categorias': categorias
     }
 
     return render(request, 'privado/produto_gerenciar.html', context)
@@ -44,23 +59,32 @@ def produto_editar(request, id):
     )
 
     if request.method == 'POST':
-        form = ProdutoForm(
+        produto_form = ProdutoForm(
             request.POST,
             request.FILES,
             instance=produto
         )
 
-        if form.is_valid():
-            form.save()
+        if produto_form.is_valid():
+            produto_form.save()
             return redirect('produto_gerenciar')
 
     else:
-        form = ProdutoForm(
+        produto_form = ProdutoForm(
             instance=produto
         )
 
+    categoria_form = CategoriaForm()
+
+    produtos = Produto.objects.select_related('categoria').all()
+
+    categorias = Categoria.objects.all()
+
     context = {
-        'form': form
+        'produto_form': produto_form,
+        'categoria_form': categoria_form,
+        'produtos': produtos,
+        'categorias': categorias
     }
 
     return render(request, 'privado/produto_gerenciar.html', context)
@@ -81,25 +105,42 @@ def produto_remover(request, id):
     return redirect('produto_gerenciar')
 
 def produtos(request):
-    produtos = Produto.objects.all()
+    busca = request.GET.get('buscar', '').strip()
+    categoria_id = request.GET.get('categoria', '').strip()
 
-    busca = request.GET.get('buscar')
-    categoria = request.GET.get('categoria')
+    categorias = Categoria.objects.all().order_by('nome')
+
+    produtos = Produto.objects.select_related('categoria').all()
 
     if busca:
         produtos = produtos.filter(
-            nome__icontains=busca
+            Q(nome__icontains=busca) |
+            Q(descricao__icontains=busca)
         )
 
-    if categoria:
+    if categoria_id:
         produtos = produtos.filter(
+            categoria_id=categoria_id
+        )
+
+    categorias_com_produtos = []
+
+    for categoria in categorias:
+        produtos_categoria = produtos.filter(
             categoria=categoria
         )
 
+        if produtos_categoria.exists():
+            categorias_com_produtos.append({
+                'categoria': categoria,
+                'produtos': produtos_categoria
+            })
+
     context = {
-        'produtos': produtos,
+        'categorias': categorias,
+        'categorias_com_produtos': categorias_com_produtos,
         'busca': busca,
-        'categoria': categoria
+        'categoria': categoria_id
     }
 
     return render(request, 'produtos.html', context)
