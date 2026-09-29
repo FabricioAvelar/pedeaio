@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Gerenciar Categorias
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/categoria_gerenciar.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-categorias">
+    <div class="painel-categorias">
+        <div class="painel-header">
+            <h1>Gerenciar Categorias</h1>
+            <p>Cadastre, edite e remova categorias do catálogo.</p>
+        </div>
+
+        <div class="categoria-formulario">
+            <h2>
+                {% if categoria %}
+                    Editar Categoria
+                {% else %}
+                    Nova Categoria
+                {% endif %}
+            </h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="campo">
+                    <label for="{{ form.nome.id_for_label }}">
+                        Nome da categoria
+                    </label>
+
+                    {{ form.nome }}
+                </div>
+
+                <button type="submit" class="btn-salvar">
+                    {% if categoria %}
+                        Salvar Alterações
+                    {% else %}
+                        Cadastrar Categoria
+                    {% endif %}
+                </button>
+
+                {% if categoria %}
+
+                    <a href="{% url 'categoria_gerenciar' %}" class="btn-cancelar">
+                        Cancelar
+                    </a>
+
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="lista-categorias">
+            <h2>Categorias Cadastradas</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Produtos</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for item in categorias %}
+                        <tr>
+                            <td>
+                                {{ item.nome }}
+                            </td>
+                            <td>
+                                {{ item.produtos.count }}
+                            </td>
+
+                            <td class="acoes">
+                                <a href="{% url 'categoria_editar' item.id %}" class="btn-editar">
+                                    Editar
+                                </a>
+
+                                <form method="POST" action="{% url 'categoria_remover' item.id %}" class="form-excluir">
+                                    {% csrf_token %}
+
+                                    <button type="submit" class="btn-excluir" onclick="return confirm('Deseja realmente excluir esta categoria?')">
+                                        Excluir
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+                            <td colspan="3">
+                                Nenhuma categoria cadastrada.
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

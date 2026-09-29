@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.db.models.deletion import ProtectedError
+from django.contrib import messages
 
 # Usuário
 from .models import Produto, Categoria, Carrinho, ItemCarrinho
@@ -264,3 +266,83 @@ def quantidade_carrinho(request):
     return ItemCarrinho.objects.filter(
         carrinho=carrinho
     ).count()
+
+
+
+@login_required
+def categoria_gerenciar(request):
+    if not request.user.is_staff:
+        return redirect('index')
+
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('categoria_gerenciar')
+
+    else:
+        form = CategoriaForm()
+
+    categorias = Categoria.objects.all().order_by('nome')
+
+    context = {
+        'form': form,
+        'categorias': categorias
+    }
+
+    return render(request, 'privado/categoria_gerenciar.html', context)
+
+@login_required
+def categoria_editar(request, id):
+    if not request.user.is_staff:
+        return redirect('index')
+
+    categoria = get_object_or_404(
+        Categoria,
+        id=id
+    )
+
+    if request.method == 'POST':
+        form = CategoriaForm(
+            request.POST,
+            instance=categoria
+        )
+
+        if form.is_valid():
+            form.save()
+            return redirect('categoria_gerenciar')
+
+    else:
+        form = CategoriaForm(
+            instance=categoria
+        )
+
+    categorias = Categoria.objects.all().order_by('nome')
+
+    context = {
+        'form': form,
+        'categoria': categoria,
+        'categorias': categorias
+    }
+
+    return render(request, 'privado/categoria_gerenciar.html', context)
+
+@login_required
+def categoria_remover(request, id):
+    if not request.user.is_staff:
+        return redirect('index')
+
+    categoria = get_object_or_404(Categoria, id=id)
+
+    if request.method == 'POST':
+        try:
+            categoria.delete()
+
+        except ProtectedError:
+            messages.error(
+                request,
+                'Não é possível excluir esta categoria porque existem produtos vinculados a ela.'
+            )
+
+    return redirect('categoria_gerenciar')

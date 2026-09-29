@@ -1,0 +1,178 @@
+/* =========================
+   CONTAINER PRINCIPAL
+========================= */
+
+.container-categorias {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+
+/* =========================
+   PAINEL
+========================= */
+
+.painel-categorias {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.painel-header {
+    margin-bottom: 30px;
+}
+
+.painel-header h1 {
+    margin-bottom: 8px;
+}
+
+.painel-header p {
+    color: #666666;
+}
+
+
+/* =========================
+   FORMULÁRIO
+========================= */
+
+.categoria-formulario {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.categoria-formulario h2 {
+    margin-bottom: 20px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.campo label {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.campo input {
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: #555555;
+}
+
+
+/* =========================
+   BOTÕES DO FORMULÁRIO
+========================= */
+
+.btn-salvar,
+.btn-cancelar {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.btn-cancelar {
+    margin-left: 10px;
+}
+
+
+/* =========================
+   LISTA DE CATEGORIAS
+========================= */
+
+.lista-categorias h2 {
+    margin-bottom: 20px;
+}
+
+.lista-categorias table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.lista-categorias th,
+.lista-categorias td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.lista-categorias th {
+    font-weight: 600;
+}
+
+.lista-categorias tbody tr:hover {
+    background: #f8f8f8;
+}
+
+
+/* =========================
+   AÇÕES
+========================= */
+
+.acoes {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.form-excluir {
+    display: inline;
+}
+
+.btn-editar,
+.btn-excluir {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 768px) {
+
+    .container-categorias {
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    .painel-categorias {
+        padding: 20px;
+    }
+
+    .lista-categorias {
+        overflow-x: auto;
+    }
+
+    .acoes {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-cancelar {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+}

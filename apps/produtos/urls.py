@@ -11,6 +11,9 @@ from .views import (
     remover_produto,
     aumentar_quantidade,
     diminuir_quantidade,
+    categoria_gerenciar,
+    categoria_editar,
+    categoria_remover,
 )
 
 
@@ -21,6 +24,10 @@ urlpatterns = [
     path('produto_gerenciar/', produto_gerenciar, name='produto_gerenciar'),
     path('produto_editar/<int:id>/', produto_editar, name='produto_editar'),
     path('produto_remover/<int:id>/', produto_remover, name='produto_remover'),
+
+    path('categorias/', categoria_gerenciar, name='categoria_gerenciar'),
+    path('categorias/editar/<int:id>/', categoria_editar, name='categoria_editar'),
+    path('categorias/remover/<int:id>/', categoria_remover, name='categoria_remover'),
 
     path('carrinho/', carrinhocompras, name='carrinhocompras'),
     path('adicionar/<int:produto_id>/', adicionar_produto, name='adicionar_produto'),
