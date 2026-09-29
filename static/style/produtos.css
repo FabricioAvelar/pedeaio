@@ -1,0 +1,269 @@
+/* =========================
+   CATÁLOGO DE PRODUTOS
+========================= */
+
+.features {
+    padding: 60px 20px;
+    text-align: center;
+    animation: fadeInUp 1.2s ease;
+}
+
+.features > h1 {
+    margin-bottom: 4px;
+    font-size: 30px;
+}
+
+.subheading {
+    margin-bottom: 30px;
+    color: var(--muted);
+}
+
+/* =========================
+   BUSCA E FILTROS
+========================= */
+
+.busca {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 45px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .04);
+}
+
+.busca-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    text-align: left;
+}
+
+.busca-campo label {
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.busca-produto {
+    flex: 1;
+}
+
+.busca-categoria {
+    width: 220px;
+}
+
+.busca input,
+.busca select {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    outline: none;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.busca input:focus,
+.busca select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(255, 107, 15, .1);
+}
+
+.btn-buscar,
+.btn-limpar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    padding: 0 24px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.btn-buscar {
+    background: var(--btn-bg);
+    color: var(--text);
+    border: 1px solid var(--btn-border);
+}
+
+.btn-buscar:hover {
+    background: var(--btn-hover);
+    color: #fff;
+    border-color: var(--btn-hover);
+    transform: translateY(-2px);
+}
+
+.btn-limpar {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.btn-limpar:hover {
+    background: var(--surface);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   CATEGORIAS
+========================= */
+
+.catalogo-categorias {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.categoria-bloco {
+    margin-bottom: 50px;
+}
+
+.categoria-titulo {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-size: 24px;
+    text-align: left;
+}
+
+/* =========================
+   GRADE DE PRODUTOS
+========================= */
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-align: left;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .05);
+}
+
+.produto-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.feature h3 {
+    margin: 15px 0 8px;
+    font-size: 18px;
+}
+
+.feature p {
+    margin-bottom: 15px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.image {
+    display: flex;
+    justify-content: center;
+}
+
+.image img {
+    width: 100%;
+    max-width: 230px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.btn-carrinho {
+    margin-top: auto;
+    cursor: pointer;
+}
+
+/* =========================
+   SEM RESULTADOS
+========================= */
+
+.sem-produtos {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+.sem-produtos h2 {
+    margin-bottom: 8px;
+    font-size: 21px;
+}
+
+.sem-produtos p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 700px) {
+    .features {
+        padding: 40px 15px;
+    }
+
+    .busca {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .busca-categoria,
+    .btn-buscar,
+    .btn-limpar {
+        width: 100%;
+    }
+
+    .categoria-titulo {
+        font-size: 21px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================
+   ANIMAÇÃO
+========================= */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
