@@ -175,27 +175,6 @@ Painel Administrativo
                 {% endif %}
             </button>
         </form>
-<br>
-        <hr>
-<br>
-        <h2>
-            Cadastrar Categoria
-        </h2>
-
-        <form method="POST">
-            {% csrf_token %}
-            <div class="campo">
-                <label for="{{ categoria_form.nome.id_for_label }}">
-                    Nome da categoria
-                </label>
-
-                {{ categoria_form.nome }}
-            </div>
-
-            <button class="btn-salvar" type="submit" name="cadastrar_categoria">
-                Cadastrar Categoria
-            </button>
-        </form>
     </div>
 </div>
 {% endblock %}
