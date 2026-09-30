@@ -22,6 +22,8 @@ Cadastrar endereço
     <form method="POST" class="endereco-form">
         {% csrf_token %}
 
+        <input type="hidden" name="origem" value="{{ origem }}">
+
         {{ form.as_p }}
 
         <button type="submit" class="btn-salvar-endereco">

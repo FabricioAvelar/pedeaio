@@ -57,6 +57,7 @@ def meus_dados(request):
 def endereco_cadastrar(request):
     if request.method == 'POST':
         form = EnderecoForm(request.POST)
+        origem = request.POST.get('origem')
 
         if form.is_valid():
             endereco = form.save(commit=False)
@@ -68,13 +69,18 @@ def endereco_cadastrar(request):
                 'Endereço cadastrado com sucesso!'
             )
 
-            return redirect('carrinhocompras')
+            if origem == 'carrinho':
+                return redirect('carrinhocompras')
+
+            return redirect('meus_enderecos')
 
     else:
         form = EnderecoForm()
+        origem = request.GET.get('origem')
 
     context = {
-        'form': form
+        'form': form,
+        'origem': origem,
     }
 
     return render(request, 'privado/endereco_cadastrar.html', context)

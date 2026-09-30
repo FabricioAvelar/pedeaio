@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import transaction
 from decimal import Decimal
+from django.urls import reverse
 
 # Usuário
 from apps.usuarios.models import Endereco
@@ -34,7 +35,10 @@ def finalizar_pedido(request):
             'Cadastre um endereço para continuar.'
         )
 
-        return redirect('endereco_cadastrar')
+        return redirect(
+            reverse('endereco_cadastrar')
+            + '?origem=carrinho'
+        )
 
     if request.method == 'POST':
         endereco_id = request.POST.get('endereco')
