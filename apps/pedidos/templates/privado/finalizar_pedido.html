@@ -6,92 +6,113 @@ Finalizar Pedido
 {% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/carrinho.css' %}">
+<link rel="stylesheet" href="{% static 'style/finalizar_pedido.css' %}">
 {% endblock %}
 
 {% block conteudo %}
 
-<main class="container">
+<main class="finalizar-container">
+    <section class="finalizar-pedido">
+        <div class="finalizar-cabecalho">
+            <h1>Finalizar Pedido</h1>
+            <p>
+                Confira os itens e escolha o endereço de entrega.
+            </p>
+        </div>
 
-    <section class="cart">
-
-        <h1>FINALIZAR PEDIDO</h1>
-
-        <h2>Escolha o endereço de entrega</h2>
-
-        <form method="POST">
-
+        <form method="POST" class="finalizar-form">
             {% csrf_token %}
 
-            {% for endereco in enderecos %}
+            <section class="finalizar-secao">
+                <h2>Escolha o endereço de entrega</h2>
+                
+                <div class="enderecos-lista">
+                    {% for endereco in enderecos %}
 
-                <div class="endereco-opcao">
+                        <label class="endereco-opcao">
+                            <input
+                                type="radio"
+                                name="endereco"
+                                value="{{ endereco.id }}"
+                                required
+                            >
 
-                    <label>
-                        <input
-                            type="radio"
-                            name="endereco"
-                            value="{{ endereco.id }}"
-                            required
-                        >
+                            <div class="endereco-conteudo">
+                                <span class="endereco-icone">
+                                    📍
+                                </span>
 
-                        <strong>
-                            {{ endereco.rua }}, {{ endereco.numero }}
-                        </strong>
+                                <div>
+                                    <strong>
+                                        {{ endereco.rua }},
+                                        {{ endereco.numero }}
+                                    </strong>
 
-                        <br>
+                                    <p>
+                                        {{ endereco.cidade }}/{{ endereco.estado }}
+                                    </p>
+                                </div>
+                            </div>
+                        </label>
 
-                        {{ endereco.cidade }}/{{ endereco.estado }}
+                    {% endfor %}
+                
+                </div>
+            </section>
 
-                    </label>
+            <section class="finalizar-secao">
+                <h2>Itens do pedido</h2>
+
+                <div class="itens-pedido">
+                    {% for item in itens %}
+
+                        <div class="pedido-item">
+                            <img
+                                src="{{ item.produto.imagem.url }}"
+                                alt="{{ item.produto.nome }}"
+                                class="pedido-item-imagem"
+                            >
+
+                            <div class="pedido-item-info">
+
+                                <h3>
+                                    {{ item.produto.nome }}
+                                </h3>
+
+                                <p>
+                                    {{ item.quantidade }} x
+                                    R$ {{ item.produto.preco }}
+                                </p>
+
+                            </div>
+
+                            <div class="pedido-item-preco">
+                                R$ {{ item.subtotal }}
+                            </div>
+                        </div>
+
+                    {% endfor %}
 
                 </div>
+            </section>
 
-            {% endfor %}
-
-            <h2>Itens do pedido</h2>
-
-            {% for item in itens %}
-
-                <div class="item">
-
-                    <div class="info">
-
-                        <h3>{{ item.produto.nome }}</h3>
-
-                        <p>
-                            {{ item.quantidade }} x
-                            R$ {{ item.produto.preco }}
-                        </p>
-
-                    </div>
-
-                    <div class="price">
-                        R$ {{ item.subtotal }}
-                    </div>
-
+            <section class="resumo-pedido">
+                <div class="resumo-linha">
+                    <span>Subtotal</span>
+                    <strong>
+                        R$ {{ total }}
+                    </strong>
                 </div>
 
-            {% endfor %}
-
-            <div class="line">
-
-                <span>Subtotal</span>
-
-                <span>
-                    R$ {{ total }}
-                </span>
-
-            </div>
-
-            <button type="submit" class="btn full">
-                Confirmar Pedido
-            </button>
-
+                <button
+                    type="submit"
+                    class="btn-confirmar-pedido"
+                >
+                    Confirmar Pedido
+                </button>
+            </section>
         </form>
-
     </section>
-
 </main>
 
 {% endblock %}
