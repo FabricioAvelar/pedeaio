@@ -62,17 +62,11 @@ def produto_editar(request, id):
             instance=produto
         )
 
-    categoria_form = CategoriaForm()
-
     produtos = Produto.objects.select_related('categoria').all()
-
-    categorias = Categoria.objects.all()
 
     context = {
         'produto_form': produto_form,
-        'categoria_form': categoria_form,
         'produtos': produtos,
-        'categorias': categorias
     }
 
     return render(request, 'privado/produto_gerenciar.html', context)
