@@ -1,0 +1,229 @@
+/* ========================================
+   PÁGINA - DETALHES DO PEDIDO
+======================================== */
+
+.pedido-detalhes {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.pedido-detalhes-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+.pedido-detalhes-cabecalho h1 {
+    margin: 4px 0 6px;
+
+    color: #222;
+
+    font-size: 32px;
+}
+
+.pedido-data {
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+/* ========================================
+   VOLTAR
+======================================== */
+
+.voltar-pedidos {
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    color: #222;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.voltar-pedidos:hover {
+    color: #f7b731;
+
+    transform: translateX(-2px);
+}
+
+
+/* ========================================
+   STATUS
+======================================== */
+
+.pedido-status {
+    padding: 8px 16px;
+
+    background-color: #fff0c2;
+    color: #805e00;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   CARD PRINCIPAL
+======================================== */
+
+.pedido-detalhes-card {
+    padding: 30px;
+
+    background-color: #fff;
+
+    border-radius: 15px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ========================================
+   SEÇÕES
+======================================== */
+
+.pedido-secao {
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.pedido-secao h2 {
+    margin-bottom: 20px;
+
+    color: #222;
+
+    font-size: 20px;
+}
+
+.pedido-secao p {
+    color: #666;
+
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   ITENS
+======================================== */
+
+.pedido-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 14px 0;
+}
+
+.pedido-item-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.pedido-item-info strong {
+    color: #222;
+
+    font-size: 16px;
+}
+
+.pedido-item-info span {
+    color: #666;
+
+    font-size: 14px;
+}
+
+.pedido-item-subtotal {
+    color: #222;
+
+    font-size: 16px;
+}
+
+
+/* ========================================
+   RESUMO
+======================================== */
+
+.pedido-total {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.pedido-total > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.pedido-total > div:nth-child(2) {
+    align-items: center;
+}
+
+.pedido-total > div:last-child {
+    align-items: flex-end;
+}
+
+.pedido-total span {
+    color: #666;
+
+    font-size: 14px;
+}
+
+.pedido-total strong {
+    color: #222;
+
+    font-size: 19px;
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 768px) {
+
+    .pedido-detalhes-cabecalho {
+        flex-direction: column;
+    }
+
+    .pedido-detalhes-cabecalho h1 {
+        font-size: 28px;
+    }
+
+    .pedido-detalhes-card {
+        padding: 22px;
+    }
+
+    .pedido-total {
+        grid-template-columns: 1fr;
+    }
+
+    .pedido-total > div:nth-child(2),
+    .pedido-total > div:last-child {
+        align-items: flex-start;
+    }
+}

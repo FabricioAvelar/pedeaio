@@ -43,6 +43,10 @@ class Pedido(models.Model):
 
     criado_em = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def subtotal(self):
+        return self.valor_total - self.taxa_entrega
+
     def __str__(self):
         return f'Pedido #{self.id} - {self.usuario.username}'
 

@@ -131,8 +131,11 @@ def meus_pedidos(request):
 def pedido_detalhes(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id, usuario=request.user)
 
+    subtotal = pedido.valor_total - pedido.taxa_entrega
+
     context = {
-        'pedido': pedido
+        'pedido': pedido,
+        'subtotal': subtotal,
     }
 
     return render(request, 'privado/pedido_detalhes.html', context)

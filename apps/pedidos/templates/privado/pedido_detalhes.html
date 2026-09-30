@@ -6,7 +6,8 @@ Pedido #{{ pedido.id }}
 {% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/pedidos.css' %}">
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}">
+<link rel="stylesheet" href="{% static 'style/pedido_detalhes.css' %}">
 {% endblock %}
 
 {% block conteudo %}
@@ -22,6 +23,10 @@ Pedido #{{ pedido.id }}
             <div class="pedido-detalhes-cabecalho">
 
                 <div>
+
+                    <a href="{% url 'meus_pedidos' %}" class="voltar-pedidos">
+                    ← Voltar para Meus Pedidos
+                    </a>
 
                     <h1>Pedido #{{ pedido.id }}</h1>
 
@@ -97,7 +102,7 @@ Pedido #{{ pedido.id }}
                         <span>Subtotal</span>
 
                         <strong>
-                            R$ {{ subtotal }}
+                            R$ {{ pedido.subtotal }}
                         </strong>
                     </div>
 
@@ -118,20 +123,10 @@ Pedido #{{ pedido.id }}
                             R$ {{ pedido.valor_total }}
                         </strong>
                     </div>
-
                 </div>
-
             </div>
-
-
-            <a href="{% url 'meus_pedidos' %}" class="voltar-pedidos">
-                ← Voltar para Meus Pedidos
-            </a>
-
         </section>
-
     </main>
-
 </div>
 
 {% endblock %}
