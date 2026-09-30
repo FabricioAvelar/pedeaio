@@ -15,7 +15,6 @@ def produto_gerenciar(request):
         return redirect('index')
 
     produto_form = ProdutoForm()
-    categoria_form = CategoriaForm()
 
     if request.method == 'POST':
         if 'cadastrar_produto' in request.POST:
@@ -28,24 +27,11 @@ def produto_gerenciar(request):
                 produto_form.save()
                 return redirect('produto_gerenciar')
 
-        elif 'cadastrar_categoria' in request.POST:
-            categoria_form = CategoriaForm(
-                request.POST
-            )
-
-            if categoria_form.is_valid():
-                categoria_form.save()
-                return redirect('produto_gerenciar')
-
     produtos = Produto.objects.select_related('categoria').all()
-
-    categorias = Categoria.objects.all()
 
     context = {
         'produto_form': produto_form,
-        'categoria_form': categoria_form,
         'produtos': produtos,
-        'categorias': categorias
     }
 
     return render(request, 'privado/produto_gerenciar.html', context)
