@@ -70,7 +70,7 @@ def endereco_cadastrar(request):
             )
 
             if origem == 'carrinho':
-                return redirect('carrinhocompras')
+                return redirect('finalizar_pedido')
 
             return redirect('meus_enderecos')
 
