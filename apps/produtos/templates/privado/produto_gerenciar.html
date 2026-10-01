@@ -38,8 +38,8 @@ Painel Administrativo
     </div>
 </div>
 
-
 <div class="container-gerenciar">
+
     <div class="painel">
         <div class="painel-header">
             <h2>Gerenciamento de Produtos</h2>
@@ -59,54 +59,42 @@ Painel Administrativo
             </thead>
 
             <tbody>
-
                 {% for produto in produtos %}
                     <tr>
                         <td>
                             {% if produto.imagem %}
-                                <img
-                                    src="{{ produto.imagem.url }}"
-                                    width="75px"
-                                    alt="{{ produto.nome }}"
-                                >
+                                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
                             {% else %}
                                 <span>Sem imagem</span>
                             {% endif %}
                         </td>
 
-                        <td>
-                            {{ produto.nome }}
-                        </td>
+                        <td>{{ produto.nome }}</td>
+
+                        <td>{{ produto.categoria.nome }}</td>
+
+                        <td>R$ {{ produto.preco }}</td>
 
                         <td>
-                            {{ produto.categoria.nome }}
-                        </td>
-
-                        <td>
-                            R$ {{ produto.preco }}
-                        </td>
-
-                        <td>
-                            <a href="{% url 'produto_editar' produto.id %}">
-                                <button type="button" class="btn-editar">
+                            <div class="acoes-produto">
+                                <a href="{% url 'produto_editar' produto.id %}" class="btn-editar">
                                     Editar
-                                </button>
-                            </a>
+                                </a>
 
-                            <form action="{% url 'produto_remover' produto.id %}" method="POST" style="display:inline;">
-                                {% csrf_token %}
+                                <form action="{% url 'produto_remover' produto.id %}" method="POST">
+                                    {% csrf_token %}
 
-                                <button class="btn-excluir" type="submit">
-                                    Excluir
-                                </button>
-                            </form>
+                                    <button class="btn-excluir" type="submit">
+                                        Excluir
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
 
                 {% empty %}
-
                     <tr>
-                        <td colspan="5" style="text-align:center;padding:25px;">
+                        <td colspan="5" class="sem-produtos">
                             Nenhum produto cadastrado.
                         </td>
                     </tr>
@@ -128,42 +116,27 @@ Painel Administrativo
             {% csrf_token %}
 
             <div class="campo">
-                <label for="{{ produto_form.nome.id_for_label }}">
-                    Nome
-                </label>
-
+                <label for="{{ produto_form.nome.id_for_label }}">Nome</label>
                 {{ produto_form.nome }}
             </div>
 
             <div class="campo">
-                <label for="{{ produto_form.descricao.id_for_label }}">
-                    Descrição
-                </label>
-
+                <label for="{{ produto_form.descricao.id_for_label }}">Descrição</label>
                 {{ produto_form.descricao }}
             </div>
 
             <div class="campo">
-                <label for="{{ produto_form.preco.id_for_label }}">
-                    Preço
-                </label>
-
+                <label for="{{ produto_form.preco.id_for_label }}">Preço</label>
                 {{ produto_form.preco }}
             </div>
 
             <div class="campo">
-                <label for="{{ produto_form.categoria.id_for_label }}">
-                    Categoria
-                </label>
-
+                <label for="{{ produto_form.categoria.id_for_label }}">Categoria</label>
                 {{ produto_form.categoria }}
             </div>
 
             <div class="campo">
-                <label for="{{ produto_form.imagem.id_for_label }}">
-                    Imagem
-                </label>
-
+                <label for="{{ produto_form.imagem.id_for_label }}">Imagem</label>
                 {{ produto_form.imagem }}
             </div>
 
@@ -176,5 +149,7 @@ Painel Administrativo
             </button>
         </form>
     </div>
+
 </div>
+
 {% endblock %}

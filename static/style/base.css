@@ -7,6 +7,7 @@
     --text: #292e2b;
     --muted: #68716c;
     --accent: #FF6B0F;
+    --accent-dark: #D94F00;
     --menu-footer: #F1F3FA;
     --btn-bg: #fff;
     --btn-hover: #FF6B0F;
@@ -118,33 +119,53 @@ a {
 }
 
 .nav-links a {
+    display: inline-flex;
+    align-items: center;
     margin: 0 10px;
-    color: #40454c;
+    color: #2f343a;
     font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
     position: relative;
-    transition: .3s;
+    transition: color .25s ease, transform .25s ease;
 }
 
 .nav-links a::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -3px;
+    bottom: -5px;
     width: 0;
     height: 2px;
     background: var(--accent);
-    transition: .3s;
+    border-radius: 2px;
+    transition: width .25s ease;
 }
 
 .nav-links a:hover {
-    color: #000;
+    color: var(--accent);
+    transform: translateY(-1px);
 }
 
 .nav-links a:hover::after {
     width: 100%;
 }
 
-/* BOTÕES GLOBAIS */
+/* CARRINHO */
+
+.link-carrinho {
+    gap: 5px;
+}
+
+.carrinho-icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    line-height: 1;
+}
+
+/* BOTÕES DO MENU */
 
 .nav-buttons {
     display: flex;
@@ -156,15 +177,51 @@ a {
 .btn-dark {
     display: inline-block;
     padding: 10px 20px;
-    background: var(--btn-bg);
-    color: var(--text);
-    border: 1px solid var(--btn-border);
     border-radius: 7px;
     font-size: 14px;
     font-weight: 600;
     text-align: center;
     cursor: pointer;
-    transition: .25s;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+/* ENTRAR / MEU PERFIL / PAINEL ADMIN */
+
+.nav-buttons .btn-outline {
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+}
+
+.nav-buttons .btn-outline:hover {
+    background: var(--accent-dark);
+    color: #fff;
+    border-color: var(--accent-dark);
+    transform: translateY(-2px);
+}
+
+/* CRIAR CONTA / SAIR */
+
+.nav-buttons .btn-dark {
+    background: var(--btn-bg);
+    color: var(--text);
+    border: 1px solid var(--btn-border);
+}
+
+.nav-buttons .btn-dark:hover {
+    background: var(--btn-hover);
+    color: #fff;
+    border-color: var(--btn-hover);
+    transform: translateY(-2px);
+}
+
+/* BOTÕES GLOBAIS FORA DO MENU */
+
+.btn-outline,
+.btn-dark {
+    background: var(--btn-bg);
+    color: var(--text);
+    border: 1px solid var(--btn-border);
 }
 
 .btn-outline:hover,
@@ -173,6 +230,20 @@ a {
     color: #fff;
     border-color: var(--btn-hover);
     transform: translateY(-2px);
+}
+
+/* REFORÇO DOS BOTÕES DO MENU */
+
+.nav-buttons .btn-outline {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.nav-buttons .btn-outline:hover {
+    background: var(--accent-dark);
+    color: #fff;
+    border-color: var(--accent-dark);
 }
 
 /* RODAPÉ */
@@ -295,37 +366,26 @@ a {
     to { opacity: 1; }
 }
 
-/* ========================================
-   MENSAGENS DO SISTEMA
-======================================== */
+/* MENSAGENS DO SISTEMA */
 
 .messages-container {
     position: fixed;
-
     top: 100px;
     right: 30px;
-
     width: min(400px, calc(100% - 40px));
-
     z-index: 1000;
 }
 
 .message {
     margin-bottom: 10px;
     padding: 14px 18px;
-
     background-color: #fff;
-
     border: 1px solid #ddd;
     border-radius: 8px;
-
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
-
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .12);
     font-size: 14px;
     font-weight: 500;
 }
-
-/* Sucesso */
 
 .message.success {
     color: #1b5e20;
@@ -333,23 +393,17 @@ a {
     border-color: #a5d6a7;
 }
 
-/* Erro */
-
 .message.error {
     color: #b71c1c;
     background-color: #ffebee;
     border-color: #ef9a9a;
 }
 
-/* Aviso */
-
 .message.warning {
     color: #795500;
     background-color: #fff8e1;
     border-color: #ffe082;
 }
-
-/* Informação */
 
 .message.info {
     color: #0d47a1;

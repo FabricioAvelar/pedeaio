@@ -10,29 +10,51 @@
 {% endblock %}
 
 {% block conteudo %}
+
 <div class="container">
     <div class="product">
-        {% if produto.imagem %}
-            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
-        {% else %}
-            <img src="{% static 'imgs/sem-imagem.png' %}" alt="Sem imagem disponível para {{ produto.nome }}">
-        {% endif %}
+
+        <div class="product-image">
+            {% if produto.imagem %}
+                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+            {% else %}
+                <img src="{% static 'imgs/sem-imagem.png' %}" alt="Sem imagem disponível para {{ produto.nome }}">
+            {% endif %}
+        </div>
 
         <div class="info">
+
+            {% if produto.categoria %}
+                <span class="categoria-badge">
+                    {{ produto.categoria.nome }}
+                </span>
+            {% endif %}
+
             <h1>{{ produto.nome }}</h1>
 
             <p class="price">
                 R$ {{ produto.preco }}
-            </p><br>
+            </p>
+
+            <div class="descricao-box">
+                <h2>Descrição</h2>
+
+                <p class="desc">
+                    {% if produto.descricao %}
+                        {{ produto.descricao }}
+                    {% else %}
+                        Nenhuma descrição disponível para este produto.
+                    {% endif %}
+                </p>
+            </div>
 
             <a href="{% url 'adicionar_produto' produto.id %}" class="btn-car">
-                Adicionar ao carrinho
+                 Adicionar ao carrinho
             </a>
 
-            <p class="desc"><br>
-                {{ produto.descricao }}
-            </p>
         </div>
+
     </div>
 </div>
+
 {% endblock %}

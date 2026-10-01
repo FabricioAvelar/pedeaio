@@ -1,79 +1,59 @@
-/* ========================================
-   PÁGINA - CARRINHO
-======================================== */
+/* PÁGINA - CARRINHO */
 
 .container {
-    display: flex;
-    align-items: flex-start;
-
     width: 100%;
     max-width: 1200px;
-
     margin: 50px auto;
     padding: 0 30px;
+}
 
+.carrinho-titulo {
+    margin-bottom: 25px;
+    color: var(--text);
+    font-size: 32px;
+}
+
+.carrinho-layout {
+    display: flex;
+    align-items: flex-start;
     gap: 35px;
 }
 
-
-/* ========================================
-   CARRINHO
-======================================== */
+/* CARRINHO */
 
 .cart {
     flex: 1;
     min-width: 0;
 }
 
-.cart h1 {
-    margin-bottom: 25px;
-
-    color: #222;
-
-    font-size: 32px;
-}
-
-
-/* ========================================
-   ITEM DO CARRINHO
-======================================== */
+/* ITEM DO CARRINHO */
 
 .item {
     display: grid;
-    grid-template-columns: 120px 1fr auto auto;
+    grid-template-columns: 120px minmax(180px, 1fr) auto 110px;
     grid-template-areas:
         "imagem info quantidade subtotal"
         "imagem preco quantidade remover";
-
     align-items: center;
-
     gap: 10px 25px;
-
+    min-height: 160px;
     margin-bottom: 20px;
     padding: 20px;
-
-    background-color: #fff;
-
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 15px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
 }
 
 .item img {
     grid-area: imagem;
-
     width: 120px;
     height: 120px;
-
     object-fit: cover;
-
     border-radius: 12px;
 }
 
-
-/* ========================================
-   INFORMAÇÕES DO PRODUTO
-======================================== */
+/* INFORMAÇÕES */
 
 .info {
     grid-area: info;
@@ -81,165 +61,134 @@
 
 .info h2 {
     margin-bottom: 8px;
-
-    color: #222;
-
+    color: var(--text);
     font-size: 20px;
 }
 
 .info p {
-    color: #666;
-
+    color: var(--muted);
     font-size: 14px;
 }
 
+/* PREÇOS */
 
-/* ========================================
-   PREÇO
-======================================== */
-
-/*
-   O HTML possui dois elementos .price:
-   o primeiro mostra o preço unitário e
-   o segundo mostra o subtotal.
-*/
-
-.item > .price:first-of-type {
+.preco-unitario {
     grid-area: preco;
-
-    color: #666;
-
+    color: var(--muted);
     font-size: 14px;
 }
 
-.item > .price:nth-of-type(2) {
+.subtotal {
     grid-area: subtotal;
-
-    color: #222;
-
+    color: var(--text);
     font-size: 18px;
     font-weight: 700;
-
     text-align: right;
 }
 
-
-/* ========================================
-   QUANTIDADE
-======================================== */
+/* QUANTIDADE */
 
 .qty {
     grid-area: quantidade;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     gap: 12px;
 }
 
 .qty span {
-    min-width: 20px;
-
+    min-width: 22px;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 700;
     text-align: center;
-
-    font-weight: 600;
 }
 
 .qty-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    width: 34px;
-    height: 34px;
-
-    background-color: #fff;
-
-    border: 1px solid #ddd;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--btn-border);
     border-radius: 8px;
-
-    color: #222;
-
     font-size: 18px;
-    font-weight: 600;
-
-    transition: 0.2s;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
 .qty-btn:hover {
-    background-color: #f7b731;
+    background: #FF6B0F;
     color: #fff;
-
-    border-color: #f7b731;
+    border-color: #FF6B0F;
+    transform: translateY(-2px);
 }
 
-
-/* ========================================
-   REMOVER PRODUTO
-======================================== */
+/* REMOVER */
 
 .remover {
     grid-area: remover;
-
     text-align: right;
 }
 
 .remover a {
-    color: #cc0000;
-
-    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    background: #fff;
+    color: #c62828;
+    border: 1px solid #c62828;
+    border-radius: 7px;
+    font-size: 13px;
     font-weight: 600;
-
-    transition: 0.2s;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
 .remover a:hover {
-    color: #990000;
+    background: #c62828;
+    color: #fff;
+    border-color: #c62828;
+    transform: translateY(-2px);
 }
 
-
-/* ========================================
-   RESUMO DO PEDIDO
-======================================== */
+/* RESUMO */
 
 .summary {
+    position: sticky;
+    top: 125px;
     width: 320px;
-
+    flex-shrink: 0;
     padding: 25px;
-
-    background-color: #fff;
-
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 15px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
 }
 
 .summary h2 {
     margin-bottom: 20px;
-
-    color: #222;
-
+    color: var(--text);
     font-size: 22px;
 }
 
-
-/* ========================================
-   TOTAL
-======================================== */
+/* TOTAL */
 
 .line {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-
+    justify-content: space-between;
     margin-bottom: 25px;
     padding-top: 15px;
-
-    border-top: 1px solid #e6e6e6;
-
-    color: #222;
-
+    border-top: 1px solid var(--border);
+    color: var(--text);
     font-size: 16px;
 }
 
@@ -248,86 +197,78 @@
     font-weight: 700;
 }
 
+/* FINALIZAR PEDIDO */
 
-/* ========================================
-   BOTÃO FINALIZAR PEDIDO
-======================================== */
-
-.btn {
-    display: inline-flex;
+.btn-finalizar {
+    display: flex;
     align-items: center;
     justify-content: center;
-
-    padding: 12px 20px;
-
-    background-color: #000;
+    width: 100%;
+    padding: 13px 20px;
+    background: #FF6B0F;
     color: #fff;
-
+    border: 1px solid #FF6B0F;
     border-radius: 8px;
-
     font-size: 14px;
     font-weight: 600;
-
-    transition: 0.2s;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease;
 }
 
-.btn:hover {
-    background-color: #222;
-
-    transform: translateY(-1px);
+.btn-finalizar:hover {
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 15px rgba(217, 79, 0, .18);
 }
 
-.full {
-    width: 100%;
-}
+/* CARRINHO VAZIO */
 
-
-/* ========================================
-   CARRINHO VAZIO
-======================================== */
-
-.cart > h2 {
-    padding: 30px;
-
-    background-color: #fff;
-
+.carrinho-vazio {
+    padding: 40px 30px;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 15px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-
-    color: #666;
-
-    font-size: 18px;
-    font-weight: 500;
-
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
     text-align: center;
 }
 
+.carrinho-vazio h2 {
+    margin-bottom: 8px;
+    color: var(--text);
+    font-size: 20px;
+}
 
-/* ========================================
-   RESPONSIVIDADE
-======================================== */
+.carrinho-vazio p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* RESPONSIVO */
 
 @media (max-width: 900px) {
-
     .container {
-        flex-direction: column;
-
         margin: 30px auto;
         padding: 0 20px;
     }
 
-    .cart {
-        width: 100%;
+    .carrinho-layout {
+        flex-direction: column;
     }
 
+    .cart,
     .summary {
         width: 100%;
     }
 
+    .summary {
+        position: static;
+    }
+
     .item {
         grid-template-columns: 100px 1fr auto;
-
         grid-template-areas:
             "imagem info subtotal"
             "imagem preco subtotal"
@@ -340,10 +281,8 @@
     }
 }
 
-
 @media (max-width: 600px) {
-
-    .cart h1 {
+    .carrinho-titulo {
         font-size: 28px;
     }
 
@@ -351,21 +290,24 @@
         display: flex;
         flex-direction: column;
         align-items: stretch;
-
         gap: 15px;
     }
 
     .item img {
         width: 100%;
-        height: 200px;
+        height: 220px;
     }
 
     .qty {
         justify-content: flex-start;
     }
 
-    .item > .price:nth-of-type(2),
+    .subtotal,
     .remover {
         text-align: left;
+    }
+
+    .remover a {
+        width: 100%;
     }
 }

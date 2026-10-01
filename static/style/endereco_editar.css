@@ -5,7 +5,6 @@
 .editar-endereco {
     width: 100%;
     max-width: 850px;
-
     margin: 0 auto;
 }
 
@@ -20,15 +19,12 @@
 
 .editar-endereco-cabecalho h1 {
     margin-bottom: 8px;
-
-    color: #222;
-
+    color: var(--text);
     font-size: 32px;
 }
 
 .editar-endereco-cabecalho p {
-    color: #666;
-
+    color: var(--muted);
     font-size: 15px;
 }
 
@@ -39,12 +35,10 @@
 
 .endereco-form {
     padding: 30px;
-
-    background-color: #fff;
-
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 15px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
 }
 
 
@@ -55,17 +49,13 @@
 .form-item {
     display: flex;
     flex-direction: column;
-
     width: 100%;
-
     margin-bottom: 20px;
 }
 
 .form-item label {
     margin-bottom: 8px;
-
-    color: #222;
-
+    color: var(--text);
     font-size: 14px;
     font-weight: 600;
 }
@@ -73,28 +63,25 @@
 .form-item input,
 .form-item select {
     width: 100%;
-
     padding: 12px 14px;
-
-    background-color: #fff;
-
-    border: 1px solid #d8d8d8;
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--border);
     border-radius: 8px;
-
-    color: #222;
-
     font-size: 14px;
-
     outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
 
-    transition: 0.2s;
+.form-item input:hover,
+.form-item select:hover {
+    border-color: #b9bec7;
 }
 
 .form-item input:focus,
 .form-item select:focus {
-    border-color: #222;
-
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 107, 15, .1);
 }
 
 
@@ -105,7 +92,6 @@
 .form-row {
     display: grid;
     grid-template-columns: 1fr 140px;
-
     gap: 20px;
 }
 
@@ -121,9 +107,7 @@
 .erro-form,
 .errorlist {
     margin: 8px 0;
-
     color: #c62828;
-
     font-size: 13px;
 }
 
@@ -140,13 +124,10 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-
     gap: 12px;
-
     margin-top: 30px;
     padding-top: 20px;
-
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid var(--border);
 }
 
 .btn-cancelar,
@@ -154,19 +135,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     min-height: 42px;
-
     padding: 10px 20px;
-
     border-radius: 8px;
-
     font-size: 14px;
     font-weight: 600;
-
     cursor: pointer;
-
-    transition: 0.2s;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
 
@@ -175,14 +150,16 @@
 ======================================== */
 
 .btn-cancelar {
-    background-color: #fff;
-    color: #222;
-
-    border: 1px solid #222;
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--btn-border);
 }
 
 .btn-cancelar:hover {
-    background-color: #f5f5f5;
+    background: #FF6B0F;
+    color: #fff;
+    border-color: #FF6B0F;
+    transform: translateY(-2px);
 }
 
 
@@ -191,16 +168,16 @@
 ======================================== */
 
 .btn-salvar {
-    background-color: #000;
+    background: #FF6B0F;
     color: #fff;
-
-    border: 1px solid #000;
+    border: 1px solid #FF6B0F;
 }
 
 .btn-salvar:hover {
-    background-color: #222;
-
-    transform: translateY(-1px);
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
+    transform: translateY(-2px);
 }
 
 
@@ -209,7 +186,6 @@
 ======================================== */
 
 @media (max-width: 768px) {
-
     .editar-endereco {
         max-width: 100%;
     }

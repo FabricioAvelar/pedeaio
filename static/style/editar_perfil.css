@@ -4,23 +4,18 @@
 
 .container {
     display: flex;
-
     min-height: 100vh;
 }
 
 .sidebar {
     width: 250px;
-
     padding: 30px 20px;
-
-    background-color: #fff;
-
-    border-right: 2px solid #e6e6e6;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
 }
 
 .conteudo {
     flex: 1;
-
     padding: 40px;
 }
 
@@ -31,22 +26,18 @@
 
 .perfil-user {
     margin-bottom: 40px;
-
     text-align: center;
 }
 
 .perfil-user .perfil-nome {
     margin-bottom: 5px;
-
-    color: #222;
-
+    color: var(--text);
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .perfil-user p {
-    color: #595959;
-
+    color: var(--muted);
     font-size: 14px;
 }
 
@@ -56,27 +47,34 @@
 ======================================== */
 
 .sidebar nav ul {
+    margin: 0;
+    padding: 0;
     list-style: none;
 }
 
 .sidebar nav ul li {
+    width: 100%;
     margin-bottom: 15px;
-    padding: 15px;
-
-    background-color: #fff8e7;
-
-    border-radius: 12px;
-
-    cursor: pointer;
-
-    font-weight: 600;
-
-    transition: 0.3s;
 }
 
-.sidebar nav ul li:hover {
-    background-color: #f7b731;
+.sidebar nav ul li a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+    background: #fff8e7;
+    color: var(--text);
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .25s ease, color .25s ease, transform .25s ease;
+}
+
+.sidebar nav ul li a:hover {
+    background: var(--accent);
     color: #fff;
+    transform: translateX(3px);
 }
 
 
@@ -84,15 +82,17 @@
    BOTÃO SAIR
 ======================================== */
 
-.sair {
+.sidebar nav ul li.sair {
     margin-top: 40px;
+}
 
-    background-color: #ffdddd !important;
+.sidebar nav ul li.sair a {
+    background: #ffdddd;
     color: #cc0000;
 }
 
-.sair:hover {
-    background-color: #cc0000 !important;
+.sidebar nav ul li.sair a:hover {
+    background: #cc0000;
     color: #fff;
 }
 
@@ -104,7 +104,6 @@
 .editar-perfil {
     width: 100%;
     max-width: 850px;
-
     margin: 0 auto;
 }
 
@@ -119,14 +118,12 @@
 
 .editar-cabecalho h1 {
     margin-bottom: 8px;
-
-    color: #222;
-
+    color: var(--text);
     font-size: 32px;
 }
 
 .editar-cabecalho p {
-    color: #666;
+    color: var(--muted);
 }
 
 
@@ -136,17 +133,14 @@
 
 .editar-form {
     padding: 30px;
-
-    background: #fff;
-
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 15px;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
 }
 
 .form-row {
     display: flex;
-
     gap: 20px;
 }
 
@@ -154,15 +148,12 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-
     margin-bottom: 22px;
 }
 
 .form-item label {
     margin-bottom: 8px;
-
-    color: #333;
-
+    color: var(--text);
     font-size: 14px;
     font-weight: 600;
 }
@@ -174,22 +165,23 @@
 
 .form-item input {
     width: 100%;
-
     padding: 12px 14px;
-
     background: #fff;
-
-    border: 1px solid #d9d9d9;
+    color: var(--text);
+    border: 1px solid var(--border);
     border-radius: 8px;
-
     font-size: 15px;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.form-item input:hover {
+    border-color: #b9bec7;
 }
 
 .form-item input:focus {
-    border-color: #111;
-
-    outline: 2px solid #111;
-    outline-offset: 2px;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 107, 15, .1);
 }
 
 
@@ -199,19 +191,15 @@
 
 .campo-bloqueado {
     padding: 12px 14px;
-
     background: #f5f5f5;
-    color: #666;
-
-    border: 1px solid #ddd;
+    color: var(--muted);
+    border: 1px solid var(--border);
     border-radius: 8px;
 }
 
 .form-item small {
     margin-top: 7px;
-
-    color: #777;
-
+    color: var(--muted);
     font-size: 12px;
 }
 
@@ -223,21 +211,16 @@
 .errorlist {
     margin-top: 7px;
     padding: 0;
-
     color: #b60000;
-
     font-size: 13px;
-
     list-style: none;
 }
 
 .erro-form {
     margin-bottom: 20px;
     padding: 12px;
-
     background: #fff5f5;
     color: #b60000;
-
     border: 1px solid #f3b5b5;
     border-radius: 8px;
 }
@@ -250,9 +233,7 @@
 .form-acoes {
     display: flex;
     justify-content: flex-end;
-
     gap: 12px;
-
     margin-top: 10px;
 }
 
@@ -261,41 +242,48 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     padding: 12px 22px;
-
     border-radius: 8px;
-
     font-size: 14px;
     font-weight: 600;
-
     cursor: pointer;
-
-    transition: 0.2s;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
+
+
+/* ========================================
+   BOTÃO CANCELAR
+======================================== */
 
 .btn-cancelar {
     background: #fff;
-    color: #000;
-
-    border: 1px solid #000;
+    color: var(--text);
+    border: 1px solid var(--btn-border);
 }
 
 .btn-cancelar:hover {
-    background: #f3f3f3;
+    background: #FF6B0F;
+    color: #fff;
+    border-color: #FF6B0F;
+    transform: translateY(-2px);
 }
 
-.btn-salvar {
-    background: #000;
-    color: #fff;
 
-    border: 1px solid #000;
+/* ========================================
+   BOTÃO SALVAR
+======================================== */
+
+.btn-salvar {
+    background: #FF6B0F;
+    color: #fff;
+    border: 1px solid #FF6B0F;
 }
 
 .btn-salvar:hover {
-    background: #222;
-
-    transform: translateY(-1px);
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
+    transform: translateY(-2px);
 }
 
 
@@ -304,16 +292,14 @@
 ======================================== */
 
 @media (max-width: 768px) {
-
     .container {
         flex-direction: column;
     }
 
     .sidebar {
         width: 100%;
-
         border-right: none;
-        border-bottom: 2px solid #e6e6e6;
+        border-bottom: 1px solid var(--border);
     }
 
     .conteudo {
@@ -326,7 +312,6 @@
 
     .form-row {
         flex-direction: column;
-
         gap: 0;
     }
 

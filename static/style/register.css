@@ -29,7 +29,7 @@
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: .25s;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
 .tab.active {
@@ -118,20 +118,20 @@
 .btn-criar {
     min-width: 160px;
     padding: 13px 28px;
-    background: var(--btn-bg);
-    color: var(--text);
-    border: 1px solid var(--btn-border);
+    background: #FF6B0F;
+    color: #fff;
+    border: 1px solid #FF6B0F;
     border-radius: 8px;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: .25s;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
 .btn-criar:hover {
-    background: var(--btn-hover);
+    background: #D94F00;
     color: #fff;
-    border-color: var(--btn-hover);
+    border-color: #D94F00;
     transform: translateY(-2px);
 }
 

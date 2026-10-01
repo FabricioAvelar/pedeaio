@@ -1,6 +1,4 @@
-/* =========================
-   CONTAINER PRINCIPAL
-========================= */
+/* CONTAINER PRINCIPAL */
 
 .container-categorias {
     width: 90%;
@@ -8,16 +6,14 @@
     margin: 40px auto;
 }
 
-
-/* =========================
-   PAINEL
-========================= */
+/* PAINEL */
 
 .painel-categorias {
-    background: #ffffff;
-    border-radius: 12px;
     padding: 30px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
 }
 
 .painel-header {
@@ -29,18 +25,15 @@
 }
 
 .painel-header p {
-    color: #666666;
+    color: var(--muted);
 }
 
-
-/* =========================
-   FORMULÁRIO
-========================= */
+/* FORMULÁRIO */
 
 .categoria-formulario {
     margin-bottom: 40px;
     padding-bottom: 30px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid var(--border);
 }
 
 .categoria-formulario h2 {
@@ -60,40 +53,70 @@
 
 .campo input {
     padding: 12px;
-    border: 1px solid #cccccc;
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--border);
     border-radius: 8px;
     font-size: 1rem;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.campo input:hover {
+    border-color: #b9bec7;
 }
 
 .campo input:focus {
-    outline: none;
-    border-color: #555555;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 107, 15, .1);
 }
 
-
-/* =========================
-   BOTÕES DO FORMULÁRIO
-========================= */
+/* BOTÕES DO FORMULÁRIO */
 
 .btn-salvar,
 .btn-cancelar {
     display: inline-block;
     padding: 10px 18px;
     border-radius: 8px;
+    font-size: .95rem;
+    font-weight: 600;
     text-decoration: none;
-    border: none;
     cursor: pointer;
-    font-size: 0.95rem;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
+
+/* CADASTRAR / SALVAR */
+
+.btn-salvar {
+    background: #FF6B0F;
+    color: #fff;
+    border: 1px solid #FF6B0F;
+}
+
+.btn-salvar:hover {
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
+    transform: translateY(-2px);
+}
+
+/* CANCELAR */
 
 .btn-cancelar {
     margin-left: 10px;
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--btn-border);
 }
 
+.btn-cancelar:hover {
+    background: #FF6B0F;
+    color: #fff;
+    border-color: #FF6B0F;
+    transform: translateY(-2px);
+}
 
-/* =========================
-   LISTA DE CATEGORIAS
-========================= */
+/* LISTA DE CATEGORIAS */
 
 .lista-categorias h2 {
     margin-bottom: 20px;
@@ -108,26 +131,27 @@
 .lista-categorias td {
     padding: 14px;
     text-align: left;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid var(--border);
 }
 
 .lista-categorias th {
     font-weight: 600;
 }
 
-.lista-categorias tbody tr:hover {
-    background: #f8f8f8;
+.lista-categorias tbody tr {
+    transition: background .2s ease;
 }
 
+.lista-categorias tbody tr:hover {
+    background: var(--soft);
+}
 
-/* =========================
-   AÇÕES
-========================= */
+/* AÇÕES */
 
 .acoes {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 10px;
 }
 
 .form-excluir {
@@ -138,20 +162,47 @@
 .btn-excluir {
     display: inline-block;
     padding: 8px 14px;
-    border-radius: 6px;
+    border-radius: 7px;
+    font-size: .9rem;
+    font-weight: 600;
     text-decoration: none;
-    border: none;
     cursor: pointer;
-    font-size: 0.9rem;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
+/* EDITAR */
 
-/* =========================
-   RESPONSIVIDADE
-========================= */
+.btn-editar {
+    background: #FF6B0F;
+    color: #fff;
+    border: 1px solid #FF6B0F;
+}
+
+.btn-editar:hover {
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
+    transform: translateY(-2px);
+}
+
+/* EXCLUIR */
+
+.btn-excluir {
+    background: #fff;
+    color: #c62828;
+    border: 1px solid #c62828;
+}
+
+.btn-excluir:hover {
+    background: #c62828;
+    color: #fff;
+    border-color: #c62828;
+    transform: translateY(-2px);
+}
+
+/* RESPONSIVIDADE */
 
 @media (max-width: 768px) {
-
     .container-categorias {
         width: 95%;
         margin: 20px auto;
@@ -171,8 +222,7 @@
     }
 
     .btn-cancelar {
-        margin-left: 0;
         margin-top: 10px;
+        margin-left: 0;
     }
-
 }

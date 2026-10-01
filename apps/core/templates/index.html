@@ -32,10 +32,9 @@ Página Inicial
     </div>
 
     <div class="image-box">
-        <img
-            src="{% static 'imgs/pizzaria.jpg' %}"
-            alt="Ambiente de estabelecimento alimentício"
-        >
+        <a href="{% url 'produtos' %}" class="image-box" aria-label="Ver produtos">
+          <img src="{% static 'imgs/pizzaria.jpg' %}" alt="Ambiente de estabelecimento alimentício">
+         </a>
     </div>
 
 </div>

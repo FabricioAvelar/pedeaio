@@ -5,13 +5,10 @@
 .endereco-container {
     width: 100%;
     max-width: 650px;
-
     margin: 50px auto;
     padding: 40px;
-
-    background: #fff;
-
-    border: 1px solid #e6e6e6;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
 }
 
@@ -22,17 +19,13 @@
 
 .endereco-container h1 {
     margin-bottom: 10px;
-
-    color: #222;
-
+    color: var(--text);
     font-size: 32px;
 }
 
 .endereco-descricao {
     margin-bottom: 30px;
-
-    color: #666;
-
+    color: var(--muted);
     font-size: 15px;
 }
 
@@ -44,14 +37,12 @@
 .endereco-form {
     display: flex;
     flex-direction: column;
-
     gap: 20px;
 }
 
 .endereco-form p {
     display: flex;
     flex-direction: column;
-
     margin: 0;
 }
 
@@ -62,9 +53,7 @@
 
 .endereco-form label {
     margin-bottom: 8px;
-
-    color: #333;
-
+    color: var(--text);
     font-size: 14px;
     font-weight: 600;
 }
@@ -78,28 +67,27 @@
 .endereco-form select,
 .endereco-form textarea {
     width: 100%;
-
     padding: 12px 14px;
-
     background: #fff;
-
-    border: 1px solid #d9d9d9;
+    color: var(--text);
+    border: 1px solid var(--border);
     border-radius: 8px;
-
     font-size: 15px;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
 
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+.endereco-form input:hover,
+.endereco-form select:hover,
+.endereco-form textarea:hover {
+    border-color: #b9bec7;
 }
 
 .endereco-form input:focus,
 .endereco-form select:focus,
 .endereco-form textarea:focus {
-    border-color: #111;
-
-    outline: 2px solid #111;
-    outline-offset: 2px;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 107, 15, .1);
 }
 
 
@@ -110,11 +98,8 @@
 .endereco-form .errorlist {
     margin: 0 0 8px;
     padding: 0;
-
     color: #b60000;
-
     font-size: 13px;
-
     list-style: none;
 }
 
@@ -125,35 +110,28 @@
 
 .btn-salvar-endereco {
     width: 100%;
-
     margin-top: 10px;
     padding: 13px 28px;
-
-    background: #000;
+    background: #FF6B0F;
     color: #fff;
-
-    border: 1px solid #000;
+    border: 1px solid #FF6B0F;
     border-radius: 8px;
-
     font-size: 15px;
     font-weight: 600;
-
     cursor: pointer;
-
-    transition:
-        background 0.25s ease,
-        transform 0.2s ease;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
 .btn-salvar-endereco:hover {
-    background: #222;
-
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
     transform: translateY(-2px);
 }
 
 .btn-salvar-endereco:focus-visible {
-    outline: 2px solid #111;
-    outline-offset: 3px;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 15, .18);
 }
 
 
@@ -162,10 +140,8 @@
 ======================================== */
 
 @media (max-width: 768px) {
-
     .endereco-container {
         width: auto;
-
         margin: 30px 20px;
         padding: 25px;
     }

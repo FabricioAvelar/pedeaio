@@ -43,6 +43,8 @@
     cursor: pointer;
 }
 
+/* IMAGENS DA HOME */
+
 .image-section {
     display: flex;
     justify-content: center;
@@ -53,6 +55,7 @@
 }
 
 .image-box {
+    display: block;
     position: relative;
     width: 600px;
     height: 300px;
@@ -74,6 +77,233 @@
     transform: scale(1.05);
     box-shadow: 0 8px 20px rgba(0, 0, 0, .1);
 }
+
+/* PRODUTOS */
+
+.features {
+    padding: 60px 20px;
+    animation: fadeInUp 1.6s ease;
+}
+
+.features h1 {
+    margin-bottom: 4px;
+    font-size: 30px;
+}
+
+.subheading {
+    margin-bottom: 30px;
+    color: var(--muted);
+}
+
+/* GRID DOS PRODUTOS */
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 300px));
+    justify-content: start;
+    gap: 25px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* CARD DO PRODUTO */
+
+.feature {
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-align: left;
+    cursor: pointer;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .07);
+}
+
+.feature h2 {
+    margin: 15px 0 8px;
+    font-size: 18px;
+}
+
+.feature p {
+    margin-bottom: 15px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* IMAGEM DO PRODUTO */
+
+.image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image img {
+    display: block;
+    width: 100%;
+    max-width: 220px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* BOTÃO CARRINHO */
+
+.btn-carrinho {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px 14px;
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--btn-border);
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+.btn-carrinho:hover {
+    background: #FF6B0F;
+    color: #fff;
+    border-color: #FF6B0F;
+    transform: translateY(-2px);
+}
+
+/* BUSCA */
+
+.busca {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto 40px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .04);
+}
+
+.busca-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    text-align: left;
+}
+
+.busca-campo label {
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.busca-produto {
+    flex: 1;
+}
+
+.busca-categoria {
+    width: 220px;
+}
+
+.busca input,
+.busca select {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    outline: none;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.busca input:focus,
+.busca select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(255, 107, 15, .1);
+}
+
+.btn-buscar {
+    height: 42px;
+    padding: 0 24px;
+    background: #FF6B0F;
+    color: #fff;
+    border: 1px solid #FF6B0F;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+.btn-buscar:hover {
+    background: #D94F00;
+    border-color: #D94F00;
+    transform: translateY(-2px);
+}
+
+/* SEM PRODUTOS */
+
+.sem-produtos {
+    padding: 35px 20px;
+    text-align: center;
+}
+
+.sem-produtos h2 {
+    margin-bottom: 8px;
+    font-size: 21px;
+}
+
+.sem-produtos p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 700px) {
+    .busca {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .busca-categoria,
+    .btn-buscar {
+        width: 100%;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .feature {
+        max-width: 350px;
+    }
+
+    .image-box {
+        width: 100%;
+        max-width: 600px;
+        height: 250px;
+    }
+}
+
+/* ANIMAÇÕES */
 
 @keyframes fadeInUp {
     from {

@@ -4,18 +4,13 @@
 
 .login-container {
     display: flex;
-
     width: 100%;
     max-width: 880px;
-
     margin: 40px auto;
     padding: 50px;
-
     gap: 60px;
-
-    background: #fff;
-
-    border: 1px solid #e6e6e6;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
 }
 
@@ -33,6 +28,7 @@
 .login-box h1,
 .login-box h2 {
     margin-bottom: 20px;
+    color: var(--text);
 }
 
 .login-box form {
@@ -48,34 +44,35 @@
 .form-group {
     display: flex;
     flex-direction: column;
-
     margin-bottom: 20px;
 }
 
 .form-group label {
     margin-bottom: 6px;
-
-    color: #333;
-
+    color: var(--text);
     font-size: 14px;
+    font-weight: 500;
 }
 
 .form-group input {
     width: 100%;
-
-    padding: 10px;
-
-    border: 1px solid #ddd;
+    padding: 12px 14px;
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--border);
     border-radius: 8px;
-
     font-size: 14px;
+    transition: .2s;
+}
+
+.form-group input:hover {
+    border-color: #b9bec7;
 }
 
 .form-group input:focus {
-    border-color: #111;
-
-    outline: 2px solid #111;
-    outline-offset: 2px;
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 15, .12);
 }
 
 
@@ -85,9 +82,7 @@
 
 .erro {
     margin-bottom: 10px;
-
     color: #b00020;
-
     font-size: 14px;
 }
 
@@ -98,16 +93,13 @@
 
 .buttons-row {
     display: flex;
-
     gap: 10px;
-
     margin-top: 10px;
 }
 
 .buttons-row .btn-primary,
 .buttons-row .btn-outline.full {
     flex: 1;
-
     margin-top: 0;
 }
 
@@ -118,29 +110,24 @@
 
 .btn-primary {
     padding: 12px;
-
-    background: #000;
+    background: var(--accent);
     color: #fff;
-
-    border: 1px solid #000;
+    border: 1px solid var(--accent);
     border-radius: 8px;
-
     font-size: 14px;
-    font-weight: 500;
-
+    font-weight: 600;
     text-align: center;
-
     cursor: pointer;
-
     transition:
-        background 0.3s ease,
-        transform 0.2s ease;
+        background .25s ease,
+        border-color .25s ease,
+        transform .2s ease;
 }
 
 .btn-primary:hover {
-    background: #222;
-
-    transform: scale(1.02);
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+    transform: translateY(-2px);
 }
 
 
@@ -150,31 +137,26 @@
 
 .btn-outline.full {
     padding: 12px;
-
     background: #fff;
-    color: #000;
-
-    border: 1px solid #000;
+    color: var(--text);
+    border: 1px solid var(--btn-border);
     border-radius: 8px;
-
     font-size: 14px;
-    font-weight: 500;
-
+    font-weight: 600;
     text-align: center;
-
     cursor: pointer;
-
     transition:
-        background 0.3s ease,
-        color 0.3s ease,
-        transform 0.2s ease;
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        transform .2s ease;
 }
 
 .btn-outline.full:hover {
-    background: #000;
+    background: var(--accent);
     color: #fff;
-
-    transform: scale(1.02);
+    border-color: var(--accent);
+    transform: translateY(-2px);
 }
 
 
@@ -184,8 +166,8 @@
 
 .btn-primary:focus-visible,
 .btn-outline.full:focus-visible {
-    outline: 2px solid #111;
-    outline-offset: 3px;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 15, .18);
 }
 
 
@@ -195,8 +177,7 @@
 
 .divider {
     width: 1px;
-
-    background: #e6e6e6;
+    background: var(--border);
 }
 
 
@@ -209,18 +190,17 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-
     text-align: center;
 }
 
 .register-box p {
     margin-bottom: 20px;
+    color: var(--text);
 }
 
 .register-box .btn-primary {
     width: 100%;
     max-width: 250px;
-
     margin-top: 0;
 }
 
@@ -230,15 +210,11 @@
 ======================================== */
 
 @media (max-width: 768px) {
-
     .login-container {
         flex-direction: column;
-
         width: auto;
-
         margin: 30px 20px;
         padding: 30px;
-
         gap: 30px;
     }
 

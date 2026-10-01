@@ -108,27 +108,70 @@
     border-radius: 10px;
 }
 
+.painel th:last-child,
+.painel td:last-child {
+    min-width: 175px;
+}
+
+.sem-produtos {
+    padding: 25px !important;
+    text-align: center !important;
+}
+
+/* AÇÕES DOS PRODUTOS */
+
+.acoes-produto {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.acoes-produto form {
+    margin: 0;
+    padding: 0;
+}
+
 /* BOTÕES EDITAR E EXCLUIR */
 
 .btn-editar,
 .btn-excluir {
-    margin-right: 8px;
-    padding: 9px 16px;
-    background: var(--btn-bg);
-    color: var(--text);
-    border: 1px solid var(--btn-border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    height: 38px;
+    padding: 0 14px;
     border-radius: 7px;
     font-size: 14px;
     font-weight: 600;
+    text-decoration: none;
     cursor: pointer;
-    transition: .25s;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
-.btn-editar:hover,
-.btn-excluir:hover {
-    background: var(--btn-hover);
+.btn-editar {
+    background: #FF6B0F;
     color: #fff;
-    border-color: var(--btn-hover);
+    border: 1px solid #FF6B0F;
+}
+
+.btn-editar:hover {
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
+    transform: translateY(-2px);
+}
+
+.btn-excluir {
+    background: #fff;
+    color: #c62828;
+    border: 1px solid #c62828;
+}
+
+.btn-excluir:hover {
+    background: #c62828;
+    color: #fff;
+    border-color: #c62828;
     transform: translateY(-2px);
 }
 
@@ -179,7 +222,7 @@
     border-radius: 8px;
     font-size: 15px;
     outline: none;
-    transition: .2s;
+    transition: border-color .2s ease, box-shadow .2s ease;
 }
 
 .cadastro textarea {
@@ -203,29 +246,34 @@
 /* UPLOAD DE IMAGEM */
 
 .cadastro input[type="file"] {
+    width: 100%;
     padding: 7px;
     background: #fff;
+    color: var(--text);
     border: 1px solid var(--border);
     border-radius: 8px;
+    font-size: 14px;
     cursor: pointer;
 }
 
 .cadastro input[type="file"]::file-selector-button {
     margin-right: 12px;
     padding: 9px 15px;
-    background: var(--btn-bg);
+    background: #fff;
     color: var(--text);
     border: 1px solid var(--btn-border);
     border-radius: 7px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: .25s;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
 .cadastro input[type="file"]::file-selector-button:hover {
-    background: var(--btn-hover);
+    background: #FF6B0F;
     color: #fff;
-    border-color: var(--btn-hover);
+    border-color: #FF6B0F;
+    transform: translateY(-2px);
 }
 
 /* CADASTRAR / SALVAR PRODUTO */
@@ -234,20 +282,20 @@
     width: 100%;
     margin-top: 8px;
     padding: 13px 20px;
-    background: var(--btn-bg);
-    color: var(--text);
-    border: 1px solid var(--btn-border);
+    background: #FF6B0F;
+    color: #fff;
+    border: 1px solid #FF6B0F;
     border-radius: 8px;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: .25s;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
 .btn-salvar:hover {
-    background: var(--btn-hover);
+    background: #D94F00;
     color: #fff;
-    border-color: var(--btn-hover);
+    border-color: #D94F00;
     transform: translateY(-2px);
 }
 
@@ -302,5 +350,15 @@
 
     .cadastro {
         padding: 20px;
+    }
+
+    .acoes-produto {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-editar,
+    .btn-excluir {
+        width: 100%;
     }
 }

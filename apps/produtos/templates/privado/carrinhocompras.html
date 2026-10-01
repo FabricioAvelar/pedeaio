@@ -6,84 +6,90 @@ Carrinho
 {% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/carrinho.css' %}" />
-{% endblock %}
-
-{% block scripts %}
-
+<link rel="stylesheet" href="{% static 'style/carrinho.css' %}">
 {% endblock %}
 
 {% block conteudo %}
 
 <main class="container">
 
-    <section class="cart">
-    <h1>CARRINHO</h1>
+    <h1 class="carrinho-titulo">CARRINHO</h1>
 
-    {% if itens %}
+    <div class="carrinho-layout">
 
-        {% for item in itens %}
+        <section class="cart">
 
-        <div class="item">
+            {% if itens %}
 
-            <img
-                src="{{ item.produto.imagem.url }}"
-                alt="{{ item.produto.nome }}"
-                width="120">
+                {% for item in itens %}
 
-            <div class="price">
-                R$ {{ item.produto.preco }}
+                    <div class="item">
+
+                        {% if item.produto.imagem %}
+                            <img src="{{ item.produto.imagem.url }}" alt="{{ item.produto.nome }}">
+                        {% else %}
+                            <img src="{% static 'imgs/sem-imagem.png' %}" alt="Sem imagem">
+                        {% endif %}
+
+                        <div class="info">
+                            <h2>{{ item.produto.nome }}</h2>
+                            <p>Preço unitário: R$ {{ item.produto.preco }}</p>
+                        </div>
+
+                        <div class="preco-unitario">
+                            R$ {{ item.produto.preco }}
+                        </div>
+
+                        <div class="qty">
+                            <a href="{% url 'diminuir_quantidade' item.id %}" class="qty-btn">−</a>
+
+                            <span>{{ item.quantidade }}</span>
+
+                            <a href="{% url 'aumentar_quantidade' item.id %}" class="qty-btn">+</a>
+                        </div>
+
+                        <div class="subtotal">
+                            R$ {{ item.subtotal }}
+                        </div>
+
+                        <div class="remover">
+                            <a href="{% url 'remover_produto' item.id %}">
+                                Remover
+                            </a>
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="carrinho-vazio">
+                    <h2>Seu carrinho está vazio.</h2>
+                    <p>Adicione alguns produtos para continuar.</p>
+                </div>
+
+            {% endif %}
+
+        </section>
+
+        <aside class="summary">
+
+            <h2>Resumo</h2>
+
+            <div class="line">
+                <span>Total</span>
+                <span>R$ {{ total }}</span>
             </div>
-            
-            <div class="info">
-                <h2>{{ item.produto.nome }}</h2>
-                <p>Preço unitário: R$ {{ item.produto.preco }}</p>
-            </div>
 
-            <div class="qty">
+            <a href="{% url 'finalizar_pedido' %}" class="btn-finalizar">
+                Finalizar Pedido
+            </a>
 
-                <a href="{% url 'diminuir_quantidade' item.id %}" class="qty-btn">-</a>
+        </aside>
 
-                <span>{{ item.quantidade }}</span>
-
-                <a href="{% url 'aumentar_quantidade' item.id %}" class="qty-btn">+</a>
-
-            </div>
-
-            <div class="price">
-                R$ {{ item.subtotal }}
-            </div>
-
-            <div class="remover">
-                <a href="{% url 'remover_produto' item.id %}">
-                    Remover
-                </a>
-            </div>
-
-        </div>
-
-        {% endfor %}
-
-    {% else %}
-
-        <h2>Seu carrinho está vazio.</h2>
-
-    {% endif %}
-
-</section>
-
-    <aside class="summary">
-
-    <h2>Resumo</h2>
-
-    <div class="line">
-        <span>Total</span>
-        <span>R$ {{ total }}</span>
     </div>
 
-    <a href="{% url 'finalizar_pedido' %}" class="btn full">Finalizar Pedido</a>
-
-</aside>
 </main>
 
 {% endblock %}
