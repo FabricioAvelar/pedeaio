@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block titulo %}
 Login
 {% endblock %}
 
+
 {% block estilo %}
 <link rel="stylesheet" href="{% static 'style/login.css' %}">
 {% endblock %}
+
 
 {% block conteudo %}
 <div class="login-container">
@@ -15,35 +18,47 @@ Login
         <h1>Já sou cliente</h1>
         <form method="POST">
             {% csrf_token %}
-            
-            <div class="form-group">
-            <label for="email">E-mail</label>
+
+
+            <!-- Mantém a página que o usuário tentou acessar antes do login -->
             <input
-                type="email"
-                id="email"
-                name="email"
-                autocomplete="email"
-                placeholder="Digite seu e-mail"
-                required>
+                type="hidden"
+                name="next"
+                value="{{ request.GET.next }}"
+            >
+           
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    placeholder="Digite seu e-mail"
+                    required>
             </div>
 
 
-        <div class="form-group">
-        <label for="password">Senha</label>
-        <input
-            type="password"
-            id="password"
-            name="password"
-            autocomplete="current-password"
-            placeholder="Digite sua senha"
-            required>
-</div>
+
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="current-password"
+                    placeholder="Digite sua senha"
+                    required>
+            </div>
+
 
             {% if messages %}
                 {% for message in messages %}
                     <p class="erro">{{ message }}</p>
                 {% endfor %}
             {% endif %}
+
 
             <div class="buttons-row">
                 <button type="submit" class="btn-primary">Acessar conta</button>
@@ -52,7 +67,9 @@ Login
         </form>
     </div>
 
+
     <div class="divider" aria-hidden="true"></div>
+
 
     <div class="login-box register-box">
         <h2>Criar conta</h2>
@@ -60,5 +77,6 @@ Login
         <a href="{% url 'register' %}" class="btn-primary">Criar conta</a>
     </div>
 </div>
+
 
 {% endblock %}
