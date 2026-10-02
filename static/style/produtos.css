@@ -68,7 +68,12 @@
     border-radius: 7px;
     outline: none;
     font-size: 14px;
-    transition: .2s;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.busca input:hover,
+.busca select:hover {
+    border-color: #b9bec7;
 }
 
 .busca input:focus,
@@ -77,42 +82,61 @@
     box-shadow: 0 0 0 2px rgba(255, 107, 15, .1);
 }
 
+/* AÇÕES DA BUSCA */
+
+.busca-acoes {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* BOTÕES */
+
 .btn-buscar,
 .btn-limpar {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-width: 100px;
     height: 42px;
-    padding: 0 24px;
+    padding: 0 22px;
     border-radius: 7px;
     font-size: 14px;
     font-weight: 600;
+    line-height: 1;
     text-decoration: none;
+    white-space: nowrap;
     cursor: pointer;
-    transition: .25s;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
+/* BUSCAR */
+
 .btn-buscar {
-    background: var(--btn-bg);
+    background: #FF6B0F;
+    color: #fff;
+    border: 1px solid #FF6B0F;
+}
+
+.btn-buscar:hover {
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
+    transform: translateY(-2px);
+}
+
+/* LIMPAR */
+
+.btn-limpar {
+    background: #fff;
     color: var(--text);
     border: 1px solid var(--btn-border);
 }
 
-.btn-buscar:hover {
-    background: var(--btn-hover);
-    color: #fff;
-    border-color: var(--btn-hover);
-    transform: translateY(-2px);
-}
-
-.btn-limpar {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-}
-
 .btn-limpar:hover {
-    background: var(--surface);
+    background: #FF6B0F;
+    color: #fff;
+    border-color: #FF6B0F;
     transform: translateY(-2px);
 }
 
@@ -196,9 +220,30 @@
     border-radius: 8px;
 }
 
+/* BOTÃO CARRINHO */
+
 .btn-carrinho {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     margin-top: auto;
+    padding: 10px 14px;
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--btn-border);
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+.btn-carrinho:hover {
+    background: #FF6B0F;
+    color: #fff;
+    border-color: #FF6B0F;
+    transform: translateY(-2px);
 }
 
 /* =========================
@@ -237,9 +282,17 @@
         align-items: stretch;
     }
 
-    .busca-categoria,
+    .busca-categoria {
+        width: 100%;
+    }
+
+    .busca-acoes {
+        width: 100%;
+    }
+
     .btn-buscar,
     .btn-limpar {
+        flex: 1;
         width: 100%;
     }
 

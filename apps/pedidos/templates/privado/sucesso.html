@@ -4,34 +4,56 @@
 {% block titulo %}Pedido realizado{% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/sucesso.css' %}">
+<link rel="stylesheet" href="{% static 'style/sucesso.css' %}?v=3">
 {% endblock %}
 
 {% block conteudo %}
 
-<div class="sucesso">
+<main class="sucesso-container">
 
-    <div class="check">
-        ✓
-    </div>
+    <section class="sucesso">
 
-    <h1>Pedido realizado!</h1>
+        <div class="check">
+            ✓
+        </div>
 
-    <p>
-        Seu pedido foi enviado com sucesso.<br>
-        Em instantes ele será preparado pelo restaurante.
-    </p>
+        {% if pedido %}
+            <span class="pedido-badge">
+                Pedido #{{ pedido.id }}
+            </span>
+        {% endif %}
 
-    <div class="botoes">
-        <a href="{% url 'produtos' %}" class="btn-outline">
-            Continuar comprando
-        </a>
-            
-        <a href="{% url 'index' %}" class="btn-dark">
-            Voltar ao início
-        </a>
-    </div>
+        <h1>Pedido realizado!</h1>
 
-</div>
+        <p class="sucesso-texto">
+            Seu pedido foi enviado com sucesso.
+            <br>
+            Em instantes ele será preparado pelo restaurante.
+        </p>
+
+        <div class="sucesso-info">
+            <span class="sucesso-info-icone">🍔</span>
+
+            <div>
+                <strong>Agora é com a gente!</strong>
+                <p>
+                    Você pode continuar navegando pelo cardápio enquanto seu pedido é preparado.
+                </p>
+            </div>
+        </div>
+
+        <div class="botoes">
+            <a href="{% url 'produtos' %}" class="btn-continuar">
+                Continuar comprando
+            </a>
+
+            <a href="{% url 'index' %}" class="btn-inicio">
+                Voltar ao início
+            </a>
+        </div>
+
+    </section>
+
+</main>
 
 {% endblock %}

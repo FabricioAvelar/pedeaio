@@ -13,7 +13,10 @@ from .models import Pedido, ItemPedido
 
 @login_required
 def finalizar_pedido(request):
-    carrinho = get_object_or_404(Carrinho, usuario=request.user)
+    carrinho = get_object_or_404(
+        Carrinho,
+        usuario=request.user
+    )
 
     itens = ItemCarrinho.objects.filter(
         carrinho=carrinho
@@ -24,37 +27,53 @@ def finalizar_pedido(request):
             request,
             'Seu carrinho está vazio.'
         )
-
         return redirect('carrinhocompras')
 
-    enderecos = Endereco.objects.filter(usuario=request.user)
+    enderecos = Endereco.objects.filter(
+        usuario=request.user
+    )
 
     if not enderecos.exists():
         messages.info(
             request,
             'Cadastre um endereço para continuar.'
         )
+        return redirect(reverse('endereco_cadastrar') + '?origem=carrinho')
 
-        return redirect(
-            reverse('endereco_cadastrar')
-            + '?origem=carrinho'
+    taxas_entrega = {
+        'Canguaretama': Decimal('5.00'),
+        'Barra do Cunhaú': Decimal('7.00'),
+        'Goianinha': Decimal('8.00'),
+        'Natal': Decimal('15.00'),
+    }
+
+    subtotal = sum(
+        item.subtotal
+        for item in itens
+    )
+
+    # Adiciona a taxa de entrega em cada endereço
+    # apenas para exibição no HTML.
+    for endereco in enderecos:
+        endereco.frete = taxas_entrega.get(
+            endereco.cidade
         )
 
     if request.method == 'POST':
         endereco_id = request.POST.get('endereco')
+
+        if not endereco_id:
+            messages.error(
+                request,
+                'Selecione um endereço de entrega.'
+            )
+            return redirect('finalizar_pedido')
 
         endereco = get_object_or_404(
             Endereco,
             id=endereco_id,
             usuario=request.user
         )
-
-        taxas_entrega = {
-            'Canguaretama': Decimal('5.00'),
-            'Barra do Cunhaú': Decimal('7.00'),
-            'Goianinha': Decimal('8.00'),
-            'Natal': Decimal('15.00'),
-        }
 
         taxa_entrega = taxas_entrega.get(
             endereco.cidade
@@ -65,13 +84,7 @@ def finalizar_pedido(request):
                 request,
                 'Não realizamos entregas para esta cidade.'
             )
-
             return redirect('finalizar_pedido')
-
-        subtotal = sum(
-            item.subtotal
-            for item in itens
-        )
 
         total = subtotal + taxa_entrega
 
@@ -93,16 +106,9 @@ def finalizar_pedido(request):
 
             itens.delete()
 
-        context = {
-            'pedido': pedido
-        }
-
-        return render(request, 'privado/sucesso.html', context)
-
-    subtotal = sum(
-        item.subtotal
-        for item in itens
-    )
+        return render(request, 'privado/sucesso.html',
+            {'pedido': pedido}
+        )
 
     context = {
         'itens': itens,
@@ -111,7 +117,6 @@ def finalizar_pedido(request):
     }
 
     return render(request, 'privado/finalizar_pedido.html', context)
-
 
 @login_required
 def sucesso(request):

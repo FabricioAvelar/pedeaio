@@ -13,11 +13,10 @@ Finalizar Pedido
 
 <main class="finalizar-container">
     <section class="finalizar-pedido">
+
         <div class="finalizar-cabecalho">
             <h1>Finalizar Pedido</h1>
-            <p>
-                Confira os itens e escolha o endereço de entrega.
-            </p>
+            <p>Confira os itens e escolha o endereço de entrega.</p>
         </div>
 
         <form method="POST" class="finalizar-form">
@@ -25,7 +24,7 @@ Finalizar Pedido
 
             <section class="finalizar-secao">
                 <h2>Escolha o endereço de entrega</h2>
-                
+
                 <div class="enderecos-lista">
                     {% for endereco in enderecos %}
 
@@ -34,18 +33,16 @@ Finalizar Pedido
                                 type="radio"
                                 name="endereco"
                                 value="{{ endereco.id }}"
+                                data-frete="{% if endereco.frete is not None %}{{ endereco.frete }}{% endif %}"
                                 required
                             >
 
                             <div class="endereco-conteudo">
-                                <span class="endereco-icone">
-                                    📍
-                                </span>
+                                <span class="endereco-icone">📍</span>
 
                                 <div>
                                     <strong>
-                                        {{ endereco.rua }},
-                                        {{ endereco.numero }}
+                                        {{ endereco.rua }}, {{ endereco.numero }}
                                     </strong>
 
                                     <p>
@@ -56,7 +53,6 @@ Finalizar Pedido
                         </label>
 
                     {% endfor %}
-                
                 </div>
             </section>
 
@@ -67,52 +63,123 @@ Finalizar Pedido
                     {% for item in itens %}
 
                         <div class="pedido-item">
-                            <img
-                                src="{{ item.produto.imagem.url }}"
-                                alt="{{ item.produto.nome }}"
-                                class="pedido-item-imagem"
-                            >
+
+                            {% if item.produto.imagem %}
+                                <img
+                                    src="{{ item.produto.imagem.url }}"
+                                    alt="{{ item.produto.nome }}"
+                                    class="pedido-item-imagem"
+                                >
+                            {% else %}
+                                <img
+                                    src="{% static 'imgs/sem-imagem.png' %}"
+                                    alt="Sem imagem"
+                                    class="pedido-item-imagem"
+                                >
+                            {% endif %}
 
                             <div class="pedido-item-info">
-
-                                <h3>
-                                    {{ item.produto.nome }}
-                                </h3>
+                                <h3>{{ item.produto.nome }}</h3>
 
                                 <p>
                                     {{ item.quantidade }} x
                                     R$ {{ item.produto.preco }}
                                 </p>
-
                             </div>
 
                             <div class="pedido-item-preco">
                                 R$ {{ item.subtotal }}
                             </div>
+
                         </div>
 
                     {% endfor %}
-
                 </div>
             </section>
 
             <section class="resumo-pedido">
+
                 <div class="resumo-linha">
                     <span>Subtotal</span>
                     <strong>
-                        R$ {{ total }}
+                        R$ <span id="subtotal">{{ total }}</span>
                     </strong>
                 </div>
 
-                <button
-                    type="submit"
-                    class="btn-confirmar-pedido"
-                >
+                <div class="resumo-linha">
+                    <span>Frete</span>
+                    <strong id="frete">—</strong>
+                </div>
+
+                <div class="resumo-linha resumo-total">
+                    <span>Total</span>
+                    <strong id="total-pedido">—</strong>
+                </div>
+
+                <button type="submit" class="btn-confirmar-pedido">
                     Confirmar Pedido
                 </button>
+
             </section>
+
         </form>
+
     </section>
 </main>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const radiosEndereco = document.querySelectorAll('input[name="endereco"]');
+    const subtotalElemento = document.getElementById('subtotal');
+    const freteElemento = document.getElementById('frete');
+    const totalElemento = document.getElementById('total-pedido');
+
+    function converterParaNumero(valor) {
+        valor = String(valor).trim();
+
+        if (valor.includes(',')) {
+            valor = valor
+                .replace(/\./g, '')
+                .replace(',', '.');
+        }
+
+        return parseFloat(valor) || 0;
+    }
+
+    function formatarMoeda(valor) {
+        return valor.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    const subtotal = converterParaNumero(
+        subtotalElemento.textContent
+    );
+
+    radiosEndereco.forEach(radio => {
+        radio.addEventListener('change', function () {
+
+            if (!this.dataset.frete) {
+                freteElemento.textContent = 'Indisponível';
+                totalElemento.textContent = '—';
+                return;
+            }
+
+            const frete = converterParaNumero(
+                this.dataset.frete
+            );
+
+            const total = subtotal + frete;
+
+            freteElemento.textContent =
+                'R$ ' + formatarMoeda(frete);
+
+            totalElemento.textContent =
+                'R$ ' + formatarMoeda(total);
+        });
+    });
+</script>
 {% endblock %}

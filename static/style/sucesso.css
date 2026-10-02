@@ -1,118 +1,255 @@
-/* ========================================
-   CONTAINER DE SUCESSO
-======================================== */
+/* CONTAINER */
+
+.sucesso-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 65px 20px;
+}
+
+/* CARD PRINCIPAL */
 
 .sucesso {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-
-    max-width: 700px;
-
-    margin: 80px auto;
-    padding: 60px;
-
-    background: #fff;
-
-    border: 1px solid #ddd;
-    border-radius: 12px;
-
+    width: 100%;
+    max-width: 760px;
+    padding: 60px 55px;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .07);
     text-align: center;
 }
 
+/* DETALHE LARANJA SUPERIOR */
 
-/* ========================================
-   ÍCONE DE CONFIRMAÇÃO
-======================================== */
+.sucesso::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: #FF6B0F;
+}
+
+/* ÍCONE DE SUCESSO */
 
 .check {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 90px;
-    height: 90px;
-
-    margin-bottom: 30px;
-
-    border: 3px solid #000;
+    width: 92px;
+    height: 92px;
+    margin-bottom: 20px;
+    background: #fff4ec;
+    color: #FF6B0F;
+    border: 3px solid #FF6B0F;
     border-radius: 50%;
-
-    font-size: 46px;
-    font-weight: bold;
+    font-size: 48px;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(255, 107, 15, .12);
 }
 
+/* NÚMERO DO PEDIDO */
 
-/* ========================================
-   MENSAGEM DE SUCESSO
-======================================== */
+.pedido-badge {
+    margin-bottom: 18px;
+    padding: 6px 13px;
+    background: #fff1e8;
+    color: #D94F00;
+    border: 1px solid #ffd5ba;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* TÍTULO */
 
 .sucesso h1 {
-    margin-bottom: 25px;
-
-    font-size: 52px;
+    margin-bottom: 16px;
+    color: var(--text);
+    font-size: 46px;
     font-weight: 700;
+    line-height: 1.1;
 }
 
-.sucesso p {
-    margin-bottom: 40px;
+/* TEXTO */
 
-    color: #555;
-
-    font-size: 18px;
+.sucesso-texto {
+    margin-bottom: 30px;
+    color: var(--muted);
+    font-size: 17px;
     line-height: 1.7;
 }
 
+/* CAIXA DE INFORMAÇÃO */
 
-/* ========================================
-   AÇÕES
-======================================== */
+.sucesso-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 35px;
+    padding: 18px 20px;
+    background: #fafafa;
+    border-left: 4px solid #FF6B0F;
+    border-radius: 0 10px 10px 0;
+    text-align: left;
+}
+
+.sucesso-info-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    background: #fff1e8;
+    border-radius: 50%;
+    font-size: 21px;
+}
+
+.sucesso-info strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text);
+    font-size: 15px;
+}
+
+.sucesso-info p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* BOTÕES */
 
 .botoes {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    gap: 18px;
+    gap: 14px;
+    width: 100%;
 }
 
-.botoes a {
-    display: flex;
+.btn-continuar,
+.btn-inicio {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    width: 170px;
-    min-height: 48px;
+    width: 190px;
+    height: 50px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
 }
 
+/* CONTINUAR COMPRANDO */
 
-/* ========================================
-   RESPONSIVIDADE
-======================================== */
+.btn-continuar {
+    background: #FF6B0F;
+    color: #fff;
+    border: 1px solid #FF6B0F;
+}
+
+.btn-continuar:hover {
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 15px rgba(217, 79, 0, .18);
+}
+
+/* VOLTAR AO INÍCIO */
+
+.btn-inicio {
+    background: #fff;
+    color: var(--text);
+    border: 1px solid var(--btn-border);
+}
+
+.btn-inicio:hover {
+    background: #FF6B0F;
+    color: #fff;
+    border-color: #FF6B0F;
+    transform: translateY(-2px);
+}
+
+/* FOCO */
+
+.btn-continuar:focus-visible,
+.btn-inicio:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 15, .18);
+}
+
+/* RESPONSIVO */
 
 @media (max-width: 768px) {
+    .sucesso-container {
+        padding: 40px 20px;
+    }
 
     .sucesso {
-        margin: 40px 20px;
-        padding: 40px 25px;
+        padding: 45px 25px;
+    }
+
+    .check {
+        width: 80px;
+        height: 80px;
+        font-size: 42px;
     }
 
     .sucesso h1 {
-        font-size: 36px;
+        font-size: 34px;
     }
 
-    .sucesso p {
+    .sucesso-texto {
         font-size: 16px;
     }
 
     .botoes {
-        width: 100%;
-
         flex-direction: column;
     }
 
-    .botoes a {
+    .btn-continuar,
+    .btn-inicio {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .sucesso-container {
+        padding: 30px 15px;
+    }
+
+    .sucesso {
+        padding: 40px 20px;
+    }
+
+    .sucesso h1 {
+        font-size: 30px;
+    }
+
+    .sucesso-info {
+        align-items: flex-start;
     }
 }

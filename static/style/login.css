@@ -1,7 +1,3 @@
-/* ========================================
-   CONTAINER PRINCIPAL
-======================================== */
-
 .login-container {
     display: flex;
     width: 100%;
@@ -14,10 +10,7 @@
     border-radius: 12px;
 }
 
-
-/* ========================================
-   ÁREA DE LOGIN
-======================================== */
+/* ÁREA DE LOGIN */
 
 .login-box {
     display: flex;
@@ -36,10 +29,7 @@
     flex-direction: column;
 }
 
-
-/* ========================================
-   CAMPOS DO FORMULÁRIO
-======================================== */
+/* CAMPOS */
 
 .form-group {
     display: flex;
@@ -75,122 +65,94 @@
     box-shadow: 0 0 0 3px rgba(255, 107, 15, .12);
 }
 
-
-/* ========================================
-   MENSAGEM DE ERRO
-======================================== */
-
 .erro {
     margin-bottom: 10px;
     color: #b00020;
     font-size: 14px;
 }
 
-
-/* ========================================
-   LINHA DE BOTÕES
-======================================== */
+/* BOTÕES DO LOGIN */
 
 .buttons-row {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
+    width: 100%;
     margin-top: 10px;
 }
 
 .buttons-row .btn-primary,
 .buttons-row .btn-outline.full {
-    flex: 1;
-    margin-top: 0;
-}
-
-
-/* ========================================
-   BOTÃO PRINCIPAL
-======================================== */
-
-.btn-primary {
-    padding: 12px;
-    background: var(--accent);
-    color: #fff;
-    border: 1px solid var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 44px;
+    margin: 0;
+    padding: 0 12px;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
     text-align: center;
     cursor: pointer;
-    transition:
-        background .25s ease,
-        border-color .25s ease,
-        transform .2s ease;
 }
 
-.btn-primary:hover {
-    background: var(--accent-dark);
-    border-color: var(--accent-dark);
+/* ACESSAR CONTA */
+
+.buttons-row .btn-primary {
+    background: #FF6B0F;
+    color: #fff;
+    border: 1px solid #FF6B0F;
+    transition: background .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+.buttons-row .btn-primary:hover {
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
     transform: translateY(-2px);
 }
 
+/* ESQUECI MINHA SENHA */
 
-/* ========================================
-   BOTÃO SECUNDÁRIO
-======================================== */
-
-.btn-outline.full {
-    padding: 12px;
+.buttons-row .btn-outline.full {
     background: #fff;
     color: var(--text);
     border: 1px solid var(--btn-border);
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
-    cursor: pointer;
-    transition:
-        background .25s ease,
-        color .25s ease,
-        border-color .25s ease,
-        transform .2s ease;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
-.btn-outline.full:hover {
-    background: var(--accent);
+.buttons-row .btn-outline.full:hover {
+    background: #FF6B0F;
     color: #fff;
-    border-color: var(--accent);
+    border-color: #FF6B0F;
     transform: translateY(-2px);
 }
 
-
-/* ========================================
-   FOCO DOS BOTÕES
-======================================== */
-
-.btn-primary:focus-visible,
-.btn-outline.full:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 107, 15, .18);
-}
-
-
-/* ========================================
-   DIVISOR
-======================================== */
+/* DIVISÓRIA */
 
 .divider {
     width: 1px;
     background: var(--border);
 }
 
-
-/* ========================================
-   ÁREA DE CADASTRO
-======================================== */
+/* ÁREA DE CADASTRO */
 
 .register-box {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 1;
     flex-direction: column;
     text-align: center;
+}
+
+.register-box h2 {
+    margin-bottom: 15px;
+    color: var(--text);
 }
 
 .register-box p {
@@ -198,16 +160,46 @@
     color: var(--text);
 }
 
-.register-box .btn-primary {
-    width: 100%;
-    max-width: 250px;
-    margin-top: 0;
+/* CRIAR CONTA */
+
+.btn-CC {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 44px;
+    padding: 0 16px;
+    background: #FF6B0F;
+    color: #fff;
+    border: 1px solid #FF6B0F;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .25s ease, border-color .25s ease, transform .25s ease;
 }
 
+.btn-CC:hover {
+    background: #D94F00;
+    color: #fff;
+    border-color: #D94F00;
+    transform: translateY(-2px);
+}
 
-/* ========================================
-   RESPONSIVIDADE
-======================================== */
+/* FOCO */
+
+.buttons-row .btn-primary:focus-visible,
+.buttons-row .btn-outline.full:focus-visible,
+.btn-CC:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 15, .18);
+}
+
+/* RESPONSIVO */
 
 @media (max-width: 768px) {
     .login-container {
@@ -227,7 +219,9 @@
         flex-direction: column;
     }
 
-    .register-box .btn-primary {
-        max-width: none;
+    .buttons-row .btn-primary,
+    .buttons-row .btn-outline.full,
+    .btn-CC {
+        width: 100%;
     }
 }

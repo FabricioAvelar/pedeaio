@@ -10,26 +10,29 @@ Produtos
 {% endblock %}
 
 {% block conteudo %}
+
 <section class="features">
     <h1>Produtos</h1>
     <p class="subheading">Em estoque</p>
 
     <form method="GET" class="busca">
-        <div class="busca-campo busca-produto">
-            <label for="buscar">
-                Buscar produto
-            </label>
 
-            <input type="text" id="buscar" name="buscar" placeholder="Digite o nome ou descrição..." value="{{ busca }}">
+        <div class="busca-campo busca-produto">
+            <label for="buscar">Buscar produto</label>
+
+            <input
+                type="text"
+                id="buscar"
+                name="buscar"
+                placeholder="Digite o nome ou descrição..."
+                value="{{ busca }}"
+            >
         </div>
 
         <div class="busca-campo busca-categoria">
-            <label for="categoria">
-                Categoria
-            </label>
+            <label for="categoria">Categoria</label>
 
             <select id="categoria" name="categoria">
-
                 <option value="">
                     Todas as categorias
                 </option>
@@ -47,91 +50,103 @@ Produtos
             </select>
         </div>
 
-        <button type="submit" class="btn-buscar">
-            Buscar
-        </button>
+        <div class="busca-acoes">
+            <button type="submit" class="btn-buscar">
+                Buscar
+            </button>
 
-        {% if busca or categoria %}
-            <a href="{% url 'produtos' %}" class="btn-limpar">
-                Limpar
-            </a>
-        {% endif %}
+            {% if busca or categoria %}
+                <a href="{% url 'produtos' %}" class="btn-limpar">
+                    Limpar
+                </a>
+            {% endif %}
+        </div>
+
     </form>
 
-
-        {% if categorias_com_produtos %}
-            <div class="catalogo-categorias">
+    {% if categorias_com_produtos %}
+        <div class="catalogo-categorias">
 
             {% for grupo in categorias_com_produtos %}
-            <section class="categoria-bloco">
-                <h2 class="categoria-titulo">
-                    {{ grupo.categoria.nome }}
-                </h2>
 
-                <div class="features-grid">
-                    {% for produto in grupo.produtos %}
-                        <div class="feature">
-                            <a
-                                href="{% url 'produto_detalhes' produto.id %}"
-                                class="produto-link"
-                            >
+                <section class="categoria-bloco">
 
-                                <div class="image">
+                    <h2 class="categoria-titulo">
+                        {{ grupo.categoria.nome }}
+                    </h2>
 
-                                    {% if produto.imagem %}
+                    <div class="features-grid">
 
-                                        <img
-                                            src="{{ produto.imagem.url }}"
-                                            alt="{{ produto.nome }}"
-                                            width="230"
-                                            height="190"
-                                        >
+                        {% for produto in grupo.produtos %}
 
-                                    {% else %}
+                            <div class="feature">
 
-                                        <img
-                                            src="{% static 'imgs/sem-imagem.png' %}"
-                                            alt="Sem imagem disponível para {{ produto.nome }}"
-                                            width="230"
-                                            height="190"
-                                        >
+                                <a
+                                    href="{% url 'produto_detalhes' produto.id %}"
+                                    class="produto-link"
+                                >
 
-                                    {% endif %}
+                                    <div class="image">
 
-                                </div>
+                                        {% if produto.imagem %}
 
-                                <h3>
-                                    {{ produto.nome }}
-                                </h3>
+                                            <img
+                                                src="{{ produto.imagem.url }}"
+                                                alt="{{ produto.nome }}"
+                                                width="230"
+                                                height="190"
+                                            >
 
-                                <p>
-                                    R$ {{ produto.preco }}
-                                </p>
+                                        {% else %}
 
-                            </a>
+                                            <img
+                                                src="{% static 'imgs/sem-imagem.png' %}"
+                                                alt="Sem imagem disponível para {{ produto.nome }}"
+                                                width="230"
+                                                height="190"
+                                            >
 
-                            <a
-                                href="{% url 'adicionar_produto' produto.id %}"
-                                class="btn-outline btn-carrinho"
-                            >
-                                Adicionar ao carrinho
-                            </a>
+                                        {% endif %}
 
-                        </div>
-                    {% endfor %}
-                </div>
-            </section>
+                                    </div>
 
-        {% endfor %}
-    </div>
+                                    <h3>
+                                        {{ produto.nome }}
+                                    </h3>
 
-        {% else %}
-            <div class="sem-produtos">
-                <h2>Nenhum produto encontrado.</h2>
-                <p>Tente alterar a busca ou selecionar outra categoria.</p>
-            </div>
+                                    <p>
+                                        R$ {{ produto.preco }}
+                                    </p>
+
+                                </a>
+
+                                <a
+                                    href="{% url 'adicionar_produto' produto.id %}"
+                                    class="btn-outline btn-carrinho"
+                                >
+                                    Adicionar ao carrinho
+                                </a>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+                </section>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="sem-produtos">
+            <h2>Nenhum produto encontrado.</h2>
+            <p>Tente alterar a busca ou selecionar outra categoria.</p>
+        </div>
 
     {% endif %}
+
 </section>
 
 {% endblock %}
