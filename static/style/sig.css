@@ -1,0 +1,30 @@
+.sig-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.sig-card h3 {
+    margin-bottom: 14px;
+    font-size: 16px;
+    color: var(--text);
+}
+
+.sig-canvas {
+    position: relative;
+    height: 300px;
+}
+
+.sig-circulares {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 800px) {
+    .sig-circulares {
+        grid-template-columns: 1fr;
+    }
+}
