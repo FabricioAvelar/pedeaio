@@ -151,6 +151,17 @@ a {
     width: 100%;
 }
 
+/* ÍCONES DO MENU */
+
+.nav-links a i {
+    margin-right: 6px;
+    font-size: 16px;
+}
+
+.link-carrinho i {
+    margin-right: 0;
+}
+
 /* CARRINHO */
 
 .link-carrinho {

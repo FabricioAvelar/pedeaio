@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}SIG{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'style/sig.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-admin">
+    {% include 'privado/sidebar_admin.html' %}
+
+    <main class="conteudo-admin">
+        <section class="dashboard-admin">
+            <div class="dashboard-cabecalho">
+                <h1>SIG – Indicadores</h1>
+                <p>Indicadores quantitativos do PedeAió.</p>
+            </div>
+
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <h2>Faturamento</h2>
+                    <p>R$ {{ resumo.faturamento|default:0|floatformat:2 }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <h2>Pedidos</h2>
+                    <p>{{ resumo.qtd_pedidos }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <h2>Ticket médio</h2>
+                    <p>R$ {{ resumo.ticket_medio|default:0|floatformat:2 }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <h2>Clientes</h2>
+                    <p>{{ total_clientes }}</p>
+                </div>
+            </div>
+
+            <div class="sig-card">
+                <h3>Faturamento por mês</h3>
+             <div class="sig-canvas"><canvas id="g-mes"></canvas></div>
+            </div>
+
+            <div class="sig-card">
+                <h3>Produtos mais vendidos</h3>
+            <div class="sig-canvas"><canvas id="g-produtos"></canvas></div>
+            </div>
+
+            <div class="sig-circulares">
+                 <div class="sig-card">
+                <h3>Receita por categoria</h3>
+             <div class="sig-canvas"><canvas id="g-categorias"></canvas></div>
+            </div>
+
+            <div class="sig-card">
+                <h3>Pedidos por status</h3>
+            <div class="sig-canvas"><canvas id="g-status"></canvas></div>
+            </div>
+            </div>
+            <h2>Pedidos por cidade</h2>
+            <ul>
+                {% for c in por_cidade %}
+                    <li>{{ c.endereco__cidade }}/{{ c.endereco__estado }}: {{ c.qtd }}</li>
+                {% empty %}
+                    <li>Sem dados.</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ graficos|json_script:"dados-graficos" }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const g = JSON.parse(document.getElementById('dados-graficos').textContent);
+
+function criar(id, tipo, dados, rotulo) {
+    new Chart(document.getElementById(id), {
+        type: tipo,
+        data: {
+            labels: dados.labels,
+            datasets: [{ label: rotulo, data: dados.valores }]
+        }
+    });
+}
+
+function criar(id, tipo, dados, rotulo) {
+    const circular = (tipo === 'pie' || tipo === 'doughnut');
+
+    new Chart(document.getElementById(id), {
+        type: tipo,
+        data: {
+            labels: dados.labels,
+            datasets: [{ label: rotulo, data: dados.valores }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: circular ? 'bottom' : 'top' }
+            }
+        }
+    });
+}
+criar('g-mes', 'line', g.mes, 'Faturamento por mês (R$)');
+criar('g-produtos', 'bar', g.produtos, 'Produtos mais vendidos (qtd)');
+criar('g-categorias', 'doughnut', g.categorias, 'Receita por categoria (R$)');
+criar('g-status', 'pie', g.status, 'Pedidos por status');
+</script>
+{% endblock %}

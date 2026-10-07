@@ -414,3 +414,13 @@
         padding: 24px 16px;
     }
 }
+
+/*======================================
+ÍCONES DA SIDEBAR ADMIN 
+========================================*/
+
+.sidebar-admin-menu a i,
+.sidebar-admin-sair i {
+    margin-right: 10px;
+    font-size: 18px;
+}

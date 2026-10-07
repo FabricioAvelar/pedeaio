@@ -12,6 +12,12 @@ class Pedido(models.Model):
         ('Cancelado', 'Cancelado'),
     ]
 
+    FORMA_PAGAMENTO_CHOICES = [
+        ('Pix', 'Pix'),
+        ('Cartão', 'Cartão (na entrega)'),
+        ('Dinheiro', 'Dinheiro (na entrega)'),
+    ]
+
     usuario = models.ForeignKey(
         Usuario,
         on_delete=models.CASCADE,
@@ -39,6 +45,13 @@ class Pedido(models.Model):
         max_length=30,
         choices=STATUS_CHOICES,
         default='Pendente'
+    )
+
+    forma_pagamento = models.CharField(
+        max_length=20,
+        choices=FORMA_PAGAMENTO_CHOICES,
+        blank=True,
+        default=''
     )
 
     criado_em = models.DateTimeField(auto_now_add=True)
