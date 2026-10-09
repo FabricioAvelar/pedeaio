@@ -28,5 +28,8 @@ urlpatterns = [
     path('usuarios/', include('apps.usuarios.urls')),
     path('pedidos/', include('apps.pedidos.urls')),
     path('sig/', include('apps.sig.urls')),
+    path('painel/', include('apps.painel.urls')),
+    path('entregas/', include('apps.entregas.urls')),
+    
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

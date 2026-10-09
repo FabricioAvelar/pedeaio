@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Pedido #{{ pedido.id }}{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'style/painel.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-admin">
+
+    {% include 'privado/sidebar_admin.html' %}
+
+    <main class="conteudo-admin">
+        <div class="pn-pagina">
+
+            <div class="pn-topo">
+                <div>
+                    <a href="{% url 'painel_pedidos' %}" class="pn-voltar">
+                        <i class="bi bi-arrow-left"></i>Voltar para os pedidos
+                    </a>
+                    <h1>Pedido #{{ pedido.id }}</h1>
+                    <p class="pn-meta">
+                        Feito em {{ pedido.criado_em|date:"d/m/Y" }}
+                        às {{ pedido.criado_em|date:"H:i" }}
+                    </p>
+                </div>
+
+                <span class="pn-badge" data-status="{{ pedido.status }}">{{ pedido.status }}</span>
+            </div>
+
+            <div class="pn-grid">
+
+                <!-- COLUNA DA ESQUERDA -->
+                <div class="pn-coluna">
+
+                    <section class="pn-card">
+                        <h2><i class="bi bi-bag"></i>Itens do pedido</h2>
+
+                        {% for item in pedido.itens.all %}
+                            <div class="pn-item">
+                                <div>
+                                    <strong>{{ item.produto.nome }}</strong>
+                                    <span>{{ item.quantidade }} x R$ {{ item.preco_unitario }}</span>
+                                </div>
+                                <strong>R$ {{ item.subtotal }}</strong>
+                            </div>
+                        {% endfor %}
+
+                        <div class="pn-linha">
+                            <span>Subtotal</span>
+                            <span>R$ {{ pedido.subtotal }}</span>
+                        </div>
+                        <div class="pn-linha">
+                            <span>Taxa de entrega</span>
+                            <span>R$ {{ pedido.taxa_entrega }}</span>
+                        </div>
+                        <div class="pn-linha total">
+                            <span>Total</span>
+                            <span>R$ {{ pedido.valor_total }}</span>
+                        </div>
+                    </section>
+
+                    <section class="pn-card">
+                        <h2><i class="bi bi-clock-history"></i>Histórico</h2>
+
+                        <ul class="pn-historico">
+                            {% for h in pedido.historico.all %}
+                                <li>
+                                    <strong>{{ h.status }}</strong>
+                                    <small>
+                                        {{ h.criado_em|date:"d/m/Y H:i" }}
+                                        {% if h.alterado_por %}
+                                            · {{ h.alterado_por.first_name|default:h.alterado_por.email }}
+                                        {% endif %}
+                                    </small>
+                                </li>
+                            {% empty %}
+                                <li>Sem registros.</li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+
+                </div>
+
+                <!-- COLUNA DA DIREITA -->
+                <div class="pn-coluna">
+
+                    <section class="pn-card">
+                        <h2><i class="bi bi-lightning-charge"></i>Ações</h2>
+
+                        {% if pedido.status == 'Pronto para entrega' %}
+                            <div class="pn-aviso">
+                                <i class="bi bi-hourglass-split"></i>
+                                <span>Aguardando um entregador aceitar esta entrega.</span>
+                            </div>
+                        {% elif pedido.status == 'Saiu para entrega' %}
+                            <div class="pn-aviso">
+                                <i class="bi bi-truck"></i>
+                                <span>O pedido está a caminho do cliente.</span>
+                            </div>
+                        {% elif pedido.status == 'Entregue' %}
+                            <div class="pn-aviso">
+                                <i class="bi bi-check-circle"></i>
+                                <span>Pedido entregue. Nada mais a fazer.</span>
+                            </div>
+                        {% elif pedido.status == 'Cancelado' %}
+                            <div class="pn-aviso">
+                                <i class="bi bi-x-circle"></i>
+                                <span>Este pedido foi cancelado.</span>
+                            </div>
+                        {% endif %}
+
+                        {% if proximos %}
+                            <form method="post" action="{% url 'painel_alterar_status' pedido.id %}" class="pn-acoes">
+                                {% csrf_token %}
+                                {% for s in proximos %}
+                                    {% if s == 'Cancelado' %}
+                                        <button name="status" value="{{ s }}" class="pn-btn pn-btn-perigo"
+                                                onclick="return confirm('Cancelar o pedido #{{ pedido.id }}?')">
+                                            <i class="bi bi-x-circle"></i>Cancelar pedido
+                                        </button>
+                                    {% elif s == 'Preparando' %}
+                                        <button name="status" value="{{ s }}" class="pn-btn">
+                                            <i class="bi bi-fire"></i>Começar a preparar
+                                        </button>
+                                    {% elif s == 'Pronto para entrega' %}
+                                        <button name="status" value="{{ s }}" class="pn-btn">
+                                            <i class="bi bi-box-seam"></i>Pronto para entrega
+                                        </button>
+                                    {% else %}
+                                        <button name="status" value="{{ s }}" class="pn-btn">{{ s }}</button>
+                                    {% endif %}
+                                {% endfor %}
+                            </form>
+                        {% endif %}
+                    </section>
+
+                    <section class="pn-card">
+                        <h2><i class="bi bi-person"></i>Cliente e entrega</h2>
+
+                        <div class="pn-info">
+                            <i class="bi bi-person"></i>
+                            <div>
+                                <strong>{{ pedido.usuario.first_name|default:pedido.usuario.username }}</strong>
+                                <span>{{ pedido.usuario.email }}</span>
+                            </div>
+                        </div>
+
+                        <div class="pn-info">
+                            <i class="bi bi-geo-alt"></i>
+                            <div>
+                                <strong>Endereço de entrega</strong>
+                                <span>{{ pedido.endereco }}</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="pn-card">
+                        <h2><i class="bi bi-wallet2"></i>Pagamento</h2>
+
+                        {% if pedido.forma_pagamento %}
+                            <div class="pn-info">
+                                {% if pedido.forma_pagamento == 'Pix' %}
+                                    <i class="bi bi-qr-code"></i>
+                                {% elif pedido.forma_pagamento == 'Dinheiro' %}
+                                    <i class="bi bi-cash-coin"></i>
+                                {% else %}
+                                    <i class="bi bi-credit-card"></i>
+                                {% endif %}
+
+                                <div>
+                                    <strong>{{ pedido.get_forma_pagamento_display }}</strong>
+                                    {% if pedido.pago %}
+                                        <span class="pn-badge pago">Pago</span>
+                                    {% else %}
+                                        <span class="pn-badge pendente">Pendente</span>
+                                    {% endif %}
+                                    {% if pedido.troco_para %}
+                                        <br><span>Troco para R$ {{ pedido.troco_para }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {% if pedido.forma_pagamento == 'Pix' and not pedido.pago %}
+                                <form method="post" action="{% url 'painel_confirmar_pagamento' pedido.id %}">
+                                    {% csrf_token %}
+                                    <button class="pn-btn pn-btn-claro">
+                                        <i class="bi bi-check2-circle"></i>Confirmar recebimento do Pix
+                                    </button>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            <p class="pn-texto-vazio">O cliente ainda não escolheu a forma de pagamento.</p>
+                        {% endif %}
+                    </section>
+
+                    <section class="pn-card">
+                        <h2><i class="bi bi-truck"></i>Entregador</h2>
+
+                        {% if pedido.entregador %}
+                            <div class="pn-info">
+                                <i class="bi bi-person-check"></i>
+                                <div>
+                                    <strong>{{ pedido.entregador.first_name|default:pedido.entregador.username }}</strong>
+                                    <span>{{ pedido.entregador.email }}</span>
+                                </div>
+                            </div>
+                        {% else %}
+                            <p class="pn-texto-vazio">Ainda não atribuído.</p>
+                        {% endif %}
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

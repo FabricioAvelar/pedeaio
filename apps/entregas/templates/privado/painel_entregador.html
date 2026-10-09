@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Minhas entregas{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/painel.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<main class="entregas-container">
+
+    <div class="entregas-cabecalho">
+        <h1><i class="bi bi-truck"></i>Painel do entregador</h1>
+        <p>Aceite os pedidos prontos e acompanhe as suas entregas.</p>
+    </div>
+
+    <!-- EM ANDAMENTO -->
+    <section class="entregas-secao">
+        <h2>
+            <i class="bi bi-geo-alt"></i>Em andamento
+            <span class="entregas-contador">{{ minhas|length }}</span>
+        </h2>
+
+        {% if minhas %}
+            <div class="entregas-grid">
+                {% for p in minhas %}
+                    <article class="entrega-card">
+                        <div class="entrega-topo">
+                            <strong>Pedido #{{ p.id }}</strong>
+                            <span class="pn-badge" data-status="{{ p.status }}">{{ p.status }}</span>
+                        </div>
+
+                        <div class="entrega-linha">
+                            <i class="bi bi-person"></i>
+                            {{ p.usuario.first_name|default:p.usuario.email }}
+                        </div>
+
+                        <div class="entrega-linha">
+                            <i class="bi bi-geo-alt"></i>
+                            {{ p.endereco }}
+                        </div>
+
+                        <div class="entrega-linha">
+                            <i class="bi bi-bag"></i>
+                            <span>
+                                {% for item in p.itens.all %}{{ item.quantidade }}x {{ item.produto.nome }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                            </span>
+                        </div>
+
+                        {% if not p.pago and p.forma_pagamento %}
+                            <div class="entrega-cobrar">
+                                <i class="bi bi-cash-coin"></i>
+                                <div>
+                                    <strong>Receber R$ {{ p.valor_total }}</strong><br>
+                                    {{ p.get_forma_pagamento_display }}
+                                    {% if p.troco_para %}· troco para R$ {{ p.troco_para }}{% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <form method="post" action="{% url 'concluir_entrega' p.id %}">
+                            {% csrf_token %}
+                            <button class="pn-btn">
+                                <i class="bi bi-check2-circle"></i>Marcar como entregue
+                            </button>
+                        </form>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="entrega-vazio">
+                <i class="bi bi-inbox"></i>
+                Nenhuma entrega em andamento.
+            </div>
+        {% endif %}
+    </section>
+
+    <!-- DISPONÍVEIS -->
+    <section class="entregas-secao">
+        <h2>
+            <i class="bi bi-box-seam"></i>Disponíveis para aceitar
+            <span class="entregas-contador">{{ disponiveis|length }}</span>
+        </h2>
+
+        {% if disponiveis %}
+            <div class="entregas-grid">
+                {% for p in disponiveis %}
+                    <article class="entrega-card">
+                        <div class="entrega-topo">
+                            <strong>Pedido #{{ p.id }}</strong>
+                            <span class="pn-badge" data-status="Pronto para entrega">{{ p.endereco.cidade }}</span>
+                        </div>
+
+                        <div class="entrega-linha">
+                            <i class="bi bi-geo-alt"></i>
+                            {{ p.endereco }}
+                        </div>
+
+                        <div class="entrega-linha">
+                            <i class="bi bi-bag"></i>
+                            <span>
+                                {% for item in p.itens.all %}{{ item.quantidade }}x {{ item.produto.nome }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                            </span>
+                        </div>
+
+                        <div class="entrega-total">
+                            <span>Total do pedido</span>
+                            <strong>R$ {{ p.valor_total }}</strong>
+                        </div>
+
+                        <form method="post" action="{% url 'aceitar_entrega' p.id %}">
+                            {% csrf_token %}
+                            <button class="pn-btn">
+                                <i class="bi bi-truck"></i>Aceitar e sair para entrega
+                            </button>
+                        </form>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="entrega-vazio">
+                <i class="bi bi-hourglass-split"></i>
+                Nenhum pedido pronto no momento.
+            </div>
+        {% endif %}
+    </section>
+
+</main>
+{% endblock %}
