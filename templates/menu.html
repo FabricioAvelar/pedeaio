@@ -30,6 +30,9 @@
             {% else %}
                 <a href="{% url 'meus_dados' %}" class="btn-outline">Meu Perfil</a>
             {% endif %}
+            {% if user.is_entregador %}
+                <a href="{% url 'painel_entregador' %}" class="btn-outline">Entregas</a>
+            {% endif %}
 
             <a href="{% url 'logout' %}" class="btn-dark">Sair</a>
 

@@ -36,6 +36,10 @@
                     <h2>Clientes</h2>
                     <p>{{ total_clientes }}</p>
                 </div>
+                <div class="dashboard-card">
+                    <h2>Tempo médio de entrega</h2>
+                    <p>{% if tempo_entrega_min %}{{ tempo_entrega_min }} min{% else %}—{% endif %}</p>
+                </div>
             </div>
 
             <div class="sig-card">
@@ -49,9 +53,13 @@
             </div>
 
             <div class="sig-circulares">
-                 <div class="sig-card">
+                <div class="sig-card">
                 <h3>Receita por categoria</h3>
              <div class="sig-canvas"><canvas id="g-categorias"></canvas></div>
+            </div>
+            <div class="sig-card">
+                <h3>Receita por forma de pagamento</h3>
+             <div class="sig-canvas"><canvas id="g-pagamento"></canvas></div>
             </div>
 
             <div class="sig-card">
@@ -67,6 +75,14 @@
                     <li>Sem dados.</li>
                 {% endfor %}
             </ul>
+            <h2>Entregas por entregador</h2>
+            <ul>
+                {% for e in por_entregador %}
+                    <li>{{ e.entregador__first_name|default:e.entregador__email }}: {{ e.qtd }}</li>
+                {% empty %}
+                    <li>Sem dados.</li>
+                {% endfor %}
+            </ul>
         </section>
     </main>
 </div>
@@ -77,16 +93,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const g = JSON.parse(document.getElementById('dados-graficos').textContent);
-
-function criar(id, tipo, dados, rotulo) {
-    new Chart(document.getElementById(id), {
-        type: tipo,
-        data: {
-            labels: dados.labels,
-            datasets: [{ label: rotulo, data: dados.valores }]
-        }
-    });
-}
 
 function criar(id, tipo, dados, rotulo) {
     const circular = (tipo === 'pie' || tipo === 'doughnut');
@@ -109,6 +115,7 @@ function criar(id, tipo, dados, rotulo) {
 criar('g-mes', 'line', g.mes, 'Faturamento por mês (R$)');
 criar('g-produtos', 'bar', g.produtos, 'Produtos mais vendidos (qtd)');
 criar('g-categorias', 'doughnut', g.categorias, 'Receita por categoria (R$)');
+criar('g-pagamento', 'doughnut', g.pagamento, 'Receita por forma de pagamento (R$)');
 criar('g-status', 'pie', g.status, 'Pedidos por status');
 </script>
 {% endblock %}

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Pagamento{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/finalizar_pedido.css' %}">
+<link rel="stylesheet" href="{% static 'style/pagamento.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<main class="finalizar-container">
+    <section class="finalizar-pedido">
+
+        <div class="finalizar-cabecalho">
+            <h1>Pagamento</h1>
+            <p>Pedido #{{ pedido.id }} — escolha como você quer pagar.</p>
+        </div>
+
+        <form method="POST" class="finalizar-form">
+            {% csrf_token %}
+
+            <section class="finalizar-secao">
+                <h2>Forma de pagamento</h2>
+                {{ form.non_field_errors }}
+
+                <div class="enderecos-lista">
+                    {% for radio in form.forma_pagamento %}
+                        <label class="endereco-opcao">
+                            {{ radio.tag }}
+
+                            <div class="endereco-conteudo">
+                                <span class="endereco-icone">
+                                    {% if radio.data.value == 'Pix' %}
+                                        <i class="bi bi-qr-code"></i>
+                                    {% elif radio.data.value == 'Dinheiro' %}
+                                        <i class="bi bi-cash-coin"></i>
+                                    {% else %}
+                                        <i class="bi bi-credit-card"></i>
+                                    {% endif %}
+                                </span>
+
+                                <div>
+                                    <strong>{{ radio.choice_label }}</strong>
+                                    <p>
+                                        {% if radio.data.value == 'Pix' %}
+                                            Pague agora com QR Code ou código copia e cola
+                                        {% elif radio.data.value == 'Dinheiro' %}
+                                            Pague ao entregador, com troco se precisar
+                                        {% else %}
+                                            Pague na maquininha quando o pedido chegar
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </label>
+                    {% endfor %}
+                </div>
+                {{ form.forma_pagamento.errors }}
+
+                <!-- PIX -->
+                <div class="pagamento-extra" id="box-pix" hidden>
+                    <h3><i class="bi bi-qr-code-scan"></i>Pague com Pix</h3>
+                    <div class="pix-conteudo">
+                        <div id="qr-pix" class="pix-qr"></div>
+
+                        <div class="pix-codigo">
+                            <label for="codigo-pix">Código copia e cola</label>
+                            <input type="text" id="codigo-pix" value="{{ codigo_pix }}" readonly>
+                            <button type="button" id="btn-copiar" class="btn-copiar">
+                                <i class="bi bi-clipboard"></i>Copiar código
+                            </button>
+                            <small>
+                                Código de demonstração. O pagamento só é confirmado
+                                quando a loja receber o Pix.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TROCO -->
+                <div class="pagamento-extra" id="box-troco" hidden>
+                    <h3><i class="bi bi-cash-coin"></i>Precisa de troco?</h3>
+                    <label for="{{ form.troco_para.id_for_label }}">{{ form.troco_para.label }}</label>
+                    {{ form.troco_para }}
+                    {{ form.troco_para.errors }}
+                    <small>Deixe em branco se não precisar de troco.</small>
+                </div>
+            </section>
+
+            <section class="resumo-pedido">
+                <div class="resumo-linha">
+                    <span>Subtotal</span>
+                    <strong>R$ {{ pedido.subtotal }}</strong>
+                </div>
+
+                <div class="resumo-linha">
+                    <span>Frete</span>
+                    <strong>R$ {{ pedido.taxa_entrega }}</strong>
+                </div>
+
+                <div class="resumo-linha resumo-total">
+                    <span>Total</span>
+                    <strong>R$ {{ pedido.valor_total }}</strong>
+                </div>
+
+                <button type="submit" class="btn-confirmar-pedido">
+                    Confirmar pagamento
+                </button>
+            </section>
+
+        </form>
+    </section>
+</main>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+    const boxPix = document.getElementById('box-pix');
+    const boxTroco = document.getElementById('box-troco');
+    const codigoPix = document.getElementById('codigo-pix').value;
+    let qrGerado = false;
+
+    function atualizar() {
+        const marcado = document.querySelector('input[name="forma_pagamento"]:checked');
+        const valor = marcado ? marcado.value : '';
+
+        boxPix.hidden = valor !== 'Pix';
+        boxTroco.hidden = valor !== 'Dinheiro';
+
+        // gera o QR Code só na primeira vez que o Pix é escolhido
+        if (valor === 'Pix' && !qrGerado && typeof QRCode !== 'undefined') {
+            new QRCode(document.getElementById('qr-pix'), {
+                text: codigoPix, width: 180, height: 180,
+            });
+            qrGerado = true;
+        }
+    }
+
+    document.querySelectorAll('input[name="forma_pagamento"]').forEach(radio => {
+        radio.addEventListener('change', atualizar);
+    });
+
+    document.getElementById('btn-copiar').addEventListener('click', async function () {
+        try {
+            await navigator.clipboard.writeText(codigoPix);
+        } catch (e) {
+            const campo = document.getElementById('codigo-pix');
+            campo.select();
+            document.execCommand('copy');
+        }
+        this.innerHTML = '<i class="bi bi-check2"></i>Copiado!';
+        setTimeout(() => {
+            this.innerHTML = '<i class="bi bi-clipboard"></i>Copiar código';
+        }, 2000);
+    });
+
+    atualizar();
+</script>
+{% endblock %}

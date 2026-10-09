@@ -421,3 +421,15 @@ a {
     background-color: #e3f2fd;
     border-color: #90caf9;
 }
+
+/* ÍCONES BOOTSTRAP EM LINKS E TÍTULOS */
+
+.sidebar nav ul li a i {
+    margin-right: 10px;
+    font-size: 17px;
+}
+
+h2 > i.bi,
+h3 > i.bi {
+    margin-right: 8px;
+}

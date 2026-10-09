@@ -1,0 +1,117 @@
+/* Caixas que aparecem ao escolher Pix ou Dinheiro */
+
+.pagamento-extra {
+    margin-top: 22px;
+    padding: 22px;
+    background: #fff7f0;
+    border: 1px solid #FF6B0F;
+    border-radius: 12px;
+}
+
+.pagamento-extra[hidden] {
+    display: none;
+}
+
+.pagamento-extra h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: var(--text);
+    font-size: 18px;
+}
+
+.pagamento-extra h3 i {
+    color: #FF6B0F;
+}
+
+.pagamento-extra label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pagamento-extra small {
+    display: block;
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.pagamento-extra input[type="number"],
+.pagamento-extra input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.pagamento-extra input:focus {
+    outline: none;
+    border-color: #FF6B0F;
+    box-shadow: 0 0 0 3px rgba(255, 107, 15, .15);
+}
+
+.pagamento-extra .errorlist {
+    margin-top: 8px;
+    color: #c62828;
+    font-size: 13px;
+    list-style: none;
+}
+
+/* PIX */
+
+.pix-conteudo {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.pix-qr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    min-height: 200px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.pix-codigo {
+    flex: 1;
+    min-width: 0;
+}
+
+.btn-copiar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 10px 18px;
+    background: #fff;
+    color: #FF6B0F;
+    border: 1px solid #FF6B0F;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .25s ease, color .25s ease;
+}
+
+.btn-copiar:hover {
+    background: #FF6B0F;
+    color: #fff;
+}
+
+@media (max-width: 700px) {
+    .pix-conteudo {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

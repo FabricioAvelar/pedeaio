@@ -8,6 +8,7 @@ Pedido #{{ pedido.id }}
 {% block estilo %}
 <link rel="stylesheet" href="{% static 'style/perfil.css' %}">
 <link rel="stylesheet" href="{% static 'style/pedido_detalhes.css' %}">
+<link rel="stylesheet" href="{% static 'style/fluxo.css' %}">
 {% endblock %}
 
 {% block conteudo %}
@@ -21,107 +22,95 @@ Pedido #{{ pedido.id }}
         <section class="pedido-detalhes">
 
             <div class="pedido-detalhes-cabecalho">
-
                 <div>
-
                     <a href="{% url 'meus_pedidos' %}" class="voltar-pedidos">
-                    ← Voltar para Meus Pedidos
+                        ← Voltar para Meus Pedidos
                     </a>
 
                     <h1>Pedido #{{ pedido.id }}</h1>
 
                     <p class="pedido-data">
-                        Realizado em
-                        {{ pedido.criado_em|date:"d/m/Y" }}
-                        às
-                        {{ pedido.criado_em|date:"H:i" }}
+                        Realizado em {{ pedido.criado_em|date:"d/m/Y" }}
+                        às {{ pedido.criado_em|date:"H:i" }}
                     </p>
-
                 </div>
 
-                <span class="pedido-status">
-                    {{ pedido.get_status_display }}
-                </span>
-
+                <span class="pedido-status">{{ pedido.get_status_display }}</span>
             </div>
 
+            <!-- ACOMPANHAMENTO -->
+            {% if pedido.status == 'Cancelado' %}
+                <p class="fluxo-cancelado">Este pedido foi cancelado.</p>
+            {% else %}
+                <ol class="timeline" id="timeline" data-status="{{ pedido.status }}">
+                    {% for e in pedido.etapas %}
+                        <li class="{% if e.feita %}feita{% elif e.atual %}atual{% endif %}">
+                            {{ e.nome }}
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if pedido.status == 'Saiu para entrega' and pedido.entregador %}
+                <p>🛵 Seu entregador:
+                    <strong>{{ pedido.entregador.first_name|default:pedido.entregador.email }}</strong>
+                </p>
+            {% endif %}
+
+            <!-- PAGAMENTO -->
+            {% if pedido.forma_pagamento %}
+                <p>💳 {{ pedido.get_forma_pagamento_display }} —
+                    {% if pedido.pago %}Pago{% else %}Pendente{% endif %}
+                </p>
+            {% elif pedido.status != 'Cancelado' %}
+                <a href="{% url 'pagamento' pedido.id %}" class="btn-dark">
+                    Escolher forma de pagamento
+                </a>
+            {% endif %}
 
             <div class="pedido-detalhes-card">
 
                 <div class="pedido-secao">
-
                     <h2>Itens do pedido</h2>
 
                     {% for item in pedido.itens.all %}
-
                         <div class="pedido-item">
-
                             <div class="pedido-item-info">
-
-                                <strong>
-                                    {{ item.produto.nome }}
-                                </strong>
-
-                                <span>
-                                    {{ item.quantidade }} x
-                                    R$ {{ item.preco_unitario }}
-                                </span>
-
+                                <strong>{{ item.produto.nome }}</strong>
+                                <span>{{ item.quantidade }} x R$ {{ item.preco_unitario }}</span>
                             </div>
-
-                            <strong class="pedido-item-subtotal">
-                                R$ {{ item.subtotal }}
-                            </strong>
-
+                            <strong class="pedido-item-subtotal">R$ {{ item.subtotal }}</strong>
                         </div>
-
                     {% endfor %}
-
                 </div>
-
 
                 <div class="pedido-secao">
-
                     <h2>📍 Endereço de entrega</h2>
-
-                    <p>
-                        {{ pedido.endereco.rua }},
-                        {{ pedido.endereco.numero }}
-                    </p>
-
-                    <p>
-                        {{ pedido.endereco.cidade }}/{{ pedido.endereco.estado }}
-                    </p>
-
+                    <p>{{ pedido.endereco.rua }}, {{ pedido.endereco.numero }}</p>
+                    <p>{{ pedido.endereco.cidade }}/{{ pedido.endereco.estado }}</p>
                 </div>
 
+                <div class="pedido-secao">
+                    <h2>Histórico</h2>
+                    {% for h in pedido.historico.all %}
+                        <p>{{ h.criado_em|date:"d/m H:i" }} — {{ h.status }}</p>
+                    {% empty %}
+                        <p>Sem registros.</p>
+                    {% endfor %}
+                </div>
 
                 <div class="pedido-total">
-
                     <div>
                         <span>Subtotal</span>
-
-                        <strong>
-                            R$ {{ pedido.subtotal }}
-                        </strong>
+                        <strong>R$ {{ pedido.subtotal }}</strong>
                     </div>
-
-
                     <div>
                         <span>Taxa de entrega</span>
-
-                        <strong>
-                            R$ {{ pedido.taxa_entrega }}
-                        </strong>
+                        <strong>R$ {{ pedido.taxa_entrega }}</strong>
                     </div>
-
-
                     <div>
                         <span>Total do pedido</span>
-
-                        <strong>
-                            R$ {{ pedido.valor_total }}
-                        </strong>
+                        <strong>R$ {{ pedido.valor_total }}</strong>
                     </div>
                 </div>
             </div>
@@ -129,4 +118,18 @@ Pedido #{{ pedido.id }}
     </main>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Atualiza a página sozinha quando o status mudar (checa a cada 15 s)
+    const tl = document.getElementById('timeline');
+    if (tl) {
+        setInterval(async () => {
+            const r = await fetch("{% url 'pedido_status' pedido.id %}");
+            const dados = await r.json();
+            if (dados.status !== tl.dataset.status) location.reload();
+        }, 15000);
+    }
+</script>
 {% endblock %}
