@@ -1,72 +1,44 @@
-<!-- ========================================
-     SIDEBAR - ÁREA DO USUÁRIO
-========================================= -->
+<aside class="sidebar-cliente">
 
-<aside class="sidebar">
-
-    <!-- USUÁRIO -->
     <div class="perfil-user">
-        <p class="perfil-nome">
+        <h2>
             {{ request.user.first_name|default:request.user.username }}
+        </h2>
+        <p>
+            {{ request.user.email }}
         </p>
-
-        <p>{{ request.user.email }}</p>
     </div>
 
-    <!-- NAVEGAÇÃO -->
-    <nav>
-        <ul>
+    <nav class="sidebar-cliente-menu">
 
-            <li>
-                <a href="{% url 'meus_dados' %}">
-                    <i class="bi bi-house-door"></i>
-                    <span>Meu Perfil</span>
-                </a>
-            </li>
+        <a href="{% url 'meus_dados' %}">
+            <i class="bi bi-house-door"></i>Meu Perfil
+        </a>
 
-            <li>
-                <a href="{% url 'dados_pessoais' %}">
-                    <i class="bi bi-person"></i>
-                    <span>Meus Dados</span>
-                </a>
-            </li>
+        <a href="{% url 'dados_pessoais' %}">
+            <i class="bi bi-person"></i>Meus Dados
+        </a>
 
-            <li>
-                <a href="{% url 'meus_pedidos' %}">
-                    <i class="bi bi-bag"></i>
-                    <span>Meus Pedidos</span>
-                </a>
-            </li>
+        <a href="{% url 'meus_pedidos' %}">
+            <i class="bi bi-bag"></i>Meus Pedidos
+        </a>
 
-            <li>
-                <a href="{% url 'meus_enderecos' %}">
-                    <i class="bi bi-geo-alt"></i>
-                    <span>Endereços</span>
-                </a>
-            </li>
+        <a href="{% url 'meus_enderecos' %}">
+            <i class="bi bi-geo-alt"></i>Endereços
+        </a>
 
-            <li>
-                <a href="">
-                    <i class="bi bi-heart"></i>
-                    <span>Favoritos</span>
-                </a>
-            </li>
+        <a href="">
+            <i class="bi bi-heart"></i>Favoritos
+        </a>
 
-            <li>
-                <a href="">
-                    <i class="bi bi-ticket"></i>
-                    <span>Cupons</span>
-                </a>
-            </li>
+        <a href="">
+            <i class="bi bi-ticket"></i>Cupons
+        </a>
 
-            <li class="sair">
-                <a href="{% url 'logout' %}">
-                    <i class="bi bi-box-arrow-right"></i>
-                    <span>Sair</span>
-                </a>
-            </li>
-
-        </ul>
     </nav>
+
+    <a href="{% url 'logout' %}" class="sidebar-cliente-sair">
+        <i class="bi bi-box-arrow-right"></i>Sair
+    </a>
 
 </aside>
