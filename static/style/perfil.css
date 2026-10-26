@@ -52,7 +52,7 @@
    MENU LATERAL
 ======================================== */
 
- .sidebar-cliente-menu {
+.sidebar-cliente-menu {
     display: flex;
     flex-direction: column;
     width: 100%;

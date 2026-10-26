@@ -8,14 +8,15 @@
     min-height: 100vh;
 }
 
-.sidebar {
-    width: 250px;
-
-    padding: 30px 20px;
-
-    background-color: #fff;
-
-    border-right: 2px solid #e6e6e6;
+.sidebar-cliente {
+    display: flex;
+    flex-direction: column;
+    width: 235px;
+    min-width: 235px;
+    min-height: calc(100vh - 125px);
+    padding: 28px 18px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
 }
 
 .conteudo {
@@ -30,24 +31,22 @@
 ======================================== */
 
 .perfil-user {
-    margin-bottom: 40px;
-
+    margin-bottom: 35px;
     text-align: center;
 }
 
-.perfil-user .perfil-nome {
-    margin-bottom: 5px;
-
-    color: #222;
-
-    font-size: 24px;
-    font-weight: bold;
+.perfil-user h2 {
+    margin: 0 0 5px;
+    color: var(--text);
+    font-size: 22px;
+    font-weight: 700;
 }
 
 .perfil-user p {
-    color: #595959;
-
+    margin: 0;
+    color: var(--muted);
     font-size: 14px;
+    overflow-wrap: anywhere;
 }
 
 
@@ -55,43 +54,33 @@
    MENU LATERAL
 ======================================== */
 
-.sidebar nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.sidebar-cliente-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 14px;
 }
 
-.sidebar nav ul li {
-    margin-bottom: 15px;
-
-    background-color: #fff8e7;
-
-    border-radius: 12px;
-
-    font-weight: 600;
-
-    transition: 0.3s;
-}
-
-.sidebar nav ul li a {
+.sidebar-cliente-menu a {
     display: flex;
     align-items: center;
-    gap: 8px;
-
     width: 100%;
-    box-sizing: border-box;
-
-    padding: 15px;
-
-    color: inherit;
+    min-height: 50px;
+    padding: 0 16px;
+    background: #fff7e8;
+    color: var(--text);
+    border-radius: 11px;
+    font-size: 15px;
+    font-weight: 600;
     text-decoration: none;
-
-    border-radius: 12px;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
 }
 
-.sidebar nav ul li a:hover {
-    background-color: #f7b731;
+.sidebar-cliente-menu a:hover {
+    background: var(--accent);
     color: #fff;
+    transform: translateX(3px);
 }
 
 
@@ -99,30 +88,27 @@
    BOTÃO SAIR
 ======================================== */
 
-.sidebar nav ul li.sair {
-    margin-top: 40px;
-    background-color: transparent;
-}
-
-.sidebar nav ul li.sair a {
+.sidebar-cliente-sair {
     display: flex;
     align-items: center;
-    gap: 8px;
-    background-color: #ffdddd;
-    color: #cc0000;
+    width: 100%;
+    min-height: 50px;
+    margin-top: 38px;
+    padding: 0 16px;
+    background: #ffdada;
+    color: #b00000;
+    border-radius: 11px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
 }
 
-.sidebar nav ul li.sair a:hover {
-    background-color: #cc0000;
+.sidebar-cliente-sair:hover {
+    background: #c62828;
     color: #fff;
-}
-
-.sidebar nav ul li.sair a i {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    line-height: 1;
+    transform: translateX(3px);
 }
 
 
@@ -435,11 +421,12 @@
         flex-direction: column;
     }
 
-    .sidebar {
+    .sidebar-cliente {
         width: 100%;
-
+        min-width: 0;
+        min-height: auto;
         border-right: none;
-        border-bottom: 2px solid #e6e6e6;
+        border-bottom: 1px solid var(--border);
     }
 
     .conteudo {
@@ -468,4 +455,21 @@
     .pedido-item {
         gap: 20px;
     }
+}
+
+@media (max-width: 550px) {
+    .sidebar-cliente-menu {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/*======================================
+ÍCONES DA SIDEBAR CLIENTE 
+========================================*/
+
+.sidebar-cliente-menu a i,
+.sidebar-cliente-sair i {
+    margin-right: 10px;
+    font-size: 18px;
 }
