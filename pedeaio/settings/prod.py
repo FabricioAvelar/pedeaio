@@ -14,8 +14,25 @@ DATABASES = {
 
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    # mantenha aqui o que você já usa para os estáticos (whitenoise)
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
 }
+
+# Só ativa o armazenamento externo se o bucket estiver configurado
+if config("S3_BUCKET_NAME", default=""):
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "bucket_name": config("S3_BUCKET_NAME"),
+            "access_key": config("S3_ACCESS_KEY"),
+            "secret_key": config("S3_SECRET_KEY"),
+            "endpoint_url": config("S3_ENDPOINT_URL"),
+            "region_name": config("S3_REGION", default="auto"),
+            "querystring_auth": False,   # links públicos, sem assinatura temporária
+            "default_acl": None,
+            "file_overwrite": False,
+        },
+    }
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True

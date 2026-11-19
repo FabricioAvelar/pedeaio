@@ -82,7 +82,14 @@ def produto_remover(request, id):
             id=id
         )
 
-        produto.delete()
+        try:
+            produto.delete()
+
+        except ProtectedError:
+            messages.error(
+                request,
+                'Este produto não pode ser excluído porque faz parte de um ou mais pedidos.'
+            )
 
     return redirect('produto_gerenciar')
 
