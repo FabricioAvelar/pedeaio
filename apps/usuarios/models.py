@@ -6,6 +6,8 @@ class Usuario(AbstractUser):
     email = models.CharField('E-mail', max_length=200, unique=True)
     nascimento = models.DateField('Data de Nascimento')
     is_entregador = models.BooleanField('Entregador', default=False)   # NOVA LINHA
+    
+    REQUIRED_FIELDS = ['email', 'cpf', 'nascimento']
 
     def __str__(self):
         return self.username

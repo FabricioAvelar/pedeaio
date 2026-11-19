@@ -94,12 +94,12 @@ def editar_perfil(request):
         )
 
         if form.is_valid():
-            form.save()
+            usuario = form.save(commit=False)
+            usuario.username = usuario.email
+            usuario.save()
 
             messages.success(request, 'Dados atualizados com sucesso!')
-
             return redirect('dados_pessoais')
-
     else:
         form = UsuarioEditarForm(
             instance=request.user
