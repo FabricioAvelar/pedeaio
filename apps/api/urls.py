@@ -1,10 +1,10 @@
 from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenBlacklistView
+from rest_framework_simplejwt.views import TokenRefreshView, TokenBlacklistView
 from .views import *
 
 urlpatterns = [
     # Autenticação (JWT). No login, o campo "username" recebe o e-mail.
-    path('token/', TokenObtainPairView.as_view(), name='api_token'),
+    path('token/', LoginView.as_view(), name='api_token'),
     path('token/refresh/', TokenRefreshView.as_view(), name='api_token_refresh'),
     path('token/blacklist/', TokenBlacklistView.as_view(), name='api_token_blacklist'),
 

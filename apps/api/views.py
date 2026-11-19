@@ -4,13 +4,15 @@ from django.db.models import ProtectedError, Q
 from django.shortcuts import render, get_object_or_404
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from apps.produtos.models import Categoria, Produto, Carrinho, ItemCarrinho
 from apps.usuarios.models import Endereco
 from .permissions import IsStaffOrReadOnly
+from .throttles import LoginRateThrottle, CadastroRateThrottle
 from .serializers import (
     UsuarioSerializer, UsuarioCadastroSerializer, EnderecoSerializer,
     CategoriaSerializer, ProdutoSerializer, ItemCarrinhoSerializer,
@@ -18,8 +20,13 @@ from .serializers import (
 
 
 # Usuários
+class LoginView(TokenObtainPairView):
+    throttle_classes = [LoginRateThrottle]
+
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
+@throttle_classes([CadastroRateThrottle])
 def cadastro(request):
     serializer = UsuarioCadastroSerializer(data=request.data)
     if serializer.is_valid():
@@ -69,7 +76,6 @@ def enderecos(request):
 @api_view(['PUT', 'PATCH'])
 @permission_classes([IsAuthenticated])
 def endereco_atualizar(request, id):
-    # Filtra pelo dono: o endereço de outro usuário responde 404
     endereco = get_object_or_404(Endereco, id=id, usuario=request.user)
     serializer = EnderecoSerializer(
         endereco,
@@ -147,7 +153,6 @@ def produtos(request):
     if request.method == 'GET':
         lista = Produto.objects.select_related('categoria').order_by('nome')
 
-        # Mesmos filtros do site: ?buscar=texto&categoria=id
         busca = request.query_params.get('buscar', '').strip()
         categoria_id = request.query_params.get('categoria', '').strip()
 
@@ -238,7 +243,6 @@ def carrinho_adicionar(request, produto_id):
     carrinho, criado = Carrinho.objects.get_or_create(usuario=request.user)
     item, criado = ItemCarrinho.objects.get_or_create(carrinho=carrinho, produto=produto)
 
-    # Igual ao site: se o produto já está no carrinho, soma 1
     if not criado:
         item.quantidade += 1
         item.save()
@@ -263,7 +267,6 @@ def carrinho_aumentar(request, item_id):
 def carrinho_diminuir(request, item_id):
     item = get_object_or_404(ItemCarrinho, id=item_id, carrinho__usuario=request.user)
 
-    # Igual ao site: com quantidade 1, diminuir remove o item
     if item.quantidade > 1:
         item.quantidade -= 1
         item.save()

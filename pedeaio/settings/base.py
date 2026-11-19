@@ -88,6 +88,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
+    'DEFAULT_THROTTLE_RATES': {
+        'login': '10/min',
+        'cadastro': '10/hour',
+    },
 }
 
 SIMPLE_JWT = {
