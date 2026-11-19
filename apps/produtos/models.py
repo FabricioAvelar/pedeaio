@@ -24,11 +24,10 @@ class Produto(models.Model):
 
 
 class Carrinho(models.Model):
-    usuario = models.ForeignKey(
+    usuario = models.OneToOneField(
         Usuario,
         on_delete=models.CASCADE
     )
-
 
 class ItemCarrinho(models.Model):
     carrinho = models.ForeignKey(
