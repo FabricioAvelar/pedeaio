@@ -9,9 +9,111 @@ from django.urls import reverse
 from .pix import gerar_codigo_pix
 
 from apps.usuarios.models import Endereco
-from apps.produtos.models import Carrinho, ItemCarrinho
-from .models import Pedido, ItemPedido, HistoricoStatus
+from apps.produtos.models import Produto
+from .models import Carrinho, ItemCarrinho, Pedido, ItemPedido, HistoricoStatus
 from .forms import PagamentoForm
+
+
+@login_required
+def adicionar_produto(request, produto_id):
+    produto = get_object_or_404(
+        Produto,
+        id=produto_id
+    )
+
+    if not produto.disponivel:
+        messages.error(request, 'Este produto está indisponível no momento.')
+        return redirect(request.META.get('HTTP_REFERER', 'produtos'))
+
+    carrinho, criado = Carrinho.objects.get_or_create(
+        usuario=request.user
+    )
+
+    item, criado = ItemCarrinho.objects.get_or_create(
+        carrinho=carrinho,
+        produto=produto
+    )
+
+    if not criado:
+        item.quantidade += 1
+        item.save()
+
+    return redirect(
+        request.META.get(
+            'HTTP_REFERER',
+            'produtos'
+        )
+    )
+
+@login_required
+def carrinhocompras(request):
+    carrinho, criado = Carrinho.objects.get_or_create(
+        usuario=request.user
+    )
+
+    itens = ItemCarrinho.objects.filter(
+        carrinho=carrinho
+    )
+
+    total = sum(
+        item.subtotal
+        for item in itens
+    )
+
+    context = {
+        'itens': itens,
+        'total': total
+    }
+
+    return render(request, 'privado/carrinhocompras.html', context)
+
+@login_required
+def aumentar_quantidade(request, item_id):
+    item = get_object_or_404(
+        ItemCarrinho,
+        id=item_id,
+        carrinho__usuario=request.user
+    )
+
+    if not item.produto.disponivel:
+        messages.error(request, 'Este produto está indisponível no momento.')
+        return redirect(request.META.get('HTTP_REFERER', 'produtos'))
+
+    item.quantidade += 1
+    item.save()
+
+    return redirect('carrinhocompras')
+
+
+@login_required
+def diminuir_quantidade(request, item_id):
+    item = get_object_or_404(
+        ItemCarrinho,
+        id=item_id,
+        carrinho__usuario=request.user
+    )
+
+    if item.quantidade > 1:
+        item.quantidade -= 1
+        item.save()
+
+    else:
+        item.delete()
+
+    return redirect('carrinhocompras')
+
+
+@login_required
+def remover_produto(request, item_id):
+    item = get_object_or_404(
+        ItemCarrinho,
+        id=item_id,
+        carrinho__usuario=request.user
+    )
+
+    item.delete()
+
+    return redirect('carrinhocompras')
 
 
 @login_required

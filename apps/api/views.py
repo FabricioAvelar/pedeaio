@@ -9,7 +9,8 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from apps.produtos.models import Categoria, Produto, Carrinho, ItemCarrinho
+from apps.pedidos.models import Carrinho, ItemCarrinho
+from apps.produtos.models import Categoria, Produto
 from apps.usuarios.models import Endereco
 from .permissions import IsStaffOrReadOnly
 from .throttles import LoginRateThrottle, CadastroRateThrottle
@@ -253,6 +254,7 @@ def carrinho_adicionar(request, produto_id):
     carrinho, criado = Carrinho.objects.get_or_create(usuario=request.user)
     item, criado = ItemCarrinho.objects.get_or_create(carrinho=carrinho, produto=produto)
 
+    # Igual ao site: se o produto já está no carrinho, soma 1
     if not criado:
         item.quantidade += 1
         item.save()
@@ -284,6 +286,7 @@ def carrinho_aumentar(request, item_id):
 def carrinho_diminuir(request, item_id):
     item = get_object_or_404(ItemCarrinho, id=item_id, carrinho__usuario=request.user)
 
+    # Igual ao site: com quantidade 1, diminuir remove o item
     if item.quantidade > 1:
         item.quantidade -= 1
         item.save()

@@ -4,6 +4,27 @@ from django.utils import timezone
 from apps.usuarios.models import Usuario, Endereco
 from apps.produtos.models import Produto
 
+class Carrinho(models.Model):
+    usuario = models.OneToOneField(
+        Usuario,
+        on_delete=models.CASCADE
+    )
+
+class ItemCarrinho(models.Model):
+    carrinho = models.ForeignKey(
+        Carrinho,
+        on_delete=models.CASCADE
+    )
+    produto = models.ForeignKey(
+        Produto,
+        on_delete=models.CASCADE
+    )
+    quantidade = models.IntegerField(default=1)
+
+    @property
+    def subtotal(self):
+        return self.produto.preco * self.quantidade
+
 
 class Pedido(models.Model):
     STATUS_CHOICES = [

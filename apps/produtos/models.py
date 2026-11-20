@@ -1,5 +1,4 @@
 from django.db import models
-from apps.usuarios.models import Usuario
 
 
 class Categoria(models.Model):
@@ -25,25 +24,3 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome
-
-
-class Carrinho(models.Model):
-    usuario = models.OneToOneField(
-        Usuario,
-        on_delete=models.CASCADE
-    )
-
-class ItemCarrinho(models.Model):
-    carrinho = models.ForeignKey(
-        Carrinho,
-        on_delete=models.CASCADE
-    )
-    produto = models.ForeignKey(
-        Produto,
-        on_delete=models.CASCADE
-    )
-    quantidade = models.IntegerField(default=1)
-
-    @property
-    def subtotal(self):
-        return self.produto.preco * self.quantidade
