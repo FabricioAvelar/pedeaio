@@ -23,6 +23,15 @@ def finalizar_pedido(request):
         messages.error(request, 'Seu carrinho está vazio.')
         return redirect('carrinhocompras')
 
+    indisponiveis = [i.produto.nome for i in itens if not i.produto.disponivel]
+
+    if indisponiveis:
+        messages.error(
+            request,
+            'Remova do carrinho os itens indisponíveis: ' + ', '.join(indisponiveis) + '.'
+        )
+        return redirect('carrinhocompras')
+
     enderecos = Endereco.objects.filter(usuario=request.user)
 
     if not enderecos.exists():

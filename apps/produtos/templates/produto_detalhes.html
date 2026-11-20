@@ -48,9 +48,13 @@
                 </p>
             </div>
 
-            <a href="{% url 'adicionar_produto' produto.id %}" class="btn-car">
-                 Adicionar ao carrinho
-            </a>
+            {% if produto.disponivel %}
+                <a href="{% url 'adicionar_produto' produto.id %}" class="btn-car">
+                    Adicionar ao carrinho
+                </a>
+            {% else %}
+                <span class="btn-car">Indisponível</span>
+            {% endif %}
 
         </div>
 

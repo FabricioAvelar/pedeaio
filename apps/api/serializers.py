@@ -71,10 +71,15 @@ class CategoriaSerializer(serializers.ModelSerializer):
 
 class ProdutoSerializer(serializers.ModelSerializer):
     categoria_nome = serializers.CharField(source='categoria.nome', read_only=True)
+    # default=True explícito: em multipart, um booleano ausente seria lido como False
+    disponivel = serializers.BooleanField(default=True)
 
     class Meta:
         model = Produto
-        fields = ['id', 'nome', 'descricao', 'preco', 'categoria', 'categoria_nome', 'imagem']
+        fields = [
+            'id', 'nome', 'descricao', 'preco', 'categoria', 'categoria_nome',
+            'imagem', 'disponivel',
+        ]
 
     def validate_preco(self, valor):
         if valor <= 0:

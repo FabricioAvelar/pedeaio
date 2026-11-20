@@ -153,6 +153,10 @@ def adicionar_produto(request, produto_id):
         id=produto_id
     )
 
+    if not produto.disponivel:
+        messages.error(request, 'Este produto está indisponível no momento.')
+        return redirect(request.META.get('HTTP_REFERER', 'produtos'))
+
     carrinho, criado = Carrinho.objects.get_or_create(
         usuario=request.user
     )
@@ -202,6 +206,10 @@ def aumentar_quantidade(request, item_id):
         id=item_id,
         carrinho__usuario=request.user
     )
+
+    if not item.produto.disponivel:
+        messages.error(request, 'Este produto está indisponível no momento.')
+        return redirect(request.META.get('HTTP_REFERER', 'produtos'))
 
     item.quantidade += 1
     item.save()

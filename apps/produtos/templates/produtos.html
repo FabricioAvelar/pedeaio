@@ -120,12 +120,13 @@ Produtos
 
                                 </a>
 
-                                <a
-                                    href="{% url 'adicionar_produto' produto.id %}"
-                                    class="btn-outline btn-carrinho"
-                                >
-                                    Adicionar ao carrinho
-                                </a>
+                                {% if produto.disponivel %}
+                                    <a href="{% url 'adicionar_produto' produto.id %}" class="btn-outline btn-carrinho">
+                                        Adicionar ao carrinho
+                                    </a>
+                                {% else %}
+                                    <span class="btn-outline btn-carrinho">Indisponível</span>
+                                {% endif %}
 
                             </div>
 

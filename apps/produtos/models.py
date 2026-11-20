@@ -21,6 +21,10 @@ class Produto(models.Model):
     )
 
     imagem = models.ImageField(upload_to='produtos/')
+    disponivel = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.nome
 
 
 class Carrinho(models.Model):

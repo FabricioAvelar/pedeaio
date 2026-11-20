@@ -21,6 +21,7 @@ from .serializers import (
 
 # Usuários
 class LoginView(TokenObtainPairView):
+    # Limita tentativas de login por IP (429 ao exceder)
     throttle_classes = [LoginRateThrottle]
 
 
@@ -76,6 +77,7 @@ def enderecos(request):
 @api_view(['PUT', 'PATCH'])
 @permission_classes([IsAuthenticated])
 def endereco_atualizar(request, id):
+    # Filtra pelo dono: o endereço de outro usuário responde 404
     endereco = get_object_or_404(Endereco, id=id, usuario=request.user)
     serializer = EnderecoSerializer(
         endereco,
@@ -153,6 +155,7 @@ def produtos(request):
     if request.method == 'GET':
         lista = Produto.objects.select_related('categoria').order_by('nome')
 
+        # Mesmos filtros do site: ?buscar=texto&categoria=id
         busca = request.query_params.get('buscar', '').strip()
         categoria_id = request.query_params.get('categoria', '').strip()
 
@@ -240,6 +243,13 @@ def carrinho(request):
 @permission_classes([IsAuthenticated])
 def carrinho_adicionar(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
+
+    if not produto.disponivel:
+        return Response(
+            {'detail': 'Este produto está indisponível no momento.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
     carrinho, criado = Carrinho.objects.get_or_create(usuario=request.user)
     item, criado = ItemCarrinho.objects.get_or_create(carrinho=carrinho, produto=produto)
 
@@ -257,6 +267,13 @@ def carrinho_adicionar(request, produto_id):
 @permission_classes([IsAuthenticated])
 def carrinho_aumentar(request, item_id):
     item = get_object_or_404(ItemCarrinho, id=item_id, carrinho__usuario=request.user)
+
+    if not item.produto.disponivel:
+        return Response(
+            {'detail': 'Este produto está indisponível no momento.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
     item.quantidade += 1
     item.save()
     return Response(montar_carrinho(request))
