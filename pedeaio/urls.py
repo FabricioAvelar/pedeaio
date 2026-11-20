@@ -30,6 +30,7 @@ urlpatterns = [
     path('usuarios/', include('apps.usuarios.urls')),
     path('pedidos/', include('apps.pedidos.urls')),
     path('sig/', include('apps.sig.urls')),
+    path('sad/', include('apps.sad.urls')),
     path('painel/', include('apps.painel.urls')),
     path('entregas/', include('apps.entregas.urls')),
     path('api/v1/', include('apps.api.urls')),

@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}SAD{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'style/sig.css' %}">
+<link rel="stylesheet" href="{% static 'style/sad.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-admin">
+    {% include 'privado/sidebar_admin.html' %}
+
+    <main class="conteudo-admin">
+        <section class="dashboard-admin">
+            <div class="dashboard-cabecalho">
+                <h1>SAD – Apoio à decisão</h1>
+                <p>Recomendações para o gestor, com base nos pedidos dos últimos {{ periodo_dias }} dias.</p>
+            </div>
+
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <h2>Produtos a revisar</h2>
+                    <p>{{ cardapio.resumo.revisar }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <h2>Produtos a promover</h2>
+                    <p>{{ cardapio.resumo.promover }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <h2>Gargalo da entrega</h2>
+                    <p>{{ gargalo|default:"Nenhum" }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <h2>Clientes a reativar</h2>
+                    <p>{{ clientes.a_reativar }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <h2>Cancelamentos</h2>
+                    <p>{{ cancelamento.taxa_pct }}%</p>
+                </div>
+            </div>
+
+            <div class="sig-card">
+                <h3>1. Cardápio: o que promover, manter ou revisar</h3>
+                <p class="sad-nota">
+                    Classificação ABC pela receita dos últimos {{ cardapio.dias }} dias:
+                    A concentra a maior parte da receita; C vende pouco. O sistema ainda não
+                    guarda o custo dos produtos, então a análise considera volume e receita, não margem.
+                </p>
+                <div class="sad-rolagem">
+                    <table class="sad-tabela">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Categoria</th>
+                                <th>Vendidos</th>
+                                <th>Receita (R$)</th>
+                                <th>Classe</th>
+                                <th>Recomendação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for l in cardapio.linhas %}
+                            <tr>
+                                <td>{{ l.produto }}{% if not l.disponivel %} <span class="sad-selo sad-selo-indisponivel">indisponível</span>{% endif %}</td>
+                                <td>{{ l.categoria }}</td>
+                                <td>{{ l.qtd }}</td>
+                                <td>{{ l.receita|floatformat:2 }} ({{ l.participacao }}%)</td>
+                                <td>{{ l.classe }}</td>
+                                <td>
+                                    <span class="sad-selo sad-selo-{{ l.acao_css }}">{{ l.acao }}</span>
+                                    {{ l.observacao }}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="6">Nenhum produto cadastrado.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="sig-card">
+                <h3>2. Demanda: horários de pico e escala de entregadores</h3>
+                {% if demanda.total %}
+                    <p class="sad-nota">
+                        Horário mais movimentado: {{ demanda.hora_pico }}h. A escala sugerida considera
+                        que um entregador faz {{ demanda.capacidade }} entregas por hora e usa a média
+                        semanal dos últimos {{ demanda.dias }} dias.
+                    </p>
+                    <div class="sig-canvas"><canvas id="g-hora"></canvas></div>
+                    <div class="sad-rolagem">
+                        <table class="sad-tabela">
+                            <thead>
+                                <tr>
+                                    <th>Dia</th>
+                                    <th>Faixa de pico</th>
+                                    <th>Pedidos no período</th>
+                                    <th>Média por semana</th>
+                                    <th>Entregadores sugeridos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in demanda.picos %}
+                                <tr>
+                                    <td>{{ p.dia }}</td>
+                                    <td>{{ p.faixa }}</td>
+                                    <td>{{ p.pedidos }}</td>
+                                    <td>{{ p.media_semanal }}</td>
+                                    <td>{{ p.entregadores }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="sad-nota">Ainda não há pedidos no período para identificar picos.</p>
+                {% endif %}
+            </div>
+
+            <div class="sig-card">
+                <h3>3. Clientes: quem vale a pena reativar</h3>
+                <p class="sad-nota">
+                    Ativos: compraram nos últimos {{ clientes.dias_em_risco }} dias ({{ clientes.resumo.ativos }}).
+                    Em risco: até {{ clientes.dias_inativo }} dias sem comprar ({{ clientes.resumo.em_risco }}).
+                    Inativos: mais de {{ clientes.dias_inativo }} dias ({{ clientes.resumo.inativos }}).
+                    Cadastrados sem nenhuma compra concluída: {{ clientes.nunca_compraram }}.
+                </p>
+                <div class="sad-rolagem">
+                    <table class="sad-tabela">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Situação</th>
+                                <th>Dias sem comprar</th>
+                                <th>Pedidos</th>
+                                <th>Total gasto (R$)</th>
+                                <th>Sugestão</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in clientes.lista %}
+                            <tr>
+                                <td>{{ c.nome }}</td>
+                                <td>{{ c.segmento }}</td>
+                                <td>{{ c.dias_sem_comprar }}</td>
+                                <td>{{ c.pedidos }}</td>
+                                <td>{{ c.total|floatformat:2 }}</td>
+                                <td>{{ c.sugestao }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="6">Nenhum cliente a reativar no momento.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="sig-card">
+                <h3>4. Entrega: onde o tempo se perde</h3>
+                <p class="sad-nota">
+                    Tempo médio de cada etapa nos pedidos entregues, comparado a uma meta.
+                    {% if cancelamento.alerta %}
+                        <strong>Atenção:</strong> {{ cancelamento.cancelados }} de {{ cancelamento.total }}
+                        pedidos foram cancelados nos últimos {{ periodo_dias }} dias ({{ cancelamento.taxa_pct }}%,
+                        acima do limite de {{ cancelamento.limite_pct }}%).
+                    {% endif %}
+                </p>
+                <div class="sad-rolagem">
+                    <table class="sad-tabela">
+                        <thead>
+                            <tr>
+                                <th>Etapa</th>
+                                <th>Tempo médio</th>
+                                <th>Meta</th>
+                                <th>Situação</th>
+                                <th>O que fazer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for e in etapas %}
+                            <tr>
+                                <td>{{ e.etapa }}{% if e.gargalo %} <span class="sad-selo sad-selo-revisar">gargalo</span>{% endif %}</td>
+                                <td>{% if e.minutos is not None %}{{ e.minutos }} min{% else %}—{% endif %}</td>
+                                <td>{{ e.meta }} min</td>
+                                <td>{{ e.situacao }}{% if e.acima %} (+{{ e.excesso_pct }}%){% endif %}</td>
+                                <td>{{ e.dica|default:"—" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ graficos|json_script:"dados-graficos" }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const g = JSON.parse(document.getElementById('dados-graficos').textContent);
+const canvas = document.getElementById('g-hora');
+
+if (canvas) {
+    new Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: g.hora.labels,
+            datasets: [{ label: 'Pedidos por hora do dia', data: g.hora.valores }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'top' } }
+        }
+    });
+}
+</script>
+{% endblock %}

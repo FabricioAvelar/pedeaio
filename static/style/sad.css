@@ -1,0 +1,65 @@
+.sad-nota {
+    margin-bottom: 14px;
+    font-size: 14px;
+    line-height: 1.5;
+    opacity: 0.85;
+}
+
+.sad-rolagem {
+    overflow-x: auto;
+    margin-top: 16px;
+}
+
+.sad-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.sad-tabela th,
+.sad-tabela td {
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+}
+
+.sad-tabela th {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.sad-selo {
+    display: inline-block;
+    padding: 2px 10px;
+    margin-right: 6px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.sad-selo-destaque {
+    background: rgba(31, 138, 76, 0.15);
+    color: #1f8a4c;
+}
+
+.sad-selo-manter {
+    background: rgba(120, 120, 120, 0.15);
+    color: #6b6b6b;
+}
+
+.sad-selo-promover {
+    background: rgba(217, 150, 20, 0.18);
+    color: #b07800;
+}
+
+.sad-selo-revisar {
+    background: rgba(200, 50, 50, 0.15);
+    color: #c83232;
+}
+
+.sad-selo-indisponivel {
+    background: rgba(120, 120, 120, 0.15);
+    color: #6b6b6b;
+}

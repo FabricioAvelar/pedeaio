@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'apps.usuarios',
     'apps.pedidos',
     'apps.sig',
+    'apps.sad',
     'apps.painel',
     'apps.entregas',
     'apps.api',
