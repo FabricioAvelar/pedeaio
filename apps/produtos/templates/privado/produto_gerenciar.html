@@ -54,6 +54,7 @@ Painel Administrativo
                     <th>Produto</th>
                     <th>Categoria</th>
                     <th>Preço</th>
+                    <th>Estoque</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -65,7 +66,7 @@ Painel Administrativo
                             {% if produto.imagem %}
                                 <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
                             {% else %}
-                                <span>Sem imagem</span>
+                                <img src="{% static 'imgs/sem-imagem.png' %}" alt="Sem imagem">
                             {% endif %}
                         </td>
 
@@ -74,6 +75,15 @@ Painel Administrativo
                         <td>{{ produto.categoria.nome }}</td>
 
                         <td>R$ {{ produto.preco }}</td>
+
+                        <td>
+                            <form action="{% url 'produto_alternar_disponibilidade' produto.id %}" method="POST">
+                            {% csrf_token %}
+                                <button type="submit" class="btn-disponibilidade {% if produto.disponivel %}ativo{% endif %}">
+                                    {% if produto.disponivel %}Disponível{% else %}Esgotado{% endif %}
+                                </button>
+                            </form>
+                        </td>
 
                         <td>
                             <div class="acoes-produto">
@@ -94,7 +104,7 @@ Painel Administrativo
 
                 {% empty %}
                     <tr>
-                        <td colspan="5" class="sem-produtos">
+                        <td colspan="6" class="sem-produtos">
                             Nenhum produto cadastrado.
                         </td>
                     </tr>
@@ -135,9 +145,32 @@ Painel Administrativo
                 {{ produto_form.categoria }}
             </div>
 
-            <div class="campo">
+            <div class="campo campo-imagem">
                 <label for="{{ produto_form.imagem.id_for_label }}">Imagem</label>
-                {{ produto_form.imagem }}
+
+                {% if produto_form.instance.imagem %}
+                    <div class="imagem-atual">
+                        <img src="{{ produto_form.instance.imagem.url }}" alt="Imagem atual de {{ produto_form.instance.nome }}">
+
+                        <label class="imagem-remover" for="imagem-clear_id">
+                            <input type="checkbox" name="imagem-clear" id="imagem-clear_id">
+                            Remover imagem
+                        </label>
+                    </div>
+                {% endif %}
+
+                <input type="file" name="imagem" id="{{ produto_form.imagem.id_for_label }}" accept="image/*">
+                {{ produto_form.imagem.errors }}
+
+                <small>Opcional. Sem imagem, o cardápio mostra uma imagem padrão.</small>
+            </div>
+
+            <div class="campo campo-check">
+                <label for="{{ produto_form.disponivel.id_for_label }}">
+                    {{ produto_form.disponivel }}
+                    <span>Disponível (em estoque)</span>
+                </label>
+                <small>Desmarque quando o produto esgotar. Ele continua no cardápio, mas não entra no carrinho.</small>
             </div>
 
             <button class="btn-salvar" type="submit" name="cadastrar_produto">

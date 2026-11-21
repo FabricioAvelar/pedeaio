@@ -72,6 +72,22 @@ def produto_editar(request, id):
     return render(request, 'privado/produto_gerenciar.html', context)
 
 @login_required
+def produto_alternar_disponibilidade(request, id):
+    if not request.user.is_staff:
+        return redirect('index')
+
+    if request.method == 'POST':
+        produto = get_object_or_404(
+            Produto,
+            id=id
+        )
+
+        produto.disponivel = not produto.disponivel
+        produto.save(update_fields=['disponivel'])
+
+    return redirect('produto_gerenciar')
+
+@login_required
 def produto_remover(request, id):
     if not request.user.is_staff:
         return redirect('index')

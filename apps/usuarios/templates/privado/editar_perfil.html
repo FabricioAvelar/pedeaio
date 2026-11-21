@@ -6,15 +6,14 @@ Editar Perfil
 {% endblock %}
 
 {% block estilo %}
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}">
 <link rel="stylesheet" href="{% static 'style/editar_perfil.css' %}">
 {% endblock %}
 
 {% block conteudo %}
 
 <div class="container">
-    
     {% include 'privado/sidebar.html' %}
-
     <main class="conteudo">
         <section class="editar-perfil">
             <div class="editar-cabecalho">

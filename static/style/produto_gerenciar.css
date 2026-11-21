@@ -186,6 +186,24 @@
     transform: translateY(-2px);
 }
 
+/* BOTÃO DISPONIBILIDADE */
+
+.btn-disponibilidade {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    background: rgba(200, 50, 50, 0.15);
+    color: #c83232;
+}
+
+.btn-disponibilidade.ativo {
+    background: rgba(31, 138, 76, 0.15);
+    color: #1f8a4c;
+}
+
+
 /* CADASTRO */
 
 .cadastro {
@@ -254,37 +272,86 @@
     box-shadow: 0 0 0 3px rgba(255, 107, 15, .1);
 }
 
-/* UPLOAD DE IMAGEM */
+/* CAMPO DE IMAGEM */
 
-.cadastro input[type="file"] {
-    width: 100%;
-    padding: 7px;
-    background: #fff;
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
+.cadastro .campo-imagem small {
+    display: block;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 13px;
 }
 
-.cadastro input[type="file"]::file-selector-button {
-    margin-right: 12px;
-    padding: 9px 15px;
-    background: #fff;
-    color: var(--text);
-    border: 1px solid var(--btn-border);
-    border-radius: 7px;
+.imagem-atual {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.imagem-atual img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.cadastro .campo .imagem-remover {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0;
+    color: #c83232;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
 }
 
-.cadastro input[type="file"]::file-selector-button:hover {
-    background: #FF6B0F;
-    color: #fff;
-    border-color: #FF6B0F;
-    transform: translateY(-2px);
+.cadastro .imagem-remover input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    margin: 0;
+    padding: 0;
+    accent-color: #c83232;
+    cursor: pointer;
+}
+
+/* CHECKBOX DE DISPONIBILIDADE */
+
+.cadastro .campo-check label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color .2s ease;
+}
+
+.cadastro .campo-check label:hover {
+    border-color: var(--accent);
+}
+
+.cadastro .campo-check input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    margin: 0;
+    padding: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.cadastro .campo-check small {
+    display: block;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 13px;
 }
 
 /* CADASTRAR / SALVAR PRODUTO */

@@ -19,7 +19,7 @@ class Produto(models.Model):
         related_name='produtos'
     )
 
-    imagem = models.ImageField(upload_to='produtos/')
+    imagem = models.ImageField(upload_to='produtos/', blank=True)
     disponivel = models.BooleanField(default=True)
 
     def __str__(self):

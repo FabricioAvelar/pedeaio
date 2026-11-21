@@ -4,6 +4,7 @@ from .views import (
     produtos,
     produto_gerenciar,
     produto_editar,
+    produto_alternar_disponibilidade,
     produto_remover,
     produto_detalhes,
     categoria_gerenciar,
@@ -18,6 +19,7 @@ urlpatterns = [
 
     path('produto_gerenciar/', produto_gerenciar, name='produto_gerenciar'),
     path('produto_editar/<int:id>/', produto_editar, name='produto_editar'),
+    path('produto_disponibilidade/<int:id>/', produto_alternar_disponibilidade, name='produto_alternar_disponibilidade'),
     path('produto_remover/<int:id>/', produto_remover, name='produto_remover'),
 
     path('categorias/', categoria_gerenciar, name='categoria_gerenciar'),
