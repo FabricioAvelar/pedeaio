@@ -34,4 +34,12 @@ urlpatterns = [
     path('carrinho_aumentar/<int:item_id>/', carrinho_aumentar, name='api_carrinho_aumentar'),
     path('carrinho_diminuir/<int:item_id>/', carrinho_diminuir, name='api_carrinho_diminuir'),
     path('carrinho_remover/<int:item_id>/', carrinho_remover, name='api_carrinho_remover'),
+
+    # Pedidos
+    path('pedidos/', pedidos, name='api_pedidos'),
+
+    # Entregas
+    path('entregas/', entregas, name='api_entregas'),
+    path('entregas/<int:pedido_id>/aceitar/', aceitar_entrega, name='api_aceitar_entrega'),
+    path('entregas/<int:pedido_id>/concluir/', concluir_entrega, name='api_concluir_entrega'),
 ]

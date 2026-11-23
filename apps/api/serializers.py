@@ -2,7 +2,8 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from apps.pedidos.models import ItemCarrinho
+from apps.pedidos.models import ItemCarrinho, Pedido, ItemPedido, HistoricoStatus
+from apps.entregas.models import Entrega
 from apps.produtos.models import Categoria, Produto
 from apps.usuarios.models import Usuario, Endereco
 
@@ -96,3 +97,90 @@ class ItemCarrinhoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemCarrinho
         fields = ['id', 'produto', 'quantidade', 'subtotal']
+
+
+# Pedidos
+
+class ItemPedidoSerializer(serializers.ModelSerializer):
+    produto = ProdutoSerializer(read_only=True)
+    subtotal = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        read_only=True
+    )
+
+    class Meta:
+        model = ItemPedido
+        fields = [
+            'id',
+            'produto',
+            'quantidade',
+            'preco_unitario',
+            'subtotal',
+        ]
+
+
+class HistoricoStatusSerializer(serializers.ModelSerializer):
+    alterado_por = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = HistoricoStatus
+        fields = [
+            'id',
+            'status',
+            'alterado_por',
+            'criado_em',
+        ]
+
+
+class PedidoSerializer(serializers.ModelSerializer):
+    endereco = EnderecoSerializer(read_only=True)
+    itens = ItemPedidoSerializer(many=True, read_only=True)
+    historico = HistoricoStatusSerializer(many=True, read_only=True)
+    entregador = serializers.StringRelatedField(read_only=True)
+    subtotal = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        read_only=True
+    )
+
+    class Meta:
+        model = Pedido
+        fields = [
+            'id',
+            'endereco',
+            'itens',
+            'historico',
+            'entregador',
+            'subtotal',
+            'taxa_entrega',
+            'valor_total',
+            'status',
+            'forma_pagamento',
+            'pago',
+            'pago_em',
+            'troco_para',
+            'criado_em',
+        ]
+
+
+class EntregaSerializer(serializers.ModelSerializer):
+    pedido = PedidoSerializer(read_only=True)
+
+    class Meta:
+        model = Entrega
+        fields = [
+            'id',
+            'pedido',
+            'data_saida',
+            'data_conclusao',
+            'observacoes',
+            'criado_em',
+        ]
+        read_only_fields = [
+            'id',
+            'pedido',
+            'data_saida',
+            'data_conclusao',
+            'criado_em',
+        ]

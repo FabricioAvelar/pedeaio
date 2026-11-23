@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from django.db.models import ProtectedError, Q
 from django.shortcuts import render, get_object_or_404
+from django.db import transaction
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes, throttle_classes
@@ -9,14 +10,17 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from apps.pedidos.models import Carrinho, ItemCarrinho
+
+from apps.pedidos.models import Carrinho, ItemCarrinho, Pedido, ItemPedido, HistoricoStatus
+from apps.entregas.models import Entrega
+from apps.usuarios.models import Usuario, Endereco
 from apps.produtos.models import Categoria, Produto
-from apps.usuarios.models import Endereco
 from .permissions import IsStaffOrReadOnly
 from .throttles import LoginRateThrottle, CadastroRateThrottle
 from .serializers import (
     UsuarioSerializer, UsuarioCadastroSerializer, EnderecoSerializer,
-    CategoriaSerializer, ProdutoSerializer, ItemCarrinhoSerializer,
+    CategoriaSerializer, ProdutoSerializer, ItemCarrinhoSerializer, 
+    PedidoSerializer, EntregaSerializer,
 )
 
 
@@ -302,3 +306,318 @@ def carrinho_remover(request, item_id):
     item = get_object_or_404(ItemCarrinho, id=item_id, carrinho__usuario=request.user)
     item.delete()
     return Response(montar_carrinho(request))
+
+
+# Pedidos
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def pedidos(request):
+
+    # Listar pedidos do usuário autenticado
+    if request.method == 'GET':
+        lista = Pedido.objects.filter(
+            usuario=request.user
+        ).select_related(
+            'endereco', 'entregador'
+        ).prefetch_related(
+            'itens__produto',
+            'historico__alterado_por'
+        ).order_by('-criado_em')
+
+        serializer = PedidoSerializer(
+            lista,
+            many=True,
+            context={'request': request}
+        )
+        return Response(serializer.data)
+
+    # Criar pedido a partir do carrinho
+    carrinho, criado = Carrinho.objects.get_or_create(
+        usuario=request.user
+    )
+
+    itens = list(
+        ItemCarrinho.objects.filter(
+            carrinho=carrinho
+        ).select_related('produto')
+    )
+
+    if not itens:
+        return Response(
+            {'detail': 'Seu carrinho está vazio.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    indisponiveis = [
+        item.produto.nome
+        for item in itens
+        if not item.produto.disponivel
+    ]
+
+    if indisponiveis:
+        return Response(
+            {
+                'detail': 'Remova do carrinho os produtos indisponíveis.',
+                'produtos': indisponiveis
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    endereco_id = request.data.get('endereco')
+
+    if not endereco_id:
+        return Response(
+            {'detail': 'Informe o endereço de entrega.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    endereco = get_object_or_404(
+        Endereco,
+        id=endereco_id,
+        usuario=request.user
+    )
+
+    taxas_entrega = {
+        'Canguaretama': Decimal('5.00'),
+        'Barra do Cunhaú': Decimal('7.00'),
+        'Goianinha': Decimal('8.00'),
+        'Natal': Decimal('15.00'),
+    }
+
+    taxa_entrega = taxas_entrega.get(endereco.cidade)
+
+    if taxa_entrega is None:
+        return Response(
+            {'detail': 'Não realizamos entregas para esta cidade.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    subtotal = sum(
+        (item.subtotal for item in itens),
+        Decimal('0.00')
+    )
+
+    total = subtotal + taxa_entrega
+
+    with transaction.atomic():
+        pedido = Pedido.objects.create(
+            usuario=request.user,
+            endereco=endereco,
+            taxa_entrega=taxa_entrega,
+            valor_total=total,
+        )
+
+        Entrega.objects.create(pedido=pedido)
+
+        for item in itens:
+            ItemPedido.objects.create(
+                pedido=pedido,
+                produto=item.produto,
+                quantidade=item.quantidade,
+                preco_unitario=item.produto.preco,
+            )
+
+        HistoricoStatus.objects.create(
+            pedido=pedido,
+            status='Pendente',
+            alterado_por=request.user
+        )
+
+        ItemCarrinho.objects.filter(
+            carrinho=carrinho
+        ).delete()
+
+    serializer = PedidoSerializer(
+        pedido,
+        context={'request': request}
+    )
+
+    return Response(
+        serializer.data,
+        status=status.HTTP_201_CREATED
+    )
+
+
+# Entregas
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def entregas(request):
+    if not request.user.is_entregador:
+        return Response(
+            {'detail': 'Apenas entregadores podem acessar esta área.'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    disponiveis = Entrega.objects.filter(
+        pedido__status='Pronto para entrega',
+        pedido__entregador__isnull=True
+    ).select_related(
+        'pedido', 'pedido__usuario', 'pedido__endereco'
+    ).prefetch_related(
+        'pedido__itens__produto',
+        'pedido__historico'
+    )
+
+    minhas = Entrega.objects.filter(
+        pedido__entregador=request.user
+    ).select_related(
+        'pedido', 'pedido__usuario', 'pedido__endereco'
+    ).prefetch_related(
+        'pedido__itens__produto',
+        'pedido__historico'
+    )
+
+    serializer = EntregaSerializer(
+        list(disponiveis) + list(minhas),
+        many=True,
+        context={'request': request}
+    )
+
+    return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def aceitar_entrega(request, pedido_id):
+    if not request.user.is_entregador:
+        return Response(
+            {'detail': 'Apenas entregadores podem aceitar entregas.'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    with transaction.atomic():
+        atualizados = Pedido.objects.filter(
+            id=pedido_id,
+            status='Pronto para entrega',
+            entregador__isnull=True
+        ).update(
+            entregador=request.user,
+            status='Saiu para entrega'
+        )
+
+        if not atualizados:
+            pedido = Pedido.objects.filter(id=pedido_id).first()
+
+            if not pedido:
+                return Response(
+                    {'detail': 'Pedido não encontrado.'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            if (
+                pedido.status == 'Saiu para entrega'
+                and pedido.entregador_id == request.user.pk
+            ):
+                entrega, _ = Entrega.objects.get_or_create(
+                    pedido=pedido
+                )
+
+                if not entrega.data_saida:
+                    entrega.iniciar_entrega()
+
+                serializer = EntregaSerializer(
+                    entrega,
+                    context={'request': request}
+                )
+                return Response(serializer.data)
+
+            if pedido.entregador_id is not None:
+                return Response(
+                    {'detail': 'Este pedido já foi aceito por outro entregador.'},
+                    status=status.HTTP_409_CONFLICT
+                )
+
+            return Response(
+                {'detail': f'Pedido indisponível. Status atual: {pedido.status}.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        pedido = Pedido.objects.get(id=pedido_id)
+
+        HistoricoStatus.objects.create(
+            pedido=pedido,
+            status='Saiu para entrega',
+            alterado_por=request.user
+        )
+
+        entrega, _ = Entrega.objects.get_or_create(
+            pedido=pedido
+        )
+
+        if not entrega.data_saida:
+            entrega.iniciar_entrega()
+
+    serializer = EntregaSerializer(
+        entrega,
+        context={'request': request}
+    )
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def concluir_entrega(request, pedido_id):
+    if not request.user.is_entregador:
+        return Response(
+            {'detail': 'Apenas entregadores podem concluir entregas.'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    with transaction.atomic():
+        pedido = Pedido.objects.filter(id=pedido_id).first()
+
+        if not pedido:
+            return Response(
+                {'detail': 'Pedido não encontrado.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        if pedido.entregador_id != request.user.pk:
+            return Response(
+                {'detail': 'Este pedido não está atribuído a você.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if pedido.status == 'Entregue':
+            entrega = Entrega.objects.filter(pedido=pedido).first()
+
+            if entrega:
+                serializer = EntregaSerializer(
+                    entrega,
+                    context={'request': request}
+                )
+                return Response(serializer.data)
+
+            return Response(
+                {'detail': 'Pedido entregue, mas o registro da entrega não foi encontrado.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if pedido.status != 'Saiu para entrega':
+            return Response(
+                {'detail': f'Não é possível concluir. Status atual: {pedido.status}.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        pedido.mudar_status('Entregue', request.user)
+
+        if not pedido.pago:
+            pedido.marcar_como_pago()
+
+        entrega, _ = Entrega.objects.get_or_create(
+            pedido=pedido
+        )
+
+        if not entrega.data_conclusao:
+            entrega.concluir_entrega()
+
+    serializer = EntregaSerializer(
+        entrega,
+        context={'request': request}
+    )
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
