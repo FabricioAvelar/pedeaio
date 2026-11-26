@@ -7,6 +7,9 @@ from django.db import transaction
 from django.http import JsonResponse
 from django.urls import reverse
 from .pix import gerar_codigo_pix
+from apps.cupons.services import (
+    SESSION_KEY as CUPOM_SESSION_KEY, CupomInvalido, cupom_da_sessao, validar_cupom,
+)
 
 from apps.usuarios.models import Endereco
 from apps.produtos.models import Produto
@@ -60,9 +63,14 @@ def carrinhocompras(request):
         for item in itens
     )
 
+    cupom, desconto = cupom_da_sessao(request, total)
+
     context = {
         'itens': itens,
-        'total': total
+        'total': total,
+        'cupom': cupom,
+        'desconto': desconto,
+        'total_final': total - desconto,
     }
 
     return render(request, 'privado/carrinhocompras.html', context)
@@ -170,38 +178,65 @@ def finalizar_pedido(request):
             messages.error(request, 'Não realizamos entregas para esta cidade.')
             return redirect('finalizar_pedido')
 
-        total = subtotal + taxa_entrega
+        codigo_cupom = request.session.get(CUPOM_SESSION_KEY)
 
-        with transaction.atomic():
-            pedido = Pedido.objects.create(
-                usuario=request.user,
-                endereco=endereco,
-                taxa_entrega=taxa_entrega,
-                valor_total=total,
-            )
+        try:
+            with transaction.atomic():
+                cupom, desconto = None, Decimal('0.00')
 
-            for item in itens:
-                ItemPedido.objects.create(
-                    pedido=pedido,
-                    produto=item.produto,
-                    quantidade=item.quantidade,
-                    preco_unitario=item.produto.preco,
+                # confere o cupom de novo na hora de fechar
+                if codigo_cupom:
+                    cupom, desconto = validar_cupom(
+                        codigo_cupom, request.user, subtotal, travar=True
+                    )
+
+                total = subtotal - desconto + taxa_entrega
+
+                pedido = Pedido.objects.create(
+                    usuario=request.user,
+                    endereco=endereco,
+                    taxa_entrega=taxa_entrega,
+                    desconto=desconto,
+                    cupom=cupom,
+                    valor_total=total,
                 )
 
-            # NOVO: primeiro registro do acompanhamento
-            HistoricoStatus.objects.create(
-                pedido=pedido, status='Pendente', alterado_por=request.user
-            )
+                for item in itens:
+                    ItemPedido.objects.create(
+                        pedido=pedido,
+                        produto=item.produto,
+                        quantidade=item.quantidade,
+                        preco_unitario=item.produto.preco,
+                    )
 
-            itens.delete()
+                HistoricoStatus.objects.create(
+                    pedido=pedido, status='Pendente', alterado_por=request.user
+                )
+
+                itens.delete()
+
+        except CupomInvalido as erro:
+            request.session.pop(CUPOM_SESSION_KEY, None)
+            messages.error(
+                request,
+                f'O cupom {codigo_cupom} foi removido: {erro} '
+                'Confira o novo total e confirme de novo.'
+            )
+            return redirect('finalizar_pedido')
+
+        request.session.pop(CUPOM_SESSION_KEY, None)
 
         # NOVO: em vez da tela de sucesso, vai escolher o pagamento
         return redirect('pagamento', pedido_id=pedido.id)
+
+    cupom, desconto = cupom_da_sessao(request, subtotal)
 
     context = {
         'itens': itens,
         'total': subtotal,
         'enderecos': enderecos,
+        'cupom': cupom,
+        'desconto': desconto,
     }
     return render(request, 'privado/finalizar_pedido.html', context)
 
@@ -253,9 +288,8 @@ def meus_pedidos(request):
 @login_required
 def pedido_detalhes(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id, usuario=request.user)
-    subtotal = pedido.valor_total - pedido.taxa_entrega
     return render(request, 'privado/pedido_detalhes.html',
-                  {'pedido': pedido, 'subtotal': subtotal})
+                  {'pedido': pedido, 'subtotal': pedido.subtotal})
 
 
 @login_required

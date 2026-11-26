@@ -104,6 +104,12 @@ Pedido #{{ pedido.id }}
                         <span>Subtotal</span>
                         <strong>R$ {{ pedido.subtotal }}</strong>
                     </div>
+                    {% if pedido.desconto %}
+                        <div>
+                            <span>Desconto{% if pedido.cupom %} ({{ pedido.cupom.codigo }}){% endif %}</span>
+                            <strong>− R$ {{ pedido.desconto }}</strong>
+                        </div>
+                    {% endif %}
                     <div>
                         <span>Taxa de entrega</span>
                         <strong>R$ {{ pedido.taxa_entrega }}</strong>

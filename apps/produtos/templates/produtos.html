@@ -7,6 +7,7 @@ Produtos
 
 {% block estilo %}
 <link rel="stylesheet" href="{% static 'style/produtos.css' %}">
+<link rel="stylesheet" href="{% static 'style/favoritos.css' %}">
 {% endblock %}
 
 {% block conteudo %}
@@ -120,13 +121,35 @@ Produtos
 
                                 </a>
 
-                                {% if produto.disponivel %}
-                                    <a href="{% url 'adicionar_produto' produto.id %}" class="btn-outline btn-carrinho">
-                                        Adicionar ao carrinho
-                                    </a>
-                                {% else %}
-                                    <span class="btn-outline btn-carrinho">Indisponível</span>
-                                {% endif %}
+                                <div class="acoes-card">
+
+                                    {% if produto.disponivel %}
+                                        <a href="{% url 'adicionar_produto' produto.id %}" class="btn-outline btn-carrinho">
+                                            Adicionar ao carrinho
+                                        </a>
+                                    {% else %}
+                                        <span class="btn-outline btn-carrinho">Indisponível</span>
+                                    {% endif %}
+
+                                    {% if user.is_authenticated %}
+                                        <form method="POST" action="{% url 'alternar_favorito' produto.id %}" class="form-favorito">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                            <button
+                                                type="submit"
+                                                class="btn-favorito {% if produto.id in favoritos_ids %}ativo{% endif %}"
+                                                title="{% if produto.id in favoritos_ids %}Remover dos favoritos{% else %}Adicionar aos favoritos{% endif %}"
+                                            >
+                                                <i class="bi {% if produto.id in favoritos_ids %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <a href="{% url 'login' %}" class="btn-favorito" title="Entre para favoritar">
+                                            <i class="bi bi-heart"></i>
+                                        </a>
+                                    {% endif %}
+
+                                </div>
 
                             </div>
 

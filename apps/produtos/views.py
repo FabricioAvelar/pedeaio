@@ -7,6 +7,7 @@ from django.contrib import messages
 # Usuário
 from .models import Produto, Categoria
 from .forms import ProdutoForm, CategoriaForm
+from apps.favoritos.services import ids_favoritos
 
 
 @login_required
@@ -143,7 +144,8 @@ def produtos(request):
         'categorias': categorias,
         'categorias_com_produtos': categorias_com_produtos,
         'busca': busca,
-        'categoria': categoria_id
+        'categoria': categoria_id,
+        'favoritos_ids': ids_favoritos(request.user),
     }
 
     return render(request, 'produtos.html', context)
@@ -155,7 +157,8 @@ def produto_detalhes(request, id):
     )
 
     context = {
-        'produto': produto
+        'produto': produto,
+        'favorito': produto.id in ids_favoritos(request.user),
     }
 
     return render(request, 'produto_detalhes.html', context)

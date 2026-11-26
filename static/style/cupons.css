@@ -1,0 +1,103 @@
+/* CARRINHO */
+.linha-resumo {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px; font-size: 15px;
+}
+.linha-desconto { color: #2e7d32; font-weight: 600; }
+.cupom-box { margin-bottom: 16px; }
+
+.cupom-form { display: flex; gap: 8px; }
+.cupom-form input {
+    flex: 1; min-width: 0; height: 40px; padding: 0 12px;
+    background: #fff; color: var(--text);
+    border: 1px solid var(--border); border-radius: 7px;
+    font-size: 14px; text-transform: uppercase; outline: none;
+}
+.cupom-form input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(255,107,15,.1); }
+.cupom-form button {
+    height: 40px; padding: 0 16px; background: #fff; color: var(--text);
+    border: 1px solid var(--btn-border); border-radius: 7px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: background .25s ease, color .25s ease;
+}
+.cupom-form button:hover { background: #FF6B0F; color: #fff; border-color: #FF6B0F; }
+
+.cupom-aplicado {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px; background: #e8f5e9; color: #2e7d32;
+    border: 1px dashed #2e7d32; border-radius: 8px;
+    font-size: 14px; font-weight: 700;
+}
+.cupom-remover {
+    background: none; color: #c62828; border: none;
+    font-size: 13px; font-weight: 600; text-decoration: underline; cursor: pointer;
+}
+
+/* PÁGINA MEUS CUPONS */
+.cupons { width: 100%; max-width: 1000px; margin: 0 auto; }
+.cupons-cabecalho { margin-bottom: 30px; }
+.cupons-cabecalho h1 { margin-bottom: 8px; font-size: 32px; }
+.cupons-cabecalho p { color: var(--muted); }
+.cupons-lista { display: flex; flex-direction: column; gap: 18px; }
+
+.cupom-card {
+    display: flex; align-items: center; gap: 20px; padding: 22px 26px;
+    background: var(--surface); border: 2px dashed #FF6B0F; border-radius: 15px;
+}
+.cupom-card-icone {
+    display: flex; align-items: center; justify-content: center;
+    width: 50px; height: 50px; flex-shrink: 0;
+    background: #fff7e8; color: #FF6B0F; border-radius: 50%; font-size: 22px;
+}
+.cupom-card-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.cupom-card-codigo { font-size: 20px; letter-spacing: 1px; }
+.cupom-card-desconto { color: #FF6B0F; font-weight: 700; }
+.cupom-card-info p, .cupom-card-info small { color: var(--muted); font-size: 13px; }
+.cupom-card-acao { display: flex; flex-direction: column; gap: 8px; }
+
+.btn-cupom {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 10px 16px; background: #FF6B0F; color: #fff;
+    border: 1px solid #FF6B0F; border-radius: 8px;
+    font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer;
+    transition: background .25s ease, transform .25s ease;
+}
+.btn-cupom:hover { background: #D94F00; transform: translateY(-2px); }
+.cupom-selo { text-align: center; color: #2e7d32; font-size: 12px; font-weight: 700; }
+
+.sem-cupons {
+    padding: 50px 30px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 15px; text-align: center;
+}
+.sem-cupons > p:first-child { margin-bottom: 10px; color: #FF6B0F; font-size: 34px; }
+.sem-cupons h2 { margin-bottom: 8px; }
+.sem-cupons p { color: var(--muted); }
+
+/* ADMIN */
+.cupom-form-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0 20px; margin-bottom: 10px;
+}
+.cupom-form-grid .campo input[type="text"],
+.cupom-form-grid .campo input[type="number"],
+.cupom-form-grid .campo input[type="datetime-local"],
+.cupom-form-grid .campo select {
+    padding: 12px; background: #fff; color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px;
+    font-size: 1rem; outline: none;
+}
+.campo-check { flex-direction: row; align-items: center; gap: 10px; }
+.campo-check label { margin: 0; order: 2; }
+.campo-ajuda { margin-top: 6px; color: var(--muted); }
+.campo-erro { margin-top: 6px; color: #c62828; font-weight: 600; }
+
+.tabela-rolavel { overflow-x: auto; }
+.lista-categorias .acoes { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.selo-status { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+.selo-status.ativo { background: #e8f5e9; color: #2e7d32; }
+.selo-status.inativo { background: #eee; color: var(--muted); }
+
+@media (max-width: 700px) {
+    .cupom-card { flex-direction: column; align-items: flex-start; }
+}

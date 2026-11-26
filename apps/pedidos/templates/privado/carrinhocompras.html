@@ -7,6 +7,7 @@ Carrinho
 
 {% block estilo %}
 <link rel="stylesheet" href="{% static 'style/carrinho.css' %}">
+<link rel="stylesheet" href="{% static 'style/cupons.css' %}">
 {% endblock %}
 
 {% block conteudo %}
@@ -77,9 +78,49 @@ Carrinho
 
             <h2>Resumo</h2>
 
+            <div class="linha-resumo">
+                <span>Subtotal</span>
+                <span>R$ {{ total }}</span>
+            </div>
+
+            {% if itens %}
+                <div class="cupom-box">
+                    {% if cupom %}
+                        <div class="cupom-aplicado">
+                            <span><i class="bi bi-ticket-perforated"></i> {{ cupom.codigo }}</span>
+
+                            <form method="POST" action="{% url 'remover_cupom' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="cupom-remover">Remover</button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <form method="POST" action="{% url 'aplicar_cupom' %}" class="cupom-form">
+                            {% csrf_token %}
+                            <input
+                                type="text"
+                                name="codigo"
+                                placeholder="Código do cupom"
+                                maxlength="30"
+                                autocomplete="off"
+                                required
+                            >
+                            <button type="submit">Aplicar</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if cupom %}
+                <div class="linha-resumo linha-desconto">
+                    <span>Desconto</span>
+                    <span>− R$ {{ desconto }}</span>
+                </div>
+            {% endif %}
+
             <div class="line">
                 <span>Total</span>
-                <span>R$ {{ total }}</span>
+                <span>R$ {{ total_final }}</span>
             </div>
 
             <a href="{% url 'finalizar_pedido' %}" class="btn-finalizar">

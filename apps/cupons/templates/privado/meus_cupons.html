@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Meus Cupons{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}">
+<link rel="stylesheet" href="{% static 'style/cupons.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container">
+
+    {% include 'privado/sidebar.html' %}
+
+    <main class="conteudo">
+        <section class="cupons">
+
+            <div class="cupons-cabecalho">
+                <h1>Meus Cupons</h1>
+                <p>Cupons disponíveis para você. Eles são aplicados no carrinho.</p>
+            </div>
+
+            {% if cupons %}
+                <div class="cupons-lista">
+
+                    {% for cupom in cupons %}
+                        <article class="cupom-card">
+
+                            <div class="cupom-card-icone">
+                                <i class="bi bi-ticket-perforated"></i>
+                            </div>
+
+                            <div class="cupom-card-info">
+                                <strong class="cupom-card-codigo">{{ cupom.codigo }}</strong>
+                                <span class="cupom-card-desconto">{{ cupom.rotulo_desconto }}</span>
+
+                                {% if cupom.descricao %}
+                                    <p>{{ cupom.descricao }}</p>
+                                {% endif %}
+
+                                <small>
+                                    {% if cupom.valor_minimo %}Pedido mínimo de R$ {{ cupom.valor_minimo }}.{% endif %}
+                                    {% if cupom.valido_ate %}Válido até {{ cupom.valido_ate|date:"d/m/Y H:i" }}.{% endif %}
+                                </small>
+                            </div>
+
+                            <div class="cupom-card-acao">
+                                {% if aplicado == cupom.codigo %}
+                                    <span class="cupom-selo">Aplicado</span>
+                                    <a href="{% url 'carrinhocompras' %}" class="btn-cupom">Ver carrinho</a>
+                                {% else %}
+                                    <form method="POST" action="{% url 'aplicar_cupom' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="codigo" value="{{ cupom.codigo }}">
+                                        <button type="submit" class="btn-cupom">Usar no carrinho</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+
+                        </article>
+                    {% endfor %}
+
+                </div>
+            {% else %}
+
+                <div class="sem-cupons">
+                    <p><i class="bi bi-ticket-perforated"></i></p>
+                    <h2>Nenhum cupom disponível</h2>
+                    <p>Quando houver uma promoção para você, ela aparece aqui.</p>
+                </div>
+
+            {% endif %}
+
+        </section>
+    </main>
+</div>
+
+{% endblock %}

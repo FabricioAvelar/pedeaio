@@ -64,6 +64,8 @@ class Pedido(models.Model):
     )
     valor_total = models.DecimalField(max_digits=10, decimal_places=2)
     taxa_entrega = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    desconto = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    cupom = models.ForeignKey( 'cupons.Cupom', on_delete=models.PROTECT, null=True, blank=True, related_name='pedidos')
     status = models.CharField(
         max_length=30, choices=STATUS_CHOICES, default='Pendente'
     )
@@ -85,7 +87,7 @@ class Pedido(models.Model):
 
     @property
     def subtotal(self):
-        return self.valor_total - self.taxa_entrega
+        return self.valor_total - self.taxa_entrega + self.desconto
 
     @property
     def etapas(self):

@@ -2,63 +2,175 @@
 {% load static %}
 
 {% block titulo %}
-{{ produto.nome }}
+Produtos
 {% endblock %}
 
 {% block estilo %}
-<link rel="stylesheet" href="{% static 'style/produto_detalhes.css' %}">
+<link rel="stylesheet" href="{% static 'style/produtos.css' %}">
+<link rel="stylesheet" href="{% static 'style/favoritos.css' %}">
 {% endblock %}
 
 {% block conteudo %}
 
-<div class="container">
-    <div class="product">
+<section class="features">
+    <h1>Produtos</h1>
+    <p class="subheading">Em estoque</p>
 
-        <div class="product-image">
-            {% if produto.imagem %}
-                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
-            {% else %}
-                <img src="{% static 'imgs/sem-imagem.png' %}" alt="Sem imagem disponível para {{ produto.nome }}">
-            {% endif %}
+    <form method="GET" class="busca">
+
+        <div class="busca-campo busca-produto">
+            <label for="buscar">Buscar produto</label>
+
+            <input
+                type="text"
+                id="buscar"
+                name="buscar"
+                placeholder="Digite o nome ou descrição..."
+                value="{{ busca }}"
+            >
         </div>
 
-        <div class="info">
+        <div class="busca-campo busca-categoria">
+            <label for="categoria">Categoria</label>
 
-            {% if produto.categoria %}
-                <span class="categoria-badge">
-                    {{ produto.categoria.nome }}
-                </span>
-            {% endif %}
+            <select id="categoria" name="categoria">
+                <option value="">
+                    Todas as categorias
+                </option>
 
-            <h1>{{ produto.nome }}</h1>
+                {% for item in categorias %}
+                    <option
+                        value="{{ item.id }}"
+                        {% if categoria == item.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ item.nome }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
-            <p class="price">
-                R$ {{ produto.preco }}
-            </p>
+        <div class="busca-acoes">
+            <button type="submit" class="btn-buscar">
+                Buscar
+            </button>
 
-            <div class="descricao-box">
-                <h2>Descrição</h2>
-
-                <p class="desc">
-                    {% if produto.descricao %}
-                        {{ produto.descricao }}
-                    {% else %}
-                        Nenhuma descrição disponível para este produto.
-                    {% endif %}
-                </p>
-            </div>
-
-            {% if produto.disponivel %}
-                <a href="{% url 'adicionar_produto' produto.id %}" class="btn-car">
-                    Adicionar ao carrinho
+            {% if busca or categoria %}
+                <a href="{% url 'produtos' %}" class="btn-limpar">
+                    Limpar
                 </a>
-            {% else %}
-                <span class="btn-car">Indisponível</span>
             {% endif %}
+        </div>
+
+    </form>
+
+    {% if categorias_com_produtos %}
+        <div class="catalogo-categorias">
+
+            {% for grupo in categorias_com_produtos %}
+
+                <section class="categoria-bloco">
+
+                    <h2 class="categoria-titulo">
+                        {{ grupo.categoria.nome }}
+                    </h2>
+
+                    <div class="features-grid">
+
+                        {% for produto in grupo.produtos %}
+
+                            <div class="feature">
+
+                                <a
+                                    href="{% url 'produto_detalhes' produto.id %}"
+                                    class="produto-link"
+                                >
+
+                                    <div class="image">
+
+                                        {% if produto.imagem %}
+
+                                            <img
+                                                src="{{ produto.imagem.url }}"
+                                                alt="{{ produto.nome }}"
+                                                width="230"
+                                                height="190"
+                                            >
+
+                                        {% else %}
+
+                                            <img
+                                                src="{% static 'imgs/sem-imagem.png' %}"
+                                                alt="Sem imagem disponível para {{ produto.nome }}"
+                                                width="230"
+                                                height="190"
+                                            >
+
+                                        {% endif %}
+
+                                    </div>
+
+                                    <h3>
+                                        {{ produto.nome }}
+                                    </h3>
+
+                                    <p>
+                                        R$ {{ produto.preco }}
+                                    </p>
+
+                                </a>
+
+                                <div class="acoes-card">
+
+                                    {% if produto.disponivel %}
+                                        <a href="{% url 'adicionar_produto' produto.id %}" class="btn-outline btn-carrinho">
+                                            Adicionar ao carrinho
+                                        </a>
+                                    {% else %}
+                                        <span class="btn-outline btn-carrinho">Indisponível</span>
+                                    {% endif %}
+
+                                    {% if user.is_authenticated %}
+                                        <form method="POST" action="{% url 'alternar_favorito' produto.id %}" class="form-favorito">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                            <button
+                                                type="submit"
+                                                class="btn-favorito {% if produto.id in favoritos_ids %}ativo{% endif %}"
+                                                title="{% if produto.id in favoritos_ids %}Remover dos favoritos{% else %}Adicionar aos favoritos{% endif %}"
+                                            >
+                                                <i class="bi {% if produto.id in favoritos_ids %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <a href="{% url 'login' %}" class="btn-favorito" title="Entre para favoritar">
+                                            <i class="bi bi-heart"></i>
+                                        </a>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+                </section>
+
+            {% endfor %}
 
         </div>
 
-    </div>
-</div>
+    {% else %}
+
+        <div class="sem-produtos">
+            <h2>Nenhum produto encontrado.</h2>
+            <p>Tente alterar a busca ou selecionar outra categoria.</p>
+        </div>
+
+    {% endif %}
+
+</section>
 
 {% endblock %}
