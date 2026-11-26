@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Gerenciar Cupons{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/categoria_gerenciar.css' %}">
+<link rel="stylesheet" href="{% static 'style/cupons.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="container-categorias">
+    <div class="painel-categorias">
+
+        <div class="painel-header">
+            <h1>Gerenciar Cupons</h1>
+            <p>Crie, edite, ative e desative os cupons de desconto.</p>
+        </div>
+
+        <div class="categoria-formulario">
+            <h2>{% if cupom %}Editar Cupom{% else %}Novo Cupom{% endif %}</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                <div class="cupom-form-grid">
+                    {% for campo in form %}
+                        <div class="campo {% if campo.field.widget.input_type == 'checkbox' %}campo-check{% endif %}">
+                            <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+                            {{ campo }}
+
+                            {% if campo.help_text %}
+                                <small class="campo-ajuda">{{ campo.help_text }}</small>
+                            {% endif %}
+                            {% for erro in campo.errors %}
+                                <small class="campo-erro">{{ erro }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn-salvar">
+                    {% if cupom %}Salvar Alterações{% else %}Cadastrar Cupom{% endif %}
+                </button>
+
+                {% if cupom %}
+                    <a href="{% url 'cupom_gerenciar' %}" class="btn-cancelar">Cancelar</a>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="lista-categorias">
+            <h2>Cupons Cadastrados</h2>
+
+            <div class="tabela-rolavel">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th><th>Desconto</th><th>Mínimo</th>
+                            <th>Validade</th><th>Usos</th><th>Status</th><th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cupons %}
+                            <tr>
+                                <td><strong>{{ item.codigo }}</strong></td>
+                                <td>{{ item.rotulo_desconto }}</td>
+                                <td>{% if item.valor_minimo %}R$ {{ item.valor_minimo }}{% else %}—{% endif %}</td>
+                                <td>{% if item.valido_ate %}{{ item.valido_ate|date:"d/m/Y H:i" }}{% else %}Sem prazo{% endif %}</td>
+                                <td>{{ item.usos }}{% if item.limite_uso %} / {{ item.limite_uso }}{% endif %}</td>
+                                <td>
+                                    {% if item.ativo %}
+                                        <span class="selo-status ativo">Ativo</span>
+                                    {% else %}
+                                        <span class="selo-status inativo">Inativo</span>
+                                    {% endif %}
+                                </td>
+                                <td class="acoes">
+                                    <a href="{% url 'cupom_editar' item.id %}" class="btn-editar">Editar</a>
+
+                                    <form method="POST" action="{% url 'cupom_alternar' item.id %}" class="form-excluir">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn-editar">
+                                            {% if item.ativo %}Desativar{% else %}Ativar{% endif %}
+                                        </button>
+                                    </form>
+
+                                    <form method="POST" action="{% url 'cupom_remover' item.id %}" class="form-excluir">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn-excluir"
+                                                onclick="return confirm('Deseja realmente excluir este cupom?')">
+                                            Excluir
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr><td colspan="7">Nenhum cupom cadastrado.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

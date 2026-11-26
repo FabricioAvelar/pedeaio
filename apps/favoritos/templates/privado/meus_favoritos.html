@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+Meus Favoritos
+{% endblock %}
+
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'style/perfil.css' %}">
+<link rel="stylesheet" href="{% static 'style/favoritos.css' %}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container">
+
+    {% include 'privado/sidebar.html' %}
+
+    <main class="conteudo">
+        <section class="favoritos">
+
+            <div class="favoritos-cabecalho">
+                <h1>Meus Favoritos</h1>
+                <p>Os produtos que você marcou para pedir de novo.</p>
+            </div>
+
+            {% if favoritos %}
+                <div class="favoritos-grid">
+
+                    {% for favorito in favoritos %}
+                        {% with produto=favorito.produto %}
+
+                            <article class="favorito-card">
+
+                                <a href="{% url 'produto_detalhes' produto.id %}" class="favorito-imagem">
+                                    {% if produto.imagem %}
+                                        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                                    {% else %}
+                                        <img src="{% static 'imgs/sem-imagem.png' %}" alt="Sem imagem">
+                                    {% endif %}
+                                </a>
+
+                                <div class="favorito-info">
+                                    <span class="favorito-categoria">{{ produto.categoria.nome }}</span>
+                                    <h2>
+                                        <a href="{% url 'produto_detalhes' produto.id %}">{{ produto.nome }}</a>
+                                    </h2>
+                                    <p class="favorito-preco">R$ {{ produto.preco }}</p>
+                                </div>
+
+                                <div class="acoes-card">
+
+                                    {% if produto.disponivel %}
+                                        <a href="{% url 'adicionar_produto' produto.id %}" class="btn-favorito-carrinho">
+                                            Adicionar ao carrinho
+                                        </a>
+                                    {% else %}
+                                        <span class="btn-favorito-carrinho indisponivel">Indisponível</span>
+                                    {% endif %}
+
+                                    <form method="POST" action="{% url 'alternar_favorito' produto.id %}" class="form-favorito">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{% url 'meus_favoritos' %}">
+                                        <button type="submit" class="btn-favorito ativo" title="Remover dos favoritos">
+                                            <i class="bi bi-heart-fill"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+
+                            </article>
+
+                        {% endwith %}
+                    {% endfor %}
+
+                </div>
+            {% else %}
+
+                <div class="sem-favoritos">
+                    <p><i class="bi bi-heart"></i></p>
+                    <h2>Você ainda não tem favoritos</h2>
+                    <p>Toque no coração de um produto para guardá-lo aqui.</p>
+                    <a href="{% url 'produtos' %}" class="btn-favorito-carrinho">Ver produtos</a>
+                </div>
+
+            {% endif %}
+
+        </section>
+    </main>
+</div>
+
+{% endblock %}

@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'apps.painel',
     'apps.entregas',
     'apps.api',
+    'apps.favoritos',
+    'apps.cupons',
 ]
 
 MIDDLEWARE = [
